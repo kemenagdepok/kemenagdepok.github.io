@@ -462,3 +462,80 @@ footer {
     }
     .dropbtn { pointer-events: none; font-weight: bold; }
 }
+
+/* --- TIMELINE STYLE (SEJARAH) --- */
+.timeline-container {
+    margin-top: 15px;
+    border-left: 3px solid var(--primary); /* Garis vertikal hijau */
+    padding-left: 20px;
+    margin-left: 10px;
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+/* Titik bulat pada timeline */
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -28px; /* Mengatur posisi titik pas di garis */
+    top: 5px;
+    width: 14px;
+    height: 14px;
+    background-color: var(--gold); /* Titik warna emas */
+    border: 2px solid var(--white);
+    border-radius: 50%;
+}
+
+.timeline-year {
+    font-weight: 800;
+    color: var(--primary);
+    font-size: 0.95rem;
+    margin-bottom: 3px;
+}
+
+.timeline-content {
+    font-size: 0.95rem;
+    color: #444;
+    background: #f9f9f9;
+    padding: 10px 15px;
+    border-radius: 6px;
+}
+
+
+/* --- TABLE STYLE (DAFTAR KEPALA) --- */
+.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+.custom-table th {
+    background-color: var(--primary);
+    color: var(--white);
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 600;
+}
+
+.custom-table td {
+    border-bottom: 1px solid #eee;
+    padding: 10px 15px;
+}
+
+/* Baris Belang-belang (Zebra Striping) */
+.custom-table tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.custom-table tr:hover {
+    background-color: #e9ecef;
+}
+
+/* Highlight baris saat ini (Pejabat sekarang) */
+.highlight-row td {
+    background-color: #e8f5e9 !important; /* Hijau sangat muda */
+    border-left: 4px solid var(--gold);
+}
