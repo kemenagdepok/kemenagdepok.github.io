@@ -712,3 +712,6 @@ footer {
 .tupoksi-unit strong {
     color: var(--kemenag-lime); /* Menyoroti bidang tugas utama */
 }
+
+/* --- Tambahan untuk Tupoksi --- */
+.mt-medium { margin-top: 40px; }
