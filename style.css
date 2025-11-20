@@ -127,3 +127,26 @@ footer { background: var(--primary); color: var(--white); text-align: center; pa
         grid-column: span 1;
     }
 }
+
+/* --- STYLE TAMBAHAN JAM OPERASIONAL --- */
+.hours-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 5px;
+    font-size: 0.95rem; /* Sedikit mengecilkan font agar pas */
+}
+
+.hours-table td {
+    padding: 4px 0; /* Memberi jarak antar baris */
+    vertical-align: top;
+}
+
+.hours-table td:first-child {
+    width: 130px; /* Lebar tetap untuk kolom Hari agar sejajar */
+    color: #555;
+    font-weight: 500;
+}
+
+.hours-table td:last-child {
+    color: var(--text);
+}
