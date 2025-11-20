@@ -168,3 +168,105 @@ footer { background: var(--primary); color: var(--white); text-align: center; pa
         transition: opacity 0.5s ease 0.2s;
     }
 }
+
+/* =========================================
+   MOBILE RESPONSIVE & ANIMASI MENU
+   ========================================= */
+@media (max-width: 768px) {
+    /* 1. Reset Layout Navbar */
+    .navbar { flex-direction: row; justify-content: space-between; }
+    
+    /* 2. Ubah Teks Header */
+    .text-desktop { display: none; }
+    .text-mobile { display: block; }
+    
+    .logo { height: 45px; }
+    .brand-text h1 { font-size: 1rem; }
+    .brand-text p { font-size: 1rem; }
+    
+    .card.wide { grid-column: span 1; }
+
+    /* 3. Tombol Hamburger */
+    .hamburger {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+        z-index: 2000;
+    }
+    .hamburger span {
+        display: block;
+        width: 25px;
+        height: 3px;
+        background-color: var(--primary);
+        border-radius: 2px;
+        transition: all 0.3s ease-in-out;
+    }
+
+    /* ANIMASI BURGER KE X */
+    .hamburger.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+    /* 4. Menu Navigasi (Side Drawer) */
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100vh;
+        width: 70%; /* Lebar menu sedikit diperbesar */
+        background-color: var(--white);
+        
+        /* PERUBAHAN DISINI: Layout Vertical */
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;     /* Rata Kiri */
+        justify-content: flex-start; /* Rata Atas (Bukan Center lagi) */
+        
+        padding-top: 100px;          /* Jarak dari atas agar tidak ketabrak tombol X */
+        padding-left: 40px;
+        padding-bottom: 40px;
+        
+        box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+        transform: translateX(100%);
+        transition: transform 0.4s ease-in-out;
+        z-index: 1500;
+    }
+
+    .nav-links.active { transform: translateX(0); }
+
+    /* Style Item Menu (Dibuat lebih rapat) */
+    .nav-links li { 
+        margin: 10px 0; /* Jarak antar menu diperkecil */
+        opacity: 0;
+        width: 100%;
+    }
+    
+    .nav-links.active li {
+        opacity: 1;
+        transition: opacity 0.5s ease 0.2s;
+    }
+
+    /* 5. STYLE SOSIAL MEDIA (DI BAWAH) */
+    /* Mendorong item ini ke paling bawah container */
+    .social-menu-item {
+        margin-top: auto !important; /* Kunci agar turun ke bawah */
+        border-top: 1px solid #eee;
+        padding-top: 20px;
+        width: 80% !important;
+    }
+
+    .social-icons {
+        display: flex;
+        gap: 20px;
+    }
+
+    .social-icons a {
+        color: #888;
+        transition: color 0.3s;
+    }
+
+    .social-icons a:hover {
+        color: var(--primary);
+    }
+}
