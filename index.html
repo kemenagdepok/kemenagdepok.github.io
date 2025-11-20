@@ -68,21 +68,28 @@
                         latestNews.forEach(news => {
                             const card = `
                                 <div class="card">
-                                    <a href="detail-berita.html?id=${news.id}" class="thumb-link">
+                                    <a href="detail-berita.html?id=${news.id}" class="thumb-link" title="${news.judul}">
                                         <div class="auto-thumb thumb-home">
                                             <img src="${logoUrl}" class="thumb-logo thumb-logo-small" alt="Logo">
                                             <div class="thumb-title-text thumb-title-small">${news.judul}</div>
                                         </div>
                                     </a>
+
                                     <small style="color:#666; display:block; margin-top:10px;">${news.tanggal}</small>
+                                    
                                     <h4 style="margin: 5px 0; font-size: 1.1rem;">
-                                        <a href="detail-berita.html?id=${news.id}" style="text-decoration:none; color:var(--primary);">
+                                        <a href="detail-berita.html?id=${news.id}" style="text-decoration:none; color:var(--primary);" title="${news.judul}">
                                             ${news.judul}
                                         </a>
                                     </h4>
+                                    
                                     <p class="news-summary">
                                         ${news.ringkasan}
                                     </p>
+
+                                    <a href="detail-berita.html?id=${news.id}" style="display:inline-block; margin-top:10px; font-size:0.85rem; font-weight:600; color:var(--primary); text-decoration:none;" title="${news.judul}">
+                                        Baca Selengkapnya →
+                                    </a>
                                 </div>
                             `;
                             container.innerHTML += card;
