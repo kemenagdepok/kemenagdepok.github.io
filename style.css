@@ -539,3 +539,84 @@ footer {
     background-color: #e8f5e9 !important; /* Hijau sangat muda */
     border-left: 4px solid var(--gold);
 }
+
+/* --- MODERN VERTICAL TIMELINE --- */
+.timeline-box {
+    position: relative;
+    padding-left: 20px;
+    border-left: 2px solid #e0e0e0; /* Garis vertikal abu-abu */
+    margin-left: 10px;
+}
+
+.timeline-event {
+    position: relative;
+    margin-bottom: 25px;
+    padding-left: 20px; /* Jarak antara garis dan teks */
+}
+
+/* Titik Penanda (Dot) */
+.t-marker {
+    position: absolute;
+    left: -28px; /* Posisi pas di tengah garis */
+    top: 0;
+    width: 14px;
+    height: 14px;
+    background-color: var(--white);
+    border: 3px solid var(--primary); /* Lingkaran Hijau */
+    border-radius: 50%;
+    z-index: 2;
+}
+
+/* Styling Tahun */
+.t-date {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #888;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Styling Isi Konten */
+.t-content {
+    background: #fff;
+    padding: 0; /* Polos tanpa kotak background */
+}
+
+.t-content strong {
+    display: block;
+    font-size: 1rem;
+    color: var(--text);
+    margin-bottom: 2px;
+}
+
+.t-content p {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* --- HIGHLIGHT UNTUK PERIODE SEKARANG (CURRENT) --- */
+
+/* 1. Ubah warna garis/titik jadi Emas */
+.timeline-event.current .t-marker {
+    border-color: var(--gold);
+    background-color: var(--gold);
+    box-shadow: 0 0 0 4px rgba(240, 192, 1, 0.2); /* Efek glow */
+}
+
+/* 2. Ubah warna teks tahun jadi Hijau */
+.t-date.current-text {
+    color: var(--primary);
+    font-weight: 800;
+}
+
+/* 3. Beri background tipis pada konten aktif */
+.t-content.current-bg {
+    background: #f0fdf4; /* Hijau sangat muda */
+    padding: 10px 15px;
+    border-radius: 6px;
+    border-left: 3px solid var(--primary);
+    margin-top: 5px;
+}
