@@ -1,0 +1,45 @@
+/* Reset & Variables */
+:root {
+    --primary: #007E33; /* Kemenag Green */
+    --secondary: #f8f9fa;
+    --text: #333;
+    --white: #ffffff;
+    --padding: 20px 10%;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+
+body { background-color: var(--secondary); color: var(--text); display: flex; flex-direction: column; min-height: 100vh; }
+
+/* Header Styling */
+header { background: var(--white); box-shadow: 0 2px 5px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 1000; }
+.navbar { display: flex; justify-content: space-between; align-items: center; padding: 15px 5%; max-width: 1200px; margin: 0 auto; }
+.logo-container { display: flex; align-items: center; gap: 15px; }
+.logo { height: 50px; width: auto; }
+.brand-text h1 { font-size: 1.2rem; color: var(--primary); font-weight: 700; }
+.brand-text p { font-size: 0.8rem; color: #666; letter-spacing: 1px; }
+
+.nav-links { list-style: none; display: flex; gap: 25px; }
+.nav-links a { text-decoration: none; color: var(--text); font-weight: 500; transition: color 0.3s; }
+.nav-links a:hover { color: var(--primary); }
+
+/* Main Content */
+main { flex: 1; padding: 40px 5%; max-width: 1000px; margin: 0 auto; width: 100%; }
+.hero { text-align: center; padding: 60px 0; }
+.hero h2 { font-size: 2.5rem; color: var(--primary); margin-bottom: 10px; }
+.section-title { margin-bottom: 20px; border-bottom: 2px solid #ddd; padding-bottom: 10px; color: var(--primary); }
+
+/* Cards (for Services) */
+.grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+.card { background: var(--white); padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); transition: transform 0.2s; }
+.card:hover { transform: translateY(-5px); }
+
+/* Footer Styling */
+footer { background: var(--primary); color: var(--white); text-align: center; padding: 20px; margin-top: auto; }
+.footer-content p { font-size: 0.9rem; margin: 5px 0; }
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .navbar { flex-direction: column; gap: 15px; }
+    .nav-links { gap: 15px; font-size: 0.9rem; }
+}
