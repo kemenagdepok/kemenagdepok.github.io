@@ -178,10 +178,18 @@ header {
     padding: 30px; border-radius: 20px; text-align: center;
     max-width: 350px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
 }
+
+/* --- SETTING UKURAN GAMBAR HERO (75%) --- */
+.image-wrapper {
+    width: 75%;      /* Lebar gambar 75% dari wadah */
+    margin: 0 auto;  /* Posisi tengah */
+}
+
 .image-wrapper img {
     width: 100%; height: auto; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
     margin-bottom: 15px;
 }
+
 .profile-label {
     display: block; color: var(--gold); font-size: 0.8rem;
     font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 5px;
@@ -253,10 +261,13 @@ main {
     background-image: radial-gradient(rgba(255,255,255,0.1) 2px, transparent 2px);
     background-size: 20px 20px; transform: rotate(30deg); pointer-events: none;
 }
+
+/* --- PENGATURAN LOGO THUMBNAIL --- */
 .thumb-logo {
     width: 60px; height: auto; z-index: 1;
-    filter: brightness(0) invert(1) drop-shadow(0 2px 4px rgba(0,0,0,0.2)); 
+    /* FILTER DIHAPUS AGAR WARNA LOGO ASLI KELUAR */
 }
+
 .thumb-title-text {
     color: #ffffff; font-size: 1.1rem; font-weight: 700;
     line-height: 1.3; text-shadow: 0 2px 4px rgba(0,0,0,0.3); z-index: 1;
