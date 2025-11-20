@@ -125,7 +125,16 @@ header {
    ========================================= */
 .hero-fullscreen {
     width: 100%;
-    background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%);
+    
+    /* UPDATE BACKGROUND DISINI */
+    /* Kita tumpuk Warna Hijau Transparan di atas Gambar */
+    background: linear-gradient(rgba(0, 99, 22, 0.9), rgba(0, 99, 22, 0.85)),
+                url('https://kemenagdepok.github.io/images/halaman/latar-belakang.webp');
+    
+    background-size: cover;      /* Gambar memenuhi area */
+    background-position: center; /* Gambar rata tengah */
+    background-repeat: no-repeat;
+    
     min-height: 85vh;
     display: flex;
     align-items: center;
