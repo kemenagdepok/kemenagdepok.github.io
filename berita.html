@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Berita - Kemenag Kota Depok</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header id="header-placeholder"></header>
+
+    <main>
+        <h3 class="section-title">Berita Terkini</h3>
+        <div id="news-container" class="grid-container">
+            <p>Memuat berita...</p>
+        </div>
+    </main>
+
+    <footer id="footer-placeholder"></footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Script khusus untuk halaman daftar berita
+        fetch('berita.json')
+            .then(response => response.json())
+            .then(data => {
+                const container = document.getElementById('news-container');
+                container.innerHTML = ''; // Kosongkan loading text
+
+                data.forEach(news => {
+                    const card = `
+                        <div class="card">
+                            <img src="${news.gambar}" alt="${news.judul}" style="width:100%; height:150px; object-fit:cover; border-radius:4px; margin-bottom:10px; background:#eee;">
+                            <small style="color:#666;">${news.tanggal}</small>
+                            <h4 style="margin: 5px 0;"><a href="detail-berita.html?id=${news.id}" style="text-decoration:none; color:var(--primary);">${news.judul}</a></h4>
+                            <p style="font-size:0.9rem;">${news.ringkasan}</p>
+                            <br>
+                            <a href="detail-berita.html?id=${news.id}" style="font-size:0.85rem; font-weight:bold; color:var(--primary); text-decoration:none;">Baca Selengkapnya →</a>
+                        </div>
+                    `;
+                    container.innerHTML += card;
+                });
+            })
+            .catch(error => {
+                document.getElementById('news-container').innerHTML = '<p>Gagal memuat berita.</p>';
+            });
+    </script>
+</body>
+</html>

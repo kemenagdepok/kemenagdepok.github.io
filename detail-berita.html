@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baca Berita - Kemenag Kota Depok</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        /* Style khusus untuk konten berita Markdown */
+        .news-content { line-height: 1.8; color: #333; }
+        .news-content h1, .news-content h2 { color: var(--primary); margin-top: 20px; margin-bottom: 10px; }
+        .news-content p { margin-bottom: 15px; }
+        .news-content ul { margin-left: 20px; margin-bottom: 15px; }
+        .news-content img { max-width: 100%; height: auto; border-radius: 8px; margin: 10px 0; }
+        .news-meta { color: #666; font-size: 0.9rem; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <header id="header-placeholder"></header>
+
+    <main>
+        <div id="article-container" style="background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+            <p>Sedang memuat artikel...</p>
+        </div>
+        <div style="margin-top: 20px;">
+            <a href="berita.html" style="text-decoration: none; color: var(--primary); font-weight: bold;">← Kembali ke Daftar Berita</a>
+        </div>
+    </main>
+
+    <footer id="footer-placeholder"></footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Ambil ID dari URL (contoh: detail-berita.html?id=persiapan-haji-2025)
+        const urlParams = new URLSearchParams(window.location.search);
+        const newsId = urlParams.get('id');
+
+        if(newsId) {
+            // 1. Cari data di berita.json
+            fetch('berita.json')
+                .then(response => response.json())
+                .then(newsList => {
+                    const news = newsList.find(item => item.id === newsId);
+                    
+                    if(news) {
+                        // 2. Jika ketemu, ambil file Markdown-nya
+                        fetch(news.file)
+                            .then(res => res.text())
+                            .then(markdownText => {
+                                // 3. Konversi Markdown ke HTML
+                                const htmlContent = marked.parse(markdownText);
+                                
+                                // 4. Tampilkan ke layar
+                                document.getElementById('article-container').innerHTML = `
+                                    <h1 style="color:var(--primary); margin-bottom:5px;">${news.judul}</h1>
+                                    <p class="news-meta">📅 ${news.tanggal} | 👤 Admin Kemenag</p>
+                                    <div class="news-content">${htmlContent}</div>
+                                `;
+                                document.title = news.judul + " - Kemenag Kota Depok";
+                            });
+                    } else {
+                        document.getElementById('article-container').innerHTML = '<p>Berita tidak ditemukan.</p>';
+                    }
+                });
+        } else {
+            window.location.href = 'berita.html';
+        }
+    </script>
+</body>
+</html>
