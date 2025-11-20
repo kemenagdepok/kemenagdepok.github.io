@@ -9,13 +9,15 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
 
-body { background-color: var(--secondary); color: var(--text); display: flex; flex-direction: column; min-height: 100vh; }
+body { background-color: var(--secondary); color: var(--text); display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden; }
 
 /* Header Styling */
 header { background: var(--white); box-shadow: 0 2px 5px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 1000; }
 .navbar { display: flex; justify-content: space-between; align-items: center; padding: 15px 5%; max-width: 1000px; margin: 0 auto; }
 .logo-container { display: flex; align-items: center; gap: 15px; }
 .logo { height: 55px; width: auto; }
+
+/* Branding Text Logic */
 .brand-text {
     display: flex;
     flex-direction: column;
@@ -23,21 +25,29 @@ header { background: var(--white); box-shadow: 0 2px 5px rgba(0,0,0,0.05); posit
 }
 
 .brand-text h1 { 
-    font-size: 1.1rem; /* Ukuran disamakan */
-    color: #000000;    /* Warna Hitam */
+    font-size: 1.1rem;
+    color: #000000;
     font-weight: 700; 
     line-height: 1.2;
     margin-bottom: 0;
 }
 
 .brand-text p { 
-    font-size: 1.1rem; /* Ukuran disamakan dengan h1 */
-    color: #000000;    /* Warna Hitam (tidak lagi hijau) */
-    font-weight: 700;  /* Ketebalan disamakan */
+    font-size: 1.1rem;
+    color: #000000;
+    font-weight: 700; 
     letter-spacing: 0.5px;
     margin-top: 2px;
 }
 
+/* Tampilan Default (Desktop) */
+.text-desktop { display: block; }
+.text-mobile { display: none; }
+
+/* Hamburger Menu Default (Hidden on Desktop) */
+.hamburger { display: none; }
+
+/* Navigation Links Default */
 .nav-links { list-style: none; display: flex; gap: 25px; }
 .nav-links a { text-decoration: none; color: var(--text); font-weight: 500; transition: color 0.3s; }
 .nav-links a:hover { color: var(--primary); }
@@ -57,105 +67,104 @@ main { flex: 1; padding: 40px 5%; max-width: 1000px; margin: 0 auto; width: 100%
 footer { background: var(--primary); color: var(--white); text-align: center; padding: 20px; margin-top: auto; }
 .footer-content p { font-size: 0.9rem; margin: 5px 0; }
 
-/* Mobile Responsive */
-@media (max-width: 768px) {
-    .navbar { flex-direction: column; gap: 15px; }
-    .nav-links { gap: 15px; font-size: 0.9rem; }
-}
-
 /* --- HALAMAN KONTAK --- */
-.contact-intro {
-    margin-bottom: 30px;
-}
-
-.contact-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
-}
-
-.contact-info, .contact-map {
-    flex: 1;
-    min-width: 300px;
-}
-
-.contact-map {
-    height: 450px;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    background: #eee; /* Placeholder warna saat loading */
-}
-
-.contact-map iframe {
-    width: 100%;
-    height: 100%;
-    border: 0;
-    display: block;
-}
-
-.contact-item {
-    margin-bottom: 20px;
-}
-
-.contact-item h4 {
-    color: var(--primary);
-    margin-bottom: 5px;
-}
+.contact-intro { margin-bottom: 30px; }
+.contact-wrapper { display: flex; flex-wrap: wrap; gap: 30px; }
+.contact-info, .contact-map { flex: 1; min-width: 300px; }
+.contact-map { height: 450px; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.1); background: #eee; }
+.contact-map iframe { width: 100%; height: 100%; border: 0; display: block; }
+.contact-item { margin-bottom: 20px; }
+.contact-item h4 { color: var(--primary); margin-bottom: 5px; }
 
 /* --- HALAMAN PROFIL --- */
-/* Kelas utilitas untuk Card yang lebar (span 2 kolom) */
-.card.wide {
-    grid-column: span 2;
-}
+.card.wide { grid-column: span 2; }
+.mission-list { margin-left: 20px; margin-top: 10px; line-height: 1.6; }
+.mt-4 { margin-top: 15px; }
 
-/* List Misi */
-.mission-list {
-    margin-left: 20px; 
-    margin-top: 10px; 
-    line-height: 1.6;
-}
+/* --- STYLE JAM OPERASIONAL --- */
+.hours-table { width: 100%; border-collapse: collapse; margin-top: 5px; font-size: 0.95rem; }
+.hours-table td { padding: 4px 0; vertical-align: top; }
+.hours-table td:first-child { width: 130px; color: #555; font-weight: 500; }
+.hours-table td:last-child { color: var(--text); }
+.break-time { font-size: 0.85rem; color: #666; font-style: italic; display: inline-block; margin-top: 2px; }
 
-/* Utilitas Margin Top */
-.mt-4 {
-    margin-top: 15px;
-}
+/* =========================================
+   MOBILE RESPONSIVE & ANIMASI MENU
+   ========================================= */
+@media (max-width: 768px) {
+    /* 1. Reset Layout Navbar */
+    .navbar { flex-direction: row; justify-content: space-between; } /* Pastikan baris, bukan kolom */
+    
+    /* 2. Ubah Teks Header */
+    .text-desktop { display: none; }
+    .text-mobile { display: block; }
+    
+    .logo { height: 45px; }
+    .brand-text h1 { font-size: 1rem; }
+    .brand-text p { font-size: 1rem; }
+    
+    /* 3. Responsive Card */
+    .card.wide { grid-column: span 1; }
 
-/* Responsive fix untuk card wide di mobile */
-@media (max-width: 600px) {
-    .card.wide {
-        grid-column: span 1;
+    /* 4. Tombol Hamburger */
+    .hamburger {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+        z-index: 2000;
     }
-}
+    .hamburger span {
+        display: block;
+        width: 25px;
+        height: 3px;
+        background-color: var(--primary);
+        border-radius: 2px;
+        transition: all 0.3s ease-in-out;
+    }
 
-/* --- STYLE TAMBAHAN JAM OPERASIONAL --- */
-.hours-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 5px;
-    font-size: 0.95rem; /* Sedikit mengecilkan font agar pas */
-}
+    /* ANIMASI BURGER KE X */
+    /* Garis 1: Putar 45 derajat & Turun */
+    .hamburger.active span:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+    /* Garis 2: Hilang (Opacity 0) */
+    .hamburger.active span:nth-child(2) {
+        opacity: 0;
+    }
+    /* Garis 3: Putar -45 derajat & Naik */
+    .hamburger.active span:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
 
-.hours-table td {
-    padding: 4px 0; /* Memberi jarak antar baris */
-    vertical-align: top;
-}
+    /* 5. Menu Navigasi (Side Drawer) */
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100vh;
+        width: 65%;
+        background-color: var(--white);
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        padding-left: 30px;
+        box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+        transform: translateX(100%); /* Sembunyi di kanan */
+        transition: transform 0.4s ease-in-out;
+        z-index: 1500;
+    }
 
-.hours-table td:first-child {
-    width: 130px; /* Lebar tetap untuk kolom Hari agar sejajar */
-    color: #555;
-    font-weight: 500;
-}
+    /* Class aktif untuk memunculkan menu */
+    .nav-links.active {
+        transform: translateX(0);
+    }
 
-.hours-table td:last-child {
-    color: var(--text);
-}
-
-/* Tambahan untuk Jam Istirahat */
-.break-time {
-    font-size: 0.85rem; /* Ukuran huruf lebih kecil */
-    color: #666;        /* Warna abu-abu agar kontras dengan jam utama */
-    font-style: italic; /* Huruf miring */
-    display: inline-block;
-    margin-top: 2px;
+    .nav-links li { margin: 15px 0; opacity: 0; }
+    
+    /* Efek Fade In untuk teks menu saat dibuka */
+    .nav-links.active li {
+        opacity: 1;
+        transition: opacity 0.5s ease 0.2s;
+    }
 }
