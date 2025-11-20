@@ -20,20 +20,29 @@
 
     <script src="script.js"></script>
     <script>
-        // Script khusus untuk halaman daftar berita
         fetch('berita.json')
             .then(response => response.json())
             .then(data => {
                 const container = document.getElementById('news-container');
-                container.innerHTML = ''; // Kosongkan loading text
+                container.innerHTML = ''; 
 
                 data.forEach(news => {
+                    // URL Logo Kemenag (bisa pakai yang online atau lokal)
+                    const logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Kementerian_Agama_new_logo.png/150px-Kementerian_Agama_new_logo.png";
+
                     const card = `
                         <div class="card">
-                            <img src="${news.gambar}" alt="${news.judul}" style="width:100%; height:150px; object-fit:cover; border-radius:4px; margin-bottom:10px; background:#eee;">
-                            <small style="color:#666;">${news.tanggal}</small>
-                            <h4 style="margin: 5px 0;"><a href="detail-berita.html?id=${news.id}" style="text-decoration:none; color:var(--primary);">${news.judul}</a></h4>
-                            <p style="font-size:0.9rem;">${news.ringkasan}</p>
+                            <div class="auto-thumb">
+                                <img src="${logoUrl}" class="thumb-logo" alt="Logo">
+                                <div class="thumb-title-text">${news.judul}</div>
+                            </div>
+                            <small style="color:#666; display:block; margin-top:10px;">${news.tanggal}</small>
+                            <h4 style="margin: 5px 0;">
+                                <a href="detail-berita.html?id=${news.id}" style="text-decoration:none; color:var(--primary);">
+                                    ${news.judul}
+                                </a>
+                            </h4>
+                            <p style="font-size:0.9rem; color:#555;">${news.ringkasan}</p>
                             <br>
                             <a href="detail-berita.html?id=${news.id}" style="font-size:0.85rem; font-weight:bold; color:var(--primary); text-decoration:none;">Baca Selengkapnya →</a>
                         </div>
@@ -42,6 +51,7 @@
                 });
             })
             .catch(error => {
+                console.error(error);
                 document.getElementById('news-container').innerHTML = '<p>Gagal memuat berita.</p>';
             });
     </script>

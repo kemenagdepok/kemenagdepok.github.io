@@ -193,3 +193,57 @@ footer { background: var(--primary); color: var(--white); text-align: center; pa
         color: var(--primary);
     }
 }
+
+/* --- AUTOMATED THUMBNAIL GENERATOR --- */
+.auto-thumb {
+    width: 100%;
+    height: 200px; /* Tinggi kotak gambar */
+    background: linear-gradient(135deg, #007E33 0%, #004d1f 100%); /* Gradasi Hijau Kemenag */
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Logo di atas, Teks di bawah */
+    align-items: center;
+    text-align: center;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.1);
+    margin-bottom: 15px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Dekorasi latar belakang (opsional: pola transparan) */
+.auto-thumb::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background-image: radial-gradient(rgba(255,255,255,0.1) 2px, transparent 2px);
+    background-size: 20px 20px;
+    transform: rotate(30deg);
+    pointer-events: none;
+}
+
+/* Gaya Logo di dalam kotak */
+.thumb-logo {
+    width: 60px;
+    height: auto;
+    filter: brightness(0) invert(1) drop-shadow(0 2px 4px rgba(0,0,0,0.2)); /* Logo jadi Putih */
+    z-index: 1;
+}
+
+/* Gaya Judul di dalam kotak */
+.thumb-title-text {
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.4;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    z-index: 1;
+    
+    /* Membatasi teks maksimal 3 baris agar rapi */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
