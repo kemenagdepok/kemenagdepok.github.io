@@ -19,19 +19,13 @@
 
         <section>
             <h3 class="section-title">Berita Terkini</h3>
-            <div class="grid-container">
-                <div class="card">
-                    <h4>Pelayanan Haji 2025</h4>
-                    <p>Informasi terbaru mengenai persiapan keberangkatan jemaah haji tahun 2025.</p>
-                </div>
-                <div class="card">
-                    <h4>Pembinaan Madrasah</h4>
-                    <p>Kegiatan pembinaan untuk meningkatkan kualitas pendidikan madrasah di Depok.</p>
-                </div>
-                <div class="card">
-                    <h4>Workshop KUA</h4>
-                    <p>Peningkatan kompetensi layanan Kantor Urusan Agama se-Kota Depok.</p>
-                </div>
+            
+            <div id="home-news-container" class="grid-container">
+                <p style="text-align:center; width:100%; color:#666;">Memuat berita terbaru...</p>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="berita.html" style="display: inline-block; padding: 10px 20px; background-color: var(--primary); color: #fff; text-decoration: none; border-radius: 30px; font-weight: 600; font-size: 0.9rem; transition: 0.3s;">Lihat Semua Berita →</a>
             </div>
         </section>
     </main>
@@ -39,5 +33,53 @@
     <footer id="footer-placeholder"></footer>
 
     <script src="script.js"></script>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch('berita.json')
+                .then(response => response.json())
+                .then(data => {
+                    const container = document.getElementById('home-news-container');
+                    
+                    // Ambil hanya 3 berita terbaru
+                    const latestNews = data.slice(0, 3);
+
+                    // URL Logo
+                    const logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Kementerian_Agama_new_logo.png/150px-Kementerian_Agama_new_logo.png";
+
+                    if (latestNews.length > 0) {
+                        container.innerHTML = ''; // Hapus pesan loading
+                        
+                        latestNews.forEach(news => {
+                            const card = `
+                                <div class="card">
+                                    <div class="auto-thumb" style="height: 180px; padding: 15px;">
+                                        <img src="${logoUrl}" class="thumb-logo" style="width: 50px;" alt="Logo">
+                                        <div class="thumb-title-text" style="font-size: 0.95rem;">${news.judul}</div>
+                                    </div>
+
+                                    <small style="color:#666; display:block; margin-top:10px;">${news.tanggal}</small>
+                                    <h4 style="margin: 5px 0; font-size: 1.1rem;">
+                                        <a href="detail-berita.html?id=${news.id}" style="text-decoration:none; color:var(--primary);">
+                                            ${news.judul}
+                                        </a>
+                                    </h4>
+                                    <p style="font-size:0.9rem; color:#555; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                                        ${news.ringkasan}
+                                    </p>
+                                </div>
+                            `;
+                            container.innerHTML += card;
+                        });
+                    } else {
+                        container.innerHTML = '<p>Belum ada berita.</p>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading news:', error);
+                    document.getElementById('home-news-container').innerHTML = '<p>Gagal memuat berita.</p>';
+                });
+        });
+    </script>
 </body>
 </html>
