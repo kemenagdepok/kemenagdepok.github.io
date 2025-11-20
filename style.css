@@ -62,3 +62,68 @@ footer { background: var(--primary); color: var(--white); text-align: center; pa
     .navbar { flex-direction: column; gap: 15px; }
     .nav-links { gap: 15px; font-size: 0.9rem; }
 }
+
+/* --- HALAMAN KONTAK --- */
+.contact-intro {
+    margin-bottom: 30px;
+}
+
+.contact-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.contact-info, .contact-map {
+    flex: 1;
+    min-width: 300px;
+}
+
+.contact-map {
+    height: 450px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    background: #eee; /* Placeholder warna saat loading */
+}
+
+.contact-map iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+}
+
+.contact-item {
+    margin-bottom: 20px;
+}
+
+.contact-item h4 {
+    color: var(--primary);
+    margin-bottom: 5px;
+}
+
+/* --- HALAMAN PROFIL --- */
+/* Kelas utilitas untuk Card yang lebar (span 2 kolom) */
+.card.wide {
+    grid-column: span 2;
+}
+
+/* List Misi */
+.mission-list {
+    margin-left: 20px; 
+    margin-top: 10px; 
+    line-height: 1.6;
+}
+
+/* Utilitas Margin Top */
+.mt-4 {
+    margin-top: 15px;
+}
+
+/* Responsive fix untuk card wide di mobile */
+@media (max-width: 600px) {
+    .card.wide {
+        grid-column: span 1;
+    }
+}
