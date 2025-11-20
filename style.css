@@ -1,26 +1,35 @@
 /* =========================================
-   1. RESET & VARIABLES (UPDATED PALETTE)
+   1. RESET & VARIABLES (UPDATED FONT & PALETTE)
    ========================================= */
+
+/* Import Font Poppins dari Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
 :root {
     /* --- PALET WARNA RESMI KEMENAG --- */
-    --kemenag-green: #006316;    /* Hijau Utama */
-    --kemenag-lime: #8DA03C;     /* Hijau Muda/Olive */
-    --kemenag-gold: #F0C001;     /* Emas Utama */
-    --kemenag-yellow: #F7D914;   /* Kuning Terang */
-    --kemenag-gray: #F2F2F2;     /* Latar Belakang Halus */
-    --kemenag-black: #000000;    /* Hitam Pekat */
+    --kemenag-green: #006316;
+    --kemenag-lime: #8DA03C;
+    --kemenag-gold: #F0C001;
+    --kemenag-yellow: #F7D914;
+    --kemenag-gray: #F2F2F2;
+    --kemenag-black: #000000;
 
-    /* --- MAPPING KE WEBSITE --- */
-    --primary: var(--kemenag-green);       /* Menggantikan hijau lama */
-    --primary-light: var(--kemenag-lime);
-    --gold: var(--kemenag-gold);           /* Menggantikan warna emas lama */
-    
-    --secondary: var(--kemenag-gray);      /* Background body */
+    /* Mapping */
+    --primary: var(--kemenag-green);
+    --primary-dark: #004d11; /* Versi gelap dari #006316 */
+    --gold: var(--kemenag-gold);
+    --secondary: var(--kemenag-gray);
     --text: #333333;
     --white: #ffffff;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+/* Terapkan Font Poppins ke seluruh elemen */
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+    font-family: 'Poppins', sans-serif; /* Font Baru */
+}
 
 body { 
     background-color: var(--secondary); 
