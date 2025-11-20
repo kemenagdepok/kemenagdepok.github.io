@@ -695,3 +695,20 @@ footer {
     margin-top: 2px;
     font-weight: 600;
 }
+
+/* --- TUGAS POKOK DAN FUNGSI (TUPOKSI) STYLE --- */
+.tupoksi-unit h5 {
+    color: var(--primary);
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 2px solid var(--gold); /* Garis emas sebagai pemisah */
+}
+.tupoksi-unit p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #555;
+}
+.tupoksi-unit strong {
+    color: var(--kemenag-lime); /* Menyoroti bidang tugas utama */
+}
