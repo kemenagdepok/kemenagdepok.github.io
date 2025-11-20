@@ -20,40 +20,50 @@
 
     <script src="script.js"></script>
     <script>
-        fetch('berita.json')
-            .then(response => response.json())
-            .then(data => {
-                const container = document.getElementById('news-container');
-                container.innerHTML = ''; 
-
-                data.forEach(news => {
-                    // URL Logo Resmi Kemenag yang Anda minta
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch('berita.json')
+                .then(response => response.json())
+                .then(data => {
+                    const container = document.getElementById('news-container');
+                    
+                    // URL Logo
                     const logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Kementerian_Agama_new_logo.png/150px-Kementerian_Agama_new_logo.png";
 
-                    const card = `
-                        <div class="card">
-                            <div class="auto-thumb">
-                                <img src="${logoUrl}" class="thumb-logo" alt="Logo Kemenag">
-                                <div class="thumb-title-text">${news.judul}</div>
-                            </div>
-                            <small style="color:#666; display:block; margin-top:10px;">${news.tanggal}</small>
-                            <h4 style="margin: 5px 0;">
-                                <a href="detail-berita.html?id=${news.id}" style="text-decoration:none; color:var(--primary);">
-                                    ${news.judul}
+                    container.innerHTML = ''; // Bersihkan loading text
+
+                    data.forEach(news => {
+                        const card = `
+                            <div class="card">
+                                <a href="detail-berita.html?id=${news.id}" class="thumb-link" title="${news.judul}">
+                                    <div class="auto-thumb">
+                                        <img src="${logoUrl}" class="thumb-logo" alt="Logo Kemenag">
+                                        <div class="thumb-title-text">${news.judul}</div>
+                                    </div>
                                 </a>
-                            </h4>
-                            <p style="font-size:0.9rem; color:#555;">${news.ringkasan}</p>
-                            <br>
-                            <a href="detail-berita.html?id=${news.id}" style="font-size:0.85rem; font-weight:bold; color:var(--primary); text-decoration:none;">Baca Selengkapnya →</a>
-                        </div>
-                    `;
-                    container.innerHTML += card;
+                                <small style="color:#666; display:block; margin-top:10px;">${news.tanggal}</small>
+                                
+                                <h4 style="margin: 5px 0;">
+                                    <a href="detail-berita.html?id=${news.id}" style="text-decoration:none; color:var(--primary);" title="${news.judul}">
+                                        ${news.judul}
+                                    </a>
+                                </h4>
+                                
+                                <p style="font-size:0.9rem; color:#555;">${news.ringkasan}</p>
+                                <br>
+                                
+                                <a href="detail-berita.html?id=${news.id}" style="font-size:0.85rem; font-weight:bold; color:var(--primary); text-decoration:none;" title="${news.judul}">
+                                    Baca Selengkapnya →
+                                </a>
+                            </div>
+                        `;
+                        container.innerHTML += card;
+                    });
+                })
+                .catch(error => {
+                    console.error(error);
+                    document.getElementById('news-container').innerHTML = '<p>Gagal memuat berita.</p>';
                 });
-            })
-            .catch(error => {
-                console.error(error);
-                document.getElementById('news-container').innerHTML = '<p>Gagal memuat berita.</p>';
-            });
+        });
     </script>
 </body>
 </html>
