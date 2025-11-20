@@ -324,3 +324,80 @@ footer { background: var(--primary); color: var(--white); text-align: center; pa
     color: #666;
     font-style: italic;
 }
+
+/* --- DROPDOWN MENU STYLING --- */
+
+/* Container Dropdown */
+.dropdown {
+    position: relative;
+}
+
+/* Konten Dropdown (Default Tersembunyi) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #ffffff;
+    min-width: 200px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    z-index: 2000;
+    border-radius: 4px;
+    list-style: none;
+    padding: 10px 0;
+    top: 100%; /* Muncul pas di bawah menu induk */
+    left: 0;
+}
+
+/* Style Link di dalam Dropdown */
+.dropdown-content li {
+    margin: 0; /* Reset margin */
+}
+
+.dropdown-content a {
+    color: var(--text);
+    padding: 10px 20px;
+    text-decoration: none;
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 400; /* Font normal */
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+    color: var(--primary);
+}
+
+/* Tampilkan Dropdown saat Hover (Desktop) */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* --- RESPONSIVE DROPDOWN (MOBILE) --- */
+@media (max-width: 768px) {
+    /* Reset posisi untuk mobile */
+    .dropdown-content {
+        position: relative; /* Tidak melayang */
+        display: block;     /* Selalu muncul (atau bisa di-toggle) */
+        box-shadow: none;
+        background-color: transparent;
+        padding: 0;
+        padding-left: 20px; /* Indentasi ke dalam */
+        top: 0;
+    }
+
+    .dropdown-content a {
+        padding: 8px 0;
+        font-size: 0.9rem;
+        color: #666;
+    }
+    
+    .dropdown-content a:hover {
+        background: none;
+        color: var(--primary);
+    }
+
+    /* Hilangkan tanda panah dropdown di menu mobile agar rapi */
+    .dropbtn {
+        pointer-events: none; /* Agar tidak diklik dua kali di mobile */
+        font-weight: bold;
+    }
+}
