@@ -66,13 +66,14 @@
                     if (latestNews.length > 0) {
                         container.innerHTML = '';
                         latestNews.forEach(news => {
-                            // Menggunakan Class CSS, bukan Inline Style
                             const card = `
                                 <div class="card">
-                                    <div class="auto-thumb thumb-home">
-                                        <img src="${logoUrl}" class="thumb-logo thumb-logo-small" alt="Logo">
-                                        <div class="thumb-title-text thumb-title-small">${news.judul}</div>
-                                    </div>
+                                    <a href="detail-berita.html?id=${news.id}" class="thumb-link">
+                                        <div class="auto-thumb thumb-home">
+                                            <img src="${logoUrl}" class="thumb-logo thumb-logo-small" alt="Logo">
+                                            <div class="thumb-title-text thumb-title-small">${news.judul}</div>
+                                        </div>
+                                    </a>
                                     <small style="color:#666; display:block; margin-top:10px;">${news.tanggal}</small>
                                     <h4 style="margin: 5px 0; font-size: 1.1rem;">
                                         <a href="detail-berita.html?id=${news.id}" style="text-decoration:none; color:var(--primary);">

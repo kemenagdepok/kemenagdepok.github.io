@@ -302,6 +302,18 @@ main {
     display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
 }
 
+/* --- LINK PADA GAMBAR BERITA --- */
+.thumb-link {
+    text-decoration: none;
+    display: block; /* Agar link membungkus seluruh area div */
+    transition: opacity 0.3s;
+}
+
+.thumb-link:hover {
+    opacity: 0.9; /* Efek sedikit transparan saat disorot mouse */
+    cursor: pointer;
+}
+
 /* Override untuk Home (Lebih kecil) */
 .thumb-home { height: 180px; padding: 15px; }
 .thumb-logo-small { width: 50px; }
