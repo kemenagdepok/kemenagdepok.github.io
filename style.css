@@ -150,3 +150,12 @@ footer { background: var(--primary); color: var(--white); text-align: center; pa
 .hours-table td:last-child {
     color: var(--text);
 }
+
+/* Tambahan untuk Jam Istirahat */
+.break-time {
+    font-size: 0.85rem; /* Ukuran huruf lebih kecil */
+    color: #666;        /* Warna abu-abu agar kontras dengan jam utama */
+    font-style: italic; /* Huruf miring */
+    display: inline-block;
+    margin-top: 2px;
+}
