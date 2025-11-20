@@ -663,3 +663,35 @@ footer {
     grid-template-columns: 1fr 1fr; /* Bagi 2 kolom rata */
     gap: 5px 20px;
 }
+
+/* --- HISTORY PAGE STYLES (Pindahan dari Inline HTML) --- */
+
+/* Jarak antar elemen */
+.history-card-gap { margin-bottom: 20px; }
+.history-grid-gap { margin-bottom: 40px; }
+
+/* Gaya Teks Paragraf Sejarah */
+.history-text {
+    line-height: 1.8;
+    text-align: justify;
+    color: #444;
+}
+
+.history-text p {
+    margin-bottom: 15px;
+}
+
+/* Teks Catatan Kecil (misal: *Tanah bantuan...) */
+.note-text {
+    color: var(--primary);
+    font-style: italic;
+}
+
+/* Label Jabatan Saat Ini */
+.role-label {
+    font-size: 0.8rem;
+    color: var(--primary);
+    display: block;
+    margin-top: 2px;
+    font-weight: 600;
+}
