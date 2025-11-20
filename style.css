@@ -1,13 +1,23 @@
 /* =========================================
-   1. RESET & VARIABLES
+   1. RESET & VARIABLES (UPDATED PALETTE)
    ========================================= */
 :root {
-    --primary: #007E33; /* Kemenag Green */
-    --primary-dark: #005c25;
-    --secondary: #f8f9fa;
-    --text: #333;
+    /* --- PALET WARNA RESMI KEMENAG --- */
+    --kemenag-green: #006316;    /* Hijau Utama */
+    --kemenag-lime: #8DA03C;     /* Hijau Muda/Olive */
+    --kemenag-gold: #F0C001;     /* Emas Utama */
+    --kemenag-yellow: #F7D914;   /* Kuning Terang */
+    --kemenag-gray: #F2F2F2;     /* Latar Belakang Halus */
+    --kemenag-black: #000000;    /* Hitam Pekat */
+
+    /* --- MAPPING KE WEBSITE --- */
+    --primary: var(--kemenag-green);       /* Menggantikan hijau lama */
+    --primary-light: var(--kemenag-lime);
+    --gold: var(--kemenag-gold);           /* Menggantikan warna emas lama */
+    
+    --secondary: var(--kemenag-gray);      /* Background body */
+    --text: #333333;
     --white: #ffffff;
-    --gold: #FFC107;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
