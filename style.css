@@ -416,3 +416,135 @@ footer { background: var(--primary); color: var(--white); text-align: center; pa
         font-weight: bold;
     }
 }
+
+/* --- NEW HERO SECTION (FULL SCREEN) --- */
+.hero-fullscreen {
+    background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%); /* Gradasi Hijau Tua Kemenag */
+    min-height: 85vh; /* Hampir setinggi layar (menyisakan ruang untuk header) */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 5%;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    width: 100%;
+    gap: 50px;
+    flex-wrap: wrap; /* Agar responsif di HP */
+}
+
+/* Bagian Teks (Kiri) */
+.hero-text-content {
+    flex: 1;
+    min-width: 300px;
+    color: #fff;
+}
+
+.hero-slogan {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: #FFC107; /* Warna Kuning Emas */
+    margin-bottom: 20px;
+    line-height: 1.1;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.hero-description {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #f1f1f1;
+    margin-bottom: 30px;
+    max-width: 500px;
+}
+
+.cta-button {
+    display: inline-block;
+    background-color: #FFC107;
+    color: #000;
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 4px 15px rgba(255, 193, 7, 0.4);
+}
+
+.cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(255, 193, 7, 0.6);
+    background-color: #ffca28;
+}
+
+/* Bagian Gambar (Kanan) */
+.hero-image-content {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end; /* Gambar rata kanan */
+    min-width: 300px;
+}
+
+/* Kartu Kaca (Glassmorphism) */
+.profile-card-glass {
+    background: rgba(255, 255, 255, 0.1); /* Transparan */
+    backdrop-filter: blur(10px); /* Efek Blur di belakang */
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 350px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.image-wrapper img {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
+    margin-bottom: 15px;
+}
+
+.profile-label {
+    display: block;
+    color: #FFC107;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+.profile-name {
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+/* Responsive Mobile */
+@media (max-width: 900px) {
+    .hero-wrapper {
+        flex-direction: column-reverse; /* Gambar di atas, Teks di bawah */
+        text-align: center;
+        gap: 40px;
+    }
+
+    .hero-image-content {
+        justify-content: center;
+    }
+    
+    .hero-description {
+        margin: 0 auto 30px auto; /* Center text description */
+    }
+
+    .hero-fullscreen {
+        min-height: auto;
+        padding: 60px 5%;
+    }
+}
