@@ -419,12 +419,15 @@ footer { background: var(--primary); color: var(--white); text-align: center; pa
 
 /* --- NEW HERO SECTION (FULL SCREEN) --- */
 .hero-fullscreen {
-    background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%); /* Gradasi Hijau Tua Kemenag */
-    min-height: 85vh; /* Hampir setinggi layar (menyisakan ruang untuk header) */
+    width: 100%;         /* Lebar Penuh */
+    margin-top: 0;       /* Hapus jarak atas agar nempel header */
+    padding: 40px 5%;    /* Padding dalam (kiri kanan) */
+    
+    background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%);
+    min-height: 85vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 40px 5%;
     position: relative;
     overflow: hidden;
 }

@@ -10,34 +10,32 @@
 
     <header id="header-placeholder"></header>
 
-    <main>
-        <section class="hero-fullscreen">
-            <div class="hero-wrapper">
-                
-                <div class="hero-text-content">
-                    <h1 class="hero-slogan">Ikhlas Beramal</h1>
-                    <p class="hero-description">
-                        Selamat datang di Portal Resmi Kementerian Agama Kota Depok. Melayani umat dengan profesionalitas dan integritas demi mewujudkan masyarakat yang taat beragama.
-                    </p>
-                    <a href="layanan.html" class="cta-button">Lihat Layanan Kami</a>
-                </div>
+    <section class="hero-fullscreen">
+        <div class="hero-wrapper">
+            
+            <div class="hero-text-content">
+                <h1 class="hero-slogan">Ikhlas Beramal</h1>
+                <p class="hero-description">
+                    Selamat datang di Portal Resmi Kementerian Agama Kota Depok. Melayani umat dengan profesionalitas dan integritas demi mewujudkan masyarakat yang taat beragama.
+                </p>
+                <a href="layanan.html" class="cta-button">Lihat Layanan Kami</a>
+            </div>
 
-                <div class="hero-image-content">
-                    <div class="profile-card-glass">
-                        <div class="image-wrapper">
-                            <img src="https://kemenagdepok.github.io/images/halaman/kepala-kantor.webp" alt="H. Enjat Mujiat - Kepala Kantor">
-                        </div>
-                        <div class="profile-details">
-                            <span class="profile-label">KEPALA KANTOR</span>
-                            <h3 class="profile-name">H. ENJAT MUJIAT, S.Ag., M.H.</h3>
-                        </div>
+            <div class="hero-image-content">
+                <div class="profile-card-glass">
+                    <div class="image-wrapper">
+                        <img src="https://kemenagdepok.github.io/images/halaman/kepala-kantor.webp" alt="H. Enjat Mujiat - Kepala Kantor">
+                    </div>
+                    <div class="profile-details">
+                        <span class="profile-label">KEPALA KANTOR</span>
+                        <h3 class="profile-name">H. ENJAT MUJIAT, S.Ag., M.H.</h3>
                     </div>
                 </div>
-
             </div>
-        </section>
 
-        <section style="padding: 60px 5%; max-width: 1200px; margin: 0 auto;">
+        </div>
+    </section>
+    <main style="padding-top: 40px;"> <section>
             <h3 class="section-title">Berita Terkini</h3>
             
             <div id="home-news-container" class="grid-container">
@@ -48,6 +46,7 @@
                 <a href="berita.html" style="display: inline-block; padding: 10px 20px; background-color: var(--primary); color: #fff; text-decoration: none; border-radius: 30px; font-weight: 600; font-size: 0.9rem; transition: 0.3s;">Lihat Semua Berita →</a>
             </div>
         </section>
+
     </main>
 
     <footer id="footer-placeholder"></footer>
@@ -60,16 +59,11 @@
                 .then(response => response.json())
                 .then(data => {
                     const container = document.getElementById('home-news-container');
-                    
-                    // Ambil hanya 3 berita terbaru
                     const latestNews = data.slice(0, 3);
-
-                    // URL Logo
                     const logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Kementerian_Agama_new_logo.png/150px-Kementerian_Agama_new_logo.png";
 
                     if (latestNews.length > 0) {
-                        container.innerHTML = ''; // Hapus pesan loading
-                        
+                        container.innerHTML = '';
                         latestNews.forEach(news => {
                             const card = `
                                 <div class="card">
@@ -77,7 +71,6 @@
                                         <img src="${logoUrl}" class="thumb-logo" style="width: 50px;" alt="Logo">
                                         <div class="thumb-title-text" style="font-size: 0.95rem;">${news.judul}</div>
                                     </div>
-
                                     <small style="color:#666; display:block; margin-top:10px;">${news.tanggal}</small>
                                     <h4 style="margin: 5px 0; font-size: 1.1rem;">
                                         <a href="detail-berita.html?id=${news.id}" style="text-decoration:none; color:var(--primary);">
