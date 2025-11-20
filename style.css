@@ -13,7 +13,15 @@ body { background-color: var(--secondary); color: var(--text); display: flex; fl
 
 /* Header Styling */
 header { background: var(--white); box-shadow: 0 2px 5px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 1000; }
-.navbar { display: flex; justify-content: space-between; align-items: center; padding: 15px 5%; max-width: 1000px; margin: 0 auto; }
+/* Cari bagian ini di style.css */
+.navbar { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 15px 2%; /* UBAH padding kiri-kanan jadi 2% agar lebih lega */
+    max-width: 1200px; /* PERLEBAR max-width dari 1000px jadi 1200px */
+    margin: 0 auto; 
+}
 .logo-container { display: flex; align-items: center; gap: 15px; }
 .logo { height: 55px; width: auto; }
 
@@ -48,7 +56,11 @@ header { background: var(--white); box-shadow: 0 2px 5px rgba(0,0,0,0.05); posit
 .hamburger { display: none; }
 
 /* Navigation Links Default */
-.nav-links { list-style: none; display: flex; gap: 25px; }
+.nav-links { 
+    list-style: none; 
+    display: flex; 
+    gap: 20px; /* KURANGI gap dari 25px jadi 20px agar muat */
+}
 .nav-links a { text-decoration: none; color: var(--text); font-weight: 500; transition: color 0.3s; }
 .nav-links a:hover { color: var(--primary); }
 
@@ -197,14 +209,18 @@ footer { background: var(--primary); color: var(--white); text-align: center; pa
 /* --- AUTOMATED THUMBNAIL GENERATOR --- */
 .auto-thumb {
     width: 100%;
-    height: 200px; /* Tinggi kotak gambar */
-    background: linear-gradient(135deg, #007E33 0%, #004d1f 100%); /* Gradasi Hijau Kemenag */
+    height: 220px; /* Sedikit dipertinggi agar lega */
+    background: linear-gradient(135deg, #007E33 0%, #004d1f 100%);
     border-radius: 8px;
     padding: 20px;
+    
+    /* PERBAIKAN POSISI DISINI */
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Logo di atas, Teks di bawah */
-    align-items: center;
+    justify-content: center; /* Mengumpulkan isi di tengah vertikal */
+    align-items: center;     /* Mengumpulkan isi di tengah horizontal */
+    gap: 15px;               /* Jarak antara Logo dan Judul (Jauh lebih dekat) */
+    
     text-align: center;
     box-shadow: inset 0 0 20px rgba(0,0,0,0.1);
     margin-bottom: 15px;
@@ -212,7 +228,7 @@ footer { background: var(--primary); color: var(--white); text-align: center; pa
     overflow: hidden;
 }
 
-/* Dekorasi latar belakang (opsional: pola transparan) */
+/* Dekorasi background tetap sama */
 .auto-thumb::before {
     content: '';
     position: absolute;
@@ -224,24 +240,23 @@ footer { background: var(--primary); color: var(--white); text-align: center; pa
     pointer-events: none;
 }
 
-/* Gaya Logo di dalam kotak */
 .thumb-logo {
     width: 60px;
     height: auto;
-    filter: brightness(0) invert(1) drop-shadow(0 2px 4px rgba(0,0,0,0.2)); /* Logo jadi Putih */
+    /* Filter ini membuat logo jadi putih (minimalis). 
+       Hapus baris filter ini jika ingin logo berwarna asli. */
+    filter: brightness(0) invert(1) drop-shadow(0 2px 4px rgba(0,0,0,0.2)); 
     z-index: 1;
 }
 
-/* Gaya Judul di dalam kotak */
 .thumb-title-text {
     color: #ffffff;
-    font-size: 1rem;
+    font-size: 1.1rem; /* Sedikit diperbesar agar lebih jelas */
     font-weight: 700;
-    line-height: 1.4;
+    line-height: 1.3;
     text-shadow: 0 2px 4px rgba(0,0,0,0.3);
     z-index: 1;
     
-    /* Membatasi teks maksimal 3 baris agar rapi */
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;

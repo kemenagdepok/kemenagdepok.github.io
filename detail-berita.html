@@ -6,25 +6,110 @@
     <title>Baca Berita - Kemenag Kota Depok</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    
     <style>
-        /* Style khusus untuk konten berita Markdown */
-        .news-content { line-height: 1.8; color: #333; }
-        .news-content h1, .news-content h2 { color: var(--primary); margin-top: 20px; margin-bottom: 10px; }
-        .news-content p { margin-bottom: 15px; }
-        .news-content ul { margin-left: 20px; margin-bottom: 15px; }
-        .news-content img { max-width: 100%; height: auto; border-radius: 8px; margin: 10px 0; }
-        .news-meta { color: #666; font-size: 0.9rem; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        /* CSS KHUSUS HALAMAN DETAIL (Internal) */
+        
+        /* Container Artikel agar seperti kertas putih di tengah */
+        .article-card {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            max-width: 850px; /* Batasi lebar agar enak dibaca */
+            margin: 0 auto;   /* Posisi Tengah */
+        }
+
+        /* Meta Data (Tanggal & Admin) */
+        .news-meta {
+            color: #666;
+            font-size: 0.95rem;
+            margin-top: 15px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Typography Isi Berita (Markdown Result) */
+        .news-content { 
+            line-height: 1.8; 
+            color: #333; 
+            font-size: 1.05rem;
+        }
+        .news-content h1, .news-content h2, .news-content h3 { 
+            color: var(--primary); 
+            margin-top: 25px; 
+            margin-bottom: 15px; 
+        }
+        .news-content p { margin-bottom: 15px; text-align: justify; }
+        .news-content ul, .news-content ol { margin-left: 25px; margin-bottom: 15px; }
+        .news-content img { 
+            max-width: 100%; 
+            height: auto; 
+            border-radius: 8px; 
+            margin: 15px 0; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .news-content blockquote {
+            border-left: 4px solid var(--primary);
+            background: #f9f9f9;
+            padding: 15px;
+            font-style: italic;
+            margin: 20px 0;
+        }
+
+        /* Tombol Kembali */
+        .back-btn-container {
+            max-width: 850px;
+            margin: 20px auto;
+        }
+        .back-link {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: 0.3s;
+        }
+        .back-link:hover {
+            transform: translateX(-5px); /* Efek geser sedikit saat hover */
+        }
+        
+        /* Responsive Mobile */
+        @media (max-width: 768px) {
+            .article-card { padding: 20px; }
+            .auto-thumb { height: 200px !important; } /* Tinggi gambar di HP */
+            .thumb-title-text { font-size: 1.2rem !important; }
+        }
     </style>
 </head>
 <body>
+
     <header id="header-placeholder"></header>
 
     <main>
-        <div id="article-container" style="background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+        <div id="loading-state" style="text-align:center; padding: 50px;">
             <p>Sedang memuat artikel...</p>
         </div>
-        <div style="margin-top: 20px;">
-            <a href="berita.html" style="text-decoration: none; color: var(--primary); font-weight: bold;">← Kembali ke Daftar Berita</a>
+
+        <div id="article-wrapper" style="display: none;">
+            
+            <div class="article-card">
+                <div id="article-hero"></div>
+
+                <div class="news-meta" id="article-meta"></div>
+
+                <div class="news-content" id="article-content"></div>
+            </div>
+
+            <div class="back-btn-container">
+                <a href="berita.html" class="back-link">← Kembali ke Daftar Berita</a>
+            </div>
+
         </div>
     </main>
 
@@ -34,6 +119,8 @@
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const newsId = urlParams.get('id');
+        
+        // URL Logo Wikimedia
         const logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Kementerian_Agama_new_logo.png/150px-Kementerian_Agama_new_logo.png";
 
         if(newsId) {
@@ -46,26 +133,33 @@
                         fetch(news.file)
                             .then(res => res.text())
                             .then(markdownText => {
+                                // Parse Markdown
                                 const htmlContent = marked.parse(markdownText);
                                 
-                                // GENERATE HTML GAMBAR OTOMATIS DI SINI
-                                const autoImageHTML = `
-                                    <div class="auto-thumb" style="height: 250px; margin-bottom: 30px;">
-                                        <img src="${logoUrl}" class="thumb-logo" style="width: 80px;">
+                                // A. GENERATE GAMBAR UNGGULAN (Sama persis dengan style.css)
+                                // Note: style height: 300px agar lebih megah di detail berita
+                                const heroHTML = `
+                                    <div class="auto-thumb" style="height: 280px; margin-bottom: 0;">
+                                        <img src="${logoUrl}" class="thumb-logo" alt="Logo Kemenag">
                                         <div class="thumb-title-text" style="font-size: 1.5rem;">${news.judul}</div>
                                     </div>
                                 `;
 
-                                document.getElementById('article-container').innerHTML = `
-                                    ${autoImageHTML} 
-                                    <h1 style="color:var(--primary); margin-bottom:5px;">${news.judul}</h1>
-                                    <p class="news-meta">📅 ${news.tanggal} | 👤 Admin Kemenag</p>
-                                    <div class="news-content">${htmlContent}</div>
-                                `;
+                                // B. MASUKKAN DATA KE HTML
+                                document.getElementById('article-hero').innerHTML = heroHTML;
+                                document.getElementById('article-meta').innerHTML = `📅 ${news.tanggal} &nbsp;|&nbsp; 👤 Admin Kemenag`;
+                                document.getElementById('article-content').innerHTML = htmlContent;
                                 document.title = news.judul + " - Kemenag Kota Depok";
+
+                                // C. TAMPILKAN CONTAINER, SEMBUNYIKAN LOADING
+                                document.getElementById('loading-state').style.display = 'none';
+                                document.getElementById('article-wrapper').style.display = 'block';
+                            })
+                            .catch(err => {
+                                document.getElementById('loading-state').innerHTML = '<p>Gagal memuat isi berita.</p>';
                             });
                     } else {
-                        document.getElementById('article-container').innerHTML = '<p>Berita tidak ditemukan.</p>';
+                        document.getElementById('loading-state').innerHTML = '<p>Berita tidak ditemukan.</p><a href="berita.html">Kembali</a>';
                     }
                 });
         } else {

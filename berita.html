@@ -27,13 +27,13 @@
                 container.innerHTML = ''; 
 
                 data.forEach(news => {
-                    // URL Logo Kemenag (bisa pakai yang online atau lokal)
+                    // URL Logo Resmi Kemenag yang Anda minta
                     const logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Kementerian_Agama_new_logo.png/150px-Kementerian_Agama_new_logo.png";
 
                     const card = `
                         <div class="card">
                             <div class="auto-thumb">
-                                <img src="${logoUrl}" class="thumb-logo" alt="Logo">
+                                <img src="${logoUrl}" class="thumb-logo" alt="Logo Kemenag">
                                 <div class="thumb-title-text">${news.judul}</div>
                             </div>
                             <small style="color:#666; display:block; margin-top:10px;">${news.tanggal}</small>
