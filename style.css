@@ -22,7 +22,22 @@ header { background: var(--white); box-shadow: 0 2px 5px rgba(0,0,0,0.05); posit
     max-width: 1200px; /* PERLEBAR max-width dari 1000px jadi 1200px */
     margin: 0 auto; 
 }
-.logo-container { display: flex; align-items: center; gap: 15px; }
+.logo-container { 
+    display: flex; 
+    align-items: center; 
+    gap: 15px;
+    flex-shrink: 0;
+    
+    /* TAMBAHAN PENTING AGAR LINK TIDAK GARIS BAWAH */
+    text-decoration: none; 
+    cursor: pointer;
+    color: inherit; /* Mengikuti warna teks di dalamnya, bukan warna biru link */
+}
+
+/* Pastikan hover tidak mengubah warna aneh */
+.logo-container:hover {
+    opacity: 0.9; /* Sedikit efek transparan saat di-hover */
+}
 .logo { height: 55px; width: auto; }
 
 /* Branding Text Logic */
