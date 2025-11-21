@@ -781,3 +781,35 @@ footer {
     font-size: 0.9rem;
     color: #666;
 }
+
+/* --- DAFTAR APLIKASI PAGE STYLES --- */
+.app-list { list-style: none; padding-left: 0; }
+.app-list li { margin-bottom: 10px; }
+.app-list a {
+    color: var(--primary);
+    font-size: 0.95rem;
+    text-decoration: none;
+    display: block;
+    padding: 5px 0;
+    transition: color 0.3s;
+}
+.app-list a:hover {
+    color: var(--primary-light); /* Warna Hijau Muda saat hover */
+}
+.app-category {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    border-bottom: 2px solid var(--gold);
+}
+.card.app-card { min-height: 250px; }
+
+/* Perbaikan Layout Grid Aplikasi (2 Kolom di Desktop) */
+@media (min-width: 900px) {
+    .app-grid {
+        grid-template-columns: repeat(2, 1fr); /* DIATUR JADI 2 KOLOM */
+        gap: 20px;
+    }
+}
