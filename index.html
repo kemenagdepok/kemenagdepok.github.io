@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Beranda - Kantor Kementerian Agama Kota Depok</title>
+    <title>Kantor Kementerian Agama Kota Depok</title>
     <link rel="stylesheet" href="style.css">
     
     <meta name="description" content="Portal resmi Kantor Kementerian Agama Kota Depok. Melayani umat dengan integritas, profesionalitas, dan semangat Ikhlas Beramal.">
@@ -13,14 +13,14 @@
 
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://kemenagdepok.github.io/">
-    <meta property="og:title" content="Beranda - Kantor Kementerian Agama Kota Depok">
+    <meta property="og:title" content="Kantor Kementerian Agama Kota Depok">
     <meta property="og:description" content="Portal resmi Kantor Kementerian Agama Kota Depok. Melayani umat dengan integritas, profesionalitas, dan semangat Ikhlas Beramal.">
     <meta property="og:image" content="https://kemenagdepok.github.io/images/seo/kemenag-depok.webp">
     <meta property="og:site_name" content="Kantor Kementerian Agama Kota Depok">
     
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Beranda - Kemenag Kota Depok">
-    <meta name="twitter:description" content="Portal resmi Kantor Kementerian Agama Kota Depok. Melayani umat dengan integritas, profesionalitas, dan semangat Ikhlas Beramal.">
+    <meta name="twitter:title" content="Kemenag Kota Depok">
+    <meta name="twitter:description" content="Portal resmi Kantor Kementerian Agama Kota Depok.">
     <meta name="twitter:image" content="https://kemenagdepok.github.io/images/seo/kemenag-depok.webp">
     
     <link rel="shortcut icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Kementerian_Agama_new_logo.png/150px-Kementerian_Agama_new_logo.png" type="image/png">
@@ -66,7 +66,7 @@
                 
                 <div class="prayer-meta">
                     <p class="prayer-date" id="current-hijri-date">Memuat tanggal...</p>
-                    <a href="jadwal-salat.html" class="prayer-link">Untuk jadwal salat selengkapnya, Klik Disini</a>
+                    <a href="jadwal-sholat.html" class="prayer-link">Untuk jadwal salat selengkapnya, Klik Disini</a>
                 </div>
             </div>
             
@@ -99,21 +99,17 @@
             const yyyy = today.getFullYear();
             const mm = String(today.getMonth() + 1).padStart(2, '0');
             const dd = String(today.getDate()).padStart(2, '0');
-            
-            // PERBAIKAN: Menggunakan format YYYY-MM-DD sesuai permintaan API myquran.com
             return `${yyyy}-${mm}-${dd}`; 
         }
 
         function formatIndonesianDate(date) {
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            // API memberikan tanggal dalam format YYYY-MM-DD, kita konversi ke format Date
             return new Date(date).toLocaleDateString('id-ID', options);
         }
 
         async function loadPrayerTimes() {
-            const cityId = "0507"; // ID Kota Depok
+            const cityId = "0507"; 
             const date = getFormattedDate();
-            // URL API diperbarui
             const api_url = `https://api.myquran.com/v2/sholat/jadwal/${cityId}/${date}`;
             const gridContainer = document.getElementById('prayer-times-grid');
             const dateDisplay = document.getElementById('current-hijri-date');
@@ -155,15 +151,13 @@
                     gridContainer.innerHTML = htmlContent;
 
                 } else {
-                    // Jika API merespons OK tapi tidak ada data (misalnya hari libur)
                     dateDisplay.textContent = formatIndonesianDate(new Date());
                     gridContainer.innerHTML = '<p style="font-size:0.9rem;">Data jadwal salat hari ini tidak tersedia.</p>';
                 }
 
             } catch (error) {
                 console.error("Error fetching prayer times:", error);
-                // Menampilkan tanggal hari ini meskipun koneksi gagal
-                dateDisplay.textContent = formatIndonesianDate(new Date()); 
+                document.getElementById('current-hijri-date').textContent = formatIndonesianDate(new Date());
                 gridContainer.innerHTML = '<p style="font-size:0.9rem;">Koneksi terputus atau API bermasalah.</p>';
             }
         }
@@ -171,7 +165,6 @@
 
         
         document.addEventListener("DOMContentLoaded", function() {
-            // Panggil fungsi Jadwal Salat saat DOM siap
             loadPrayerTimes();
             
             // --- FUNGSI BERITA ---
