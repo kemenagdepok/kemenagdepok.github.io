@@ -255,6 +255,38 @@ main {
 .card:hover { transform: translateY(-5px); }
 .card.wide { grid-column: span 2; } /* Untuk Visi Misi */
 
+/* --- BREADCRUMB STYLE --- */
+.breadcrumb-container {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    margin-bottom: 25px; /* Jarak dari judul utama */
+    font-size: 0.95rem;
+    color: #666;
+    border-bottom: 1px solid #eee;
+    overflow-x: auto; /* Agar tidak pecah di mobile */
+    white-space: nowrap;
+}
+.breadcrumb-container a {
+    color: #666;
+    text-decoration: none;
+    transition: color 0.3s;
+    font-weight: 500;
+}
+.breadcrumb-container a:hover {
+    color: var(--primary);
+}
+.breadcrumb-separator {
+    width: 16px;
+    height: 16px;
+    margin: 0 8px;
+    color: #ccc; /* Warna abu-abu terang untuk panah */
+    flex-shrink: 0;
+}
+.breadcrumb-current {
+    color: var(--text); /* Warna teks utama */
+    font-weight: 600;
+}
 
 /* =========================================
    5. NEWS & THUMBNAILS
