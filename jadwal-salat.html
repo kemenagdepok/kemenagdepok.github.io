@@ -9,12 +9,12 @@
     <style>
         /* Gaya khusus untuk Halaman Jadwal Bulanan */
         
-        /* Wadah Kontrol Utama (Menyatukan Judul Status dan Dropdown) */
+        /* Wadah Kontrol Utama */
         .schedule-layout-bar {
             display: flex;
-            justify-content: space-between; /* Rata kiri dan kanan */
+            justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap; /* Safety for mobile */
+            flex-wrap: wrap;
             gap: 10px;
             margin-bottom: 15px;
         }
@@ -79,11 +79,14 @@
             border: 1px solid #eee;
         }
         
-        /* --- PERBAIKAN WARNA LATAR --- */
-        .schedule-table tr:nth-child(even) {
-            background-color: var(--white); /* DIUBAH: Menjadi putih (#fff) */
+        /* PERBAIKAN WARNA LATAR: Membuat latar semua baris menjadi putih */
+        .schedule-table tr {
+            background-color: var(--white); 
         }
-        /* --- AKHIR PERBAIKAN --- */
+        .schedule-table tr:nth-child(even) {
+            background-color: var(--white); /* Menonaktifkan efek belang-belang */
+        }
+        /* --- AKHIR PERBAIKAN WARNA LATAR --- */
         
         .schedule-table td:first-child {
             font-weight: bold;
@@ -93,7 +96,8 @@
             white-space: nowrap;
         }
         .today-row {
-            background-color: #ffe0b2 !important; /* Highlight Baris Hari Ini (Kuning Muda) */
+            /* Highlight Baris Hari Ini (Kuning Muda) */
+            background-color: #ffe0b2 !important; 
             font-weight: bold;
             color: #000;
         }
@@ -167,8 +171,8 @@
         </div>
     </main>
 
-    <footer id="footer-placeholder"></footer>
-    <script src="script.js"></script>
+    <footer id="footer-placeholder"></footer
+    ><script src="script.js"></script>
     <script>
         
         const CITY_ID = "1225";
