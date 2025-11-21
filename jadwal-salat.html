@@ -3,15 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jadwal Sholat Bulanan - Kemenag Kota Depok</title>
+    <title>Jadwal Salat Bulanan - Kemenag Kota Depok</title>
     <link rel="stylesheet" href="style.css">
     
     <style>
         /* Gaya khusus untuk Halaman Jadwal Bulanan */
+        .schedule-controls-wrapper {
+            /* Wadah baru untuk menengahkan kontrol */
+            display: flex;
+            justify-content: center; /* Rata tengah horizontal */
+            align-items: center;
+            margin-bottom: 25px;
+        }
         .schedule-controls {
             display: flex;
             gap: 15px;
-            margin-bottom: 25px;
             align-items: center;
         }
         .schedule-controls select {
@@ -42,7 +48,7 @@
         }
         .schedule-table {
             width: 100%;
-            min-width: 900px; /* Lebar minimum agar tabel tidak terlalu sempit */
+            min-width: 900px;
             border-collapse: collapse;
             font-size: 0.9rem;
             text-align: center;
@@ -59,19 +65,32 @@
             border: 1px solid #eee;
         }
         .schedule-table tr:nth-child(even) {
-            background-color: var(--kemenag-gray); /* Belang-belang */
+            background-color: var(--kemenag-gray);
         }
         .schedule-table td:first-child {
             font-weight: bold;
             color: var(--primary-dark);
             text-align: left;
             padding-left: 15px;
+            white-space: nowrap; /* Mencegah tanggal terpotong */
         }
         .today-row {
             background-color: #ffe0b2 !important; /* Highlight Baris Hari Ini */
             font-weight: bold;
             color: #000;
         }
+        
+        /* Sumber Data */
+        .data-source {
+            text-align: right;
+            margin-top: 15px;
+            font-size: 0.8rem;
+            color: #666;
+            padding-right: 15px;
+        }
+        
+        /* Fix Table Header Text */
+        .schedule-table th:nth-child(1) { width: 180px; } /* Lebarkan kolom Tanggal */
     </style>
 </head>
 <body>
@@ -82,17 +101,19 @@
         <div class="breadcrumb-container">
             <a href="index.html">Beranda</a>
             <svg class="breadcrumb-separator" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-            <span class="breadcrumb-current">Jadwal Sholat Bulanan</span>
+            <span class="breadcrumb-current">Jadwal Salat Bulanan</span>
         </div>
-        <h3 class="section-title">Jadwal Sholat Kota Depok</h3>
+        <h3 class="section-title">Jadwal Salat Kota Depok</h3>
         
         <div class="card wide" style="margin-bottom: 20px;">
-            <p style="margin-bottom: 15px;">Jadwal Sholat Bulanan untuk Kota Depok (ID: 1225). Pilih periode di bawah untuk menampilkan data:</p>
+            <p style="margin-bottom: 15px;">Jadwal Salat Bulanan untuk Kota Depok. Pilih periode di bawah untuk menampilkan data:</p>
             
-            <div class="schedule-controls">
-                <select id="month-selector"></select>
-                <select id="year-selector"></select>
-                <button id="load-schedule-btn">Tampilkan Jadwal</button>
+            <div class="schedule-controls-wrapper">
+                <div class="schedule-controls">
+                    <select id="month-selector"></select>
+                    <select id="year-selector"></select>
+                    <button id="load-schedule-btn">Tampilkan Jadwal</button>
+                </div>
             </div>
             
             <p id="loading-status" style="color:var(--primary); margin-top: 10px; font-weight: 600;"></p>
@@ -107,9 +128,9 @@
                         <th>Subuh</th>
                         <th>Terbit</th>
                         <th>Dhuha</th>
-                        <th>Dzuhur</th>
-                        <th>Ashar</th>
-                        <th>Maghrib</th>
+                        <th>Zuhur</th>
+                        <th>Asar</th>
+                        <th>Magrib</th>
                         <th>Isya</th>
                     </tr>
                 </thead>
@@ -121,6 +142,9 @@
             </table>
         </div>
         
+        <div class="data-source">
+            Sumber: <a href="https://bimasislam.kemenag.go.id" target="_blank" style="color:var(--primary);">https://bimasislam.kemenag.go.id</a>
+        </div>
     </main>
 
     <footer id="footer-placeholder"></footer>
@@ -138,6 +162,13 @@
         const currentYear = today.getFullYear();
         const currentMonth = today.getMonth() + 1;
         const currentDay = today.getDate();
+
+        // Fungsi untuk format tanggal Indonesia standar: "Senin, 1 Desember 2025"
+        function formatFullIndonesianDate(dateString) {
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const date = new Date(dateString);
+            return date.toLocaleDateString('id-ID', options);
+        }
 
         // 1. Inisialisasi Dropdown Bulan dan Tahun
         function initializeControls() {
@@ -176,10 +207,10 @@
                 const data = await response.json();
 
                 if (data.status && data.data && data.data.jadwal) {
-                    renderSchedule(data.data.jadwal);
-                    loadingStatus.textContent = `Jadwal Sholat Bulan ${monthSelector.options[monthSelector.selectedIndex].text} ${year}`;
+                    renderSchedule(data.data.jadwal, year, month);
+                    loadingStatus.textContent = `Jadwal Salat Bulan ${monthSelector.options[monthSelector.selectedIndex].text} ${year}`;
                 } else {
-                    throw new Error("Data jadwal sholat tidak tersedia untuk periode ini.");
+                    throw new Error("Data jadwal salat tidak tersedia untuk periode ini.");
                 }
             } catch (error) {
                 monthlyScheduleBody.innerHTML = `<tr><td colspan="9" style="color: red; text-align: center;">Gagal memuat jadwal: ${error.message}</td></tr>`;
@@ -188,17 +219,21 @@
         }
 
         // 3. Fungsi Render Tabel
-        function renderSchedule(jadwalArray) {
+        function renderSchedule(jadwalArray, selectedYear, selectedMonth) {
             let htmlContent = '';
             
             jadwalArray.forEach(day => {
                 const dayDate = new Date(day.date);
+                // Cek apakah ini hari ini untuk highlight
                 const isToday = dayDate.getDate() === currentDay && dayDate.getMonth() + 1 === currentMonth && dayDate.getFullYear() === currentYear;
                 const rowClass = isToday ? 'today-row' : '';
 
+                // Format tanggal ke Bahasa Indonesia standar: "Senin, 1 Desember 2025"
+                const formattedDate = formatFullIndonesianDate(day.date); 
+                
                 htmlContent += `
                     <tr class="${rowClass}">
-                        <td>${day.tanggal}</td>
+                        <td>${formattedDate}</td>
                         <td>${day.imsak}</td>
                         <td>${day.subuh}</td>
                         <td>${day.terbit}</td>

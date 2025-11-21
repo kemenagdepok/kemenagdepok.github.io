@@ -42,12 +42,12 @@
             <div class="prayer-header">
                 
                 <div class="prayer-title-container">
-                    <h2 class="prayer-title">Jadwal Sholat Kota Depok</h2>
+                    <h2 class="prayer-title">Jadwal Salat Kota Depok</h2>
                 </div>
                 
                 <div class="prayer-meta">
                     <p class="prayer-date" id="current-hijri-date">Memuat tanggal...</p>
-                    <a href="jadwal-sholat.html" class="prayer-link">Untuk jadwal sholat selengkapnya, Klik Disini</a>
+                    <a href="jadwal-salat.html" class="prayer-link">Untuk jadwal salat selengkapnya, Klik Disini</a>
                 </div>
             </div>
             
@@ -74,7 +74,7 @@
     
     <script>
         
-        // --- FUNGSI JADWAL SHOLAT ---
+        // --- FUNGSI JADWAL SALAT ---
         function getFormattedDate() {
             const today = new Date();
             const yyyy = today.getFullYear();
@@ -138,7 +138,7 @@
                 } else {
                     // Jika API merespons OK tapi tidak ada data (misalnya hari libur)
                     dateDisplay.textContent = formatIndonesianDate(new Date());
-                    gridContainer.innerHTML = '<p style="font-size:0.9rem;">Data jadwal sholat hari ini tidak tersedia.</p>';
+                    gridContainer.innerHTML = '<p style="font-size:0.9rem;">Data jadwal salat hari ini tidak tersedia.</p>';
                 }
 
             } catch (error) {
@@ -148,11 +148,11 @@
                 gridContainer.innerHTML = '<p style="font-size:0.9rem;">Koneksi terputus atau API bermasalah.</p>';
             }
         }
-        // --- AKHIR FUNGSI JADWAL SHOLAT ---
+        // --- AKHIR FUNGSI JADWAL SALAT ---
 
         
         document.addEventListener("DOMContentLoaded", function() {
-            // Panggil fungsi Jadwal Sholat saat DOM siap
+            // Panggil fungsi Jadwal Salat saat DOM siap
             loadPrayerTimes();
             
             // --- FUNGSI BERITA ---
