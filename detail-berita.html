@@ -3,31 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Baca Berita - Kemenag Kota Depok</title>
+    <title id="page-title">Memuat Berita...</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://unpkg.com/marked/marked.min.js"></script>
+    
+    <meta name="description" content="Baca berita terbaru dari Kantor Kemenag Kota Depok." id="meta-description">
+    <meta name="keywords" content="Berita Kemenag, Info terbaru, Kota Depok" id="meta-keywords">
+    <link rel="canonical" href="https://kemenagdepok.github.io/detail-berita.html" id="meta-canonical">
+
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://kemenagdepok.github.io/detail-berita.html" id="og-url">
+    <meta property="og:title" content="Memuat Berita..." id="og-title">
+    <meta property="og:description" content="Baca berita terbaru dari Kantor Kemenag Kota Depok." id="og-description">
+    <meta property="og:image" content="https://kemenagdepok.github.io/images/seo/kemenag-depok.webp">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Memuat Berita..." id="twitter-title">
+    <meta name="twitter:description" content="Baca berita terbaru dari Kantor Kemenag Kota Depok." id="twitter-description">
+    <meta name="twitter:image" content="https://kemenagdepok.github.io/images/seo/kemenag-depok.webp">
+    
+    <meta name="author" content="Admin Kemenag Depok">
+    <link rel="shortcut icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Kementerian_Agama_new_logo.png/150px-Kementerian_Agama_new_logo.png" type="image/png">
     
     <style>
-        /* CSS KHUSUS HALAMAN DETAIL (Internal) */
-        
-        /* Container Artikel agar seperti kertas putih di tengah */
+        .article-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding-bottom: 60px;
+        }
+
         .article-card {
             background: #ffffff;
             padding: 40px;
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            max-width: 850px; /* Batasi lebar agar enak dibaca */
-            margin: 0 auto;   /* Posisi Tengah */
+            margin-top: 20px;
         }
 
         /* Meta Data (Tanggal & Admin) */
         .news-meta {
             color: #666;
             font-size: 0.95rem;
-            margin-top: 15px;
+            margin-top: 20px;
             margin-bottom: 30px;
-            border-bottom: 1px solid #eee;
             padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
             display: flex;
             align-items: center;
             gap: 15px;
@@ -36,23 +56,18 @@
         /* Typography Isi Berita (Markdown Result) */
         .news-content { 
             line-height: 1.8; 
-            color: #333; 
+            color: #2c3e50; 
             font-size: 1.05rem;
+            min-height: 200px; 
         }
         .news-content h1, .news-content h2, .news-content h3 { 
             color: var(--primary); 
-            margin-top: 25px; 
+            margin-top: 30px; 
             margin-bottom: 15px; 
+            font-weight: 700;
         }
         .news-content p { margin-bottom: 15px; text-align: justify; }
-        .news-content ul, .news-content ol { margin-left: 25px; margin-bottom: 15px; }
-        .news-content img { 
-            max-width: 100%; 
-            height: auto; 
-            border-radius: 8px; 
-            margin: 15px 0; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
+        .news-content ul, .news-content ol { margin-left: 25px; margin-bottom: 20px; }
         .news-content blockquote {
             border-left: 4px solid var(--primary);
             background: #f9f9f9;
@@ -60,29 +75,37 @@
             font-style: italic;
             margin: 20px 0;
         }
+        .news-content img { 
+            max-width: 100%; 
+            height: auto; 
+            border-radius: 8px; 
+            margin: 15px 0; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: block; /* Agar rata tengah jika kurang dari 100% */
+            margin-left: auto;
+            margin-right: auto;
+        }
 
         /* Tombol Kembali */
-        .back-btn-container {
-            max-width: 850px;
-            margin: 20px auto;
-        }
-        .back-link {
+        .back-btn {
+            display: inline-block;
+            margin-top: 30px;
             text-decoration: none;
             color: var(--primary);
             font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            transition: 0.3s;
+            padding: 10px 20px;
+            border: 1px solid var(--primary);
+            border-radius: 30px;
+            transition: all 0.3s;
         }
-        .back-link:hover {
-            transform: translateX(-5px); /* Efek geser sedikit saat hover */
+        .back-btn:hover {
+            background-color: var(--primary);
+            color: #fff;
         }
-        
-        /* Responsive Mobile */
+
         @media (max-width: 768px) {
             .article-card { padding: 20px; }
-            .auto-thumb { height: 200px !important; } /* Tinggi gambar di HP */
+            .auto-thumb { height: 200px !important; }
             .thumb-title-text { font-size: 1.2rem !important; }
         }
     </style>
@@ -91,34 +114,30 @@
 
     <header id="header-placeholder"></header>
 
-    <main>
-        <div id="loading-state" style="text-align:center; padding: 50px;">
-            <p>Sedang memuat artikel...</p>
+    <main class="article-container">
+        
+        <div id="loading-state" style="text-align: center; padding: 40px;">
+            <p>Memuat artikel...</p>
         </div>
 
-        <div class="breadcrumb-container" id="breadcrumb-container">
-            <a href="index.html">Beranda</a>
-            <svg class="breadcrumb-separator" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-            <a href="berita.html">Berita</a>
-            <svg class="breadcrumb-separator" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-            <span class="breadcrumb-current" id="current-article-title"></span>
-        </div>
-
-        <div id="article-wrapper" style="display: none;">
+        <article id="article-wrapper" class="article-card" style="display: none;">
             
-            <div class="article-card">
-                <div id="article-hero"></div>
-
-                <div class="news-meta" id="article-meta"></div>
-
-                <div class="news-content" id="article-content"></div>
+            <div class="breadcrumb-container">
+                <a href="index.html">Beranda</a>
+                <svg class="breadcrumb-separator" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                <a href="berita.html">Berita</a>
+                <svg class="breadcrumb-separator" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                <span class="breadcrumb-current" id="current-article-title"></span>
             </div>
+            <div id="article-hero"></div>
 
-            <div class="back-btn-container">
-                <a href="berita.html" class="back-link">← Kembali ke Daftar Berita</a>
-            </div>
+            <div class="news-meta" id="article-meta"></div>
 
-        </div>
+            <div class="news-content" id="article-content"></div>
+        </article>
+
+        <a href="berita.html" class="back-btn">← Kembali ke Daftar Berita</a>
+
     </main>
 
     <footer id="footer-placeholder"></footer>
@@ -127,9 +146,33 @@
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const newsId = urlParams.get('id');
-        
-        // URL Logo Wikimedia
         const logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Kementerian_Agama_new_logo.png/150px-Kementerian_Agama_new_logo.png";
+        const loadingState = document.getElementById('loading-state');
+        const articleWrapper = document.getElementById('article-wrapper');
+        
+        // --- FUNGSI BARU UNTUK UPDATE META TAGS SEO ---
+        function updateSeoMeta(news) {
+            const baseUrl = 'https://kemenagdepok.github.io/';
+            const url = baseUrl + 'detail-berita.html?id=' + news.id;
+            const desc = news.ringkasan.substring(0, 150) + '...';
+            const title = news.judul + ' - Kemenag Depok';
+            const keywords = `Berita, ${news.judul.split(' ').slice(0, 5).join(', ')}, Kemenag Depok, Informasi`;
+
+            // 1. Tag Dasar
+            document.title = title;
+            document.getElementById('meta-description').setAttribute('content', desc);
+            document.getElementById('meta-keywords').setAttribute('content', keywords);
+            document.getElementById('meta-canonical').setAttribute('href', url);
+            
+            // 2. Open Graph Tags
+            document.getElementById('og-title').setAttribute('content', title);
+            document.getElementById('og-description').setAttribute('content', desc);
+            document.getElementById('og-url').setAttribute('content', url);
+            
+            // 3. Twitter Tags
+            document.getElementById('twitter-title').setAttribute('content', title);
+            document.getElementById('twitter-description').setAttribute('content', desc);
+        }
 
         if(newsId) {
             fetch('berita.json')
@@ -138,40 +181,53 @@
                     const news = newsList.find(item => item.id === newsId);
                     
                     if(news) {
-                        fetch(news.file)
-                            .then(res => res.text())
-                            .then(markdownText => {
-                                // Parse Markdown
-                                const htmlContent = marked.parse(markdownText);
-                                
-                                // A. GENERATE GAMBAR UNGGULAN (Sama persis dengan style.css)
-                                // Note: style height: 300px agar lebih megah di detail berita
-                                const heroHTML = `
-                                    <div class="auto-thumb" style="height: 280px; margin-bottom: 0;">
-                                        <img src="${logoUrl}" class="thumb-logo" alt="Logo Kemenag">
-                                        <div class="thumb-title-text" style="font-size: 1.5rem;">${news.judul}</div>
-                                    </div>
-                                `;
-
-                                // B. MASUKKAN DATA KE HTML
-                                document.getElementById('article-hero').innerHTML = heroHTML;
-                                document.getElementById('article-meta').innerHTML = `📅 ${news.tanggal} &nbsp;|&nbsp; 👤 Admin Kemenag`;
-                                document.getElementById('article-content').innerHTML = htmlContent;
-                                document.title = news.judul + " - Kemenag Kota Depok";
-
-                                // C. TAMPILKAN CONTAINER, SEMBUNYIKAN LOADING
-                                document.getElementById('loading-state').style.display = 'none';
-                                document.getElementById('article-wrapper').style.display = 'block';
-
-                                // INJEKSI JUDUL KE BREADCRUMB
-                                document.getElementById('current-article-title').textContent = news.judul;
-                            })
-                            .catch(err => {
-                                document.getElementById('loading-state').innerHTML = '<p>Gagal memuat isi berita.</p>';
-                            });
+                        // 1. Update SEO Meta Tags
+                        updateSeoMeta(news);
+                        
+                        // 2. Fetch Markdown
+                        return fetch(news.file);
                     } else {
-                        document.getElementById('loading-state').innerHTML = '<p>Berita tidak ditemukan.</p><a href="berita.html">Kembali</a>';
+                        throw new Error("Berita tidak ditemukan dalam database.");
                     }
+                })
+                .then(response => {
+                    if (!response.ok) throw new Error(`File Markdown tidak ditemukan: ${response.url}`);
+                    return response.text();
+                })
+                .then(markdownText => {
+                    if (typeof marked === 'undefined') {
+                        throw new Error("Library Marked.js gagal dimuat.");
+                    }
+
+                    const htmlContent = marked.parse(markdownText);
+                    
+                    // 3. Render Konten
+                    const heroHTML = `
+                        <div class="auto-thumb" style="height: 280px; margin-bottom: 0;">
+                            <img src="${logoUrl}" class="thumb-logo" alt="Logo Kemenag">
+                            <div class="thumb-title-text" style="font-size: 1.5rem;">${news.judul}</div>
+                        </div>
+                    `;
+
+                    document.getElementById('article-hero').innerHTML = heroHTML;
+                    document.getElementById('article-meta').innerHTML = `📅 ${news.tanggal} &nbsp;|&nbsp; 👤 Admin Kemenag`;
+                    document.getElementById('article-content').innerHTML = htmlContent;
+                    document.getElementById('current-article-title').textContent = news.judul; 
+
+                    // 4. Tampilkan Konten
+                    loadingState.style.display = 'none';
+                    articleWrapper.style.display = 'block';
+                })
+                .catch(error => {
+                    console.error(error);
+                    loadingState.innerHTML = `
+                        <div style="color: red; padding: 20px; border: 1px solid red; border-radius: 8px;">
+                            <h3>Terjadi Kesalahan</h3>
+                            <p>${error.message}</p>
+                            <p>Pastikan file <strong>.md</strong> sudah diupload ke folder <em>content/berita/</em></p>
+                        </div>
+                    `;
+                    loadingState.style.display = 'block';
                 });
         } else {
             window.location.href = 'berita.html';
