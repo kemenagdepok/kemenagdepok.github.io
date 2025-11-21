@@ -361,6 +361,9 @@ main {
    ========================================= */
 .mission-list { margin-left: 20px; margin-top: 10px; line-height: 1.6; }
 
+.org-chart-image {
+    text-align: center;
+}
 .org-structure {
     display: flex; flex-direction: column; align-items: center;
     gap: 30px; margin-top: 20px;
