@@ -37,6 +37,16 @@
     </section>
 
     <main>
+        
+        <div class="prayer-times-section">
+            <div class="prayer-header">
+                <h2 class="prayer-title">Jadwal Sholat Kota Depok</h2>
+                <p class="prayer-date" id="current-hijri-date">Memuat tanggal...</p>
+            </div>
+            <div class="prayer-grid" id="prayer-times-grid">
+                <p>Memuat jadwal...</p>
+            </div>
+        </div>
         <section class="home-news-section">
             <h3 class="section-title">Berita Terkini</h3>
             
@@ -55,7 +65,81 @@
     <script src="script.js"></script>
     
     <script>
+        
+        // --- FUNGSI JADWAL SHOLAT ---
+        function getFormattedDate() {
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+            return `${yyyy}/${mm}/${dd}`;
+        }
+
+        function formatIndonesianDate(date) {
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(date).toLocaleDateString('id-ID', options);
+        }
+
+        async function loadPrayerTimes() {
+            const cityId = "0507"; // ID Kota Depok
+            const date = getFormattedDate();
+            const api_url = `https://api.myquran.com/v2/sholat/jadwal/${cityId}/${date}`;
+            const gridContainer = document.getElementById('prayer-times-grid');
+            const dateDisplay = document.getElementById('current-hijri-date');
+
+            try {
+                const response = await fetch(api_url);
+                const data = await response.json();
+
+                if (data.status && data.data && data.data.jadwal) {
+                    const jadwal = data.data.jadwal;
+                    const displayDate = formatIndonesianDate(data.data.data.date); // Menggunakan date dari API jika ada
+                    dateDisplay.textContent = displayDate;
+                    
+                    // Times yang dibutuhkan
+                    const times = [
+                        { name: 'Imsak', key: 'imsak' },
+                        { name: 'Subuh', key: 'subuh' },
+                        { name: 'Terbit', key: 'terbit' },
+                        { name: 'Dhuha', key: 'dhuha' },
+                        { name: 'Dzuhur', key: 'dzuhur' },
+                        { name: 'Ashar', key: 'ashar' },
+                        { name: 'Maghrib', key: 'maghrib' },
+                        { name: 'Isya', key: 'isya' }
+                    ];
+
+                    let htmlContent = '';
+                    times.forEach(item => {
+                        if (jadwal[item.key]) {
+                            htmlContent += `
+                                <div class="prayer-box">
+                                    <div class="prayer-name">${item.name}</div>
+                                    <div class="prayer-time">${jadwal[item.key]}</div>
+                                </div>
+                            `;
+                        }
+                    });
+                    gridContainer.innerHTML = htmlContent;
+
+                } else {
+                    dateDisplay.textContent = formatIndonesianDate(new Date());
+                    gridContainer.innerHTML = '<p style="font-size:0.9rem;">Gagal memuat jadwal sholat dari server.</p>';
+                }
+
+            } catch (error) {
+                console.error("Error fetching prayer times:", error);
+                document.getElementById('current-hijri-date').textContent = formatIndonesianDate(new Date());
+                gridContainer.innerHTML = '<p style="font-size:0.9rem;">Koneksi terputus atau API bermasalah.</p>';
+            }
+        }
+        // --- AKHIR FUNGSI JADWAL SHOLAT ---
+
+        
         document.addEventListener("DOMContentLoaded", function() {
+            // Panggil fungsi Jadwal Sholat saat DOM siap
+            loadPrayerTimes();
+            
+            // --- FUNGSI BERITA ---
             fetch('berita.json')
                 .then(response => response.json())
                 .then(data => {
@@ -102,6 +186,7 @@
                     console.error('Error loading news:', error);
                     document.getElementById('home-news-container').innerHTML = '<p class="loading-text">Gagal memuat berita.</p>';
                 });
+            // --- AKHIR FUNGSI BERITA ---
         });
     </script>
 </body>
