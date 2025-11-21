@@ -295,21 +295,47 @@ main {
 /* --- JADWAL SHOLAT SECTION --- */
 .prayer-times-section {
     padding: 30px;
-    background-color: #e8f5e9; /* Light green/olive background, mirip seperti di gambar */
+    background-color: #e8f5e9; 
     border-radius: 10px;
-    margin-bottom: 40px; /* Jarak antara Hero dan Berita Terkini */
+    margin-bottom: 40px; 
     box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
-.prayer-header { margin-bottom: 25px; }
+.prayer-header { 
+    margin-bottom: 25px; 
+    /* PERBAIKAN: Gunakan Flexbox untuk meratakan judul dan tanggal */
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+.prayer-title-container {
+    /* Wadah untuk Judul dan Tanggal */
+    flex-shrink: 0;
+}
 .prayer-title { 
     font-size: 2rem; 
     font-weight: 800; 
     color: var(--primary); 
     line-height: 1.2;
 }
+.prayer-meta { 
+    text-align: right; /* Agar teks (tanggal & link) rata kanan */
+    line-height: 1.4;
+}
 .prayer-date { 
-    font-size: 0.9rem; 
-    color: #666; 
+    font-size: 0.95rem; 
+    color: #333; 
+    font-weight: 600;
+}
+.prayer-link {
+    font-size: 0.85rem;
+    display: block;
+    color: var(--primary);
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+.prayer-link:hover {
+    color: var(--primary-dark);
 }
 
 .prayer-grid {

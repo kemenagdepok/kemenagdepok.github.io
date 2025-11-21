@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jadwal Sholat Bulanan - Kemenag Kota Depok</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        /* Gaya khusus untuk Tabel Jadwal Bulanan */
+        .schedule-table-wrapper {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+        .schedule-table {
+            width: 100%;
+            min-width: 700px; /* Lebar minimum agar tidak terlalu sempit */
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        .schedule-table th, .schedule-table td {
+            padding: 10px 5px;
+            border: 1px solid #eee;
+        }
+        .schedule-table th {
+            background-color: var(--primary);
+            color: var(--white);
+            font-weight: 600;
+        }
+        .schedule-table tr:nth-child(even) {
+            background-color: var(--kemenag-gray); /* Belang-belang */
+        }
+        .schedule-table td:first-child {
+            font-weight: bold;
+            color: var(--primary-dark);
+        }
+    </style>
+</head>
+<body>
+
+    <header id="header-placeholder"></header>
+
+    <main>
+        <div class="breadcrumb-container">
+            <a href="index.html">Beranda</a>
+            <svg class="breadcrumb-separator" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+            <span class="breadcrumb-current">Jadwal Sholat Bulanan</span>
+        </div>
+        <h3 class="section-title">Jadwal Sholat Kota Depok</h3>
+        
+        <div class="card wide" style="margin-bottom: 20px;">
+            <p>Jadwal Sholat untuk **Kota Depok** (ID: 0507). Untuk menampilkan data bulanan secara dinamis, perlu kode JavaScript tambahan yang mengambil data harian selama 30 hari. Berikut adalah tampilan struktur tabel yang akan diisi oleh data tersebut:</p>
+        </div>
+
+        <div class="schedule-table-wrapper">
+            <table class="schedule-table">
+                <thead>
+                    <tr>
+                        <th>Tanggal</th>
+                        <th>Imsak</th>
+                        <th>Subuh</th>
+                        <th>Terbit</th>
+                        <th>Dhuha</th>
+                        <th>Dzuhur</th>
+                        <th>Ashar</th>
+                        <th>Maghrib</th>
+                        <th>Isya</th>
+                    </tr>
+                </thead>
+                <tbody id="monthly-schedule-body">
+                    <tr>
+                        <td colspan="9" style="text-align: center;">Memuat jadwal bulanan...</td>
+                    </tr>
+                    <tr>
+                        <td>21 Nov</td>
+                        <td>03:55</td>
+                        <td>04:05</td>
+                        <td>05:23</td>
+                        <td>05:51</td>
+                        <td>11:42</td>
+                        <td>15:05</td>
+                        <td>17:55</td>
+                        <td>19:09</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+    </main>
+
+    <footer id="footer-placeholder"></footer>
+    <script src="script.js"></script>
+</body>
+</html>
