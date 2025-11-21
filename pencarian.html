@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hasil Pencarian - Kemenag Kota Depok</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* CSS Khusus Halaman Pencarian */
+        .search-area {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        #search-input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+        #search-button {
+            padding: 10px 20px;
+            background-color: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .search-result-item {
+            border-bottom: 1px solid #eee;
+            padding: 15px 0;
+        }
+        .search-result-item h4 {
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        .search-result-item p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+    <header id="header-placeholder"></header>
+
+    <main>
+        <h3 class="section-title">Hasil Pencarian</h3>
+
+        <div class="search-area">
+            <input type="text" id="search-input" placeholder="Masukkan kata kunci..." autofocus>
+            <button id="search-button">Cari</button>
+        </div>
+
+        <h4 id="search-query-display"></h4>
+        
+        <div id="search-results-container">
+            <p>Silakan masukkan kata kunci untuk memulai pencarian.</p>
+        </div>
+    </main>
+
+    <footer id="footer-placeholder"></footer>
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('search-input');
+            const searchButton = document.getElementById('search-button');
+            const resultsContainer = document.getElementById('search-results-container');
+            const queryDisplay = document.getElementById('search-query-display');
+
+            // Fungsi untuk mendapatkan query dari URL
+            function getQueryParam() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const query = urlParams.get('q');
+                if (query) {
+                    // Isi input dengan query dari URL
+                    searchInput.value = query;
+                }
+                return query;
+            }
+
+            // Fungsi Simulasi Pencarian
+            function runSearch(query) {
+                if (!query || query.length < 3) {
+                    queryDisplay.textContent = 'Masukkan minimal 3 karakter untuk mencari.';
+                    resultsContainer.innerHTML = '';
+                    return;
+                }
+
+                queryDisplay.innerHTML = `Menampilkan hasil untuk: <strong>"${query}"</strong>`;
+                
+                // --- LOGIKA SIMULASI HASIL (HARUS DIGANTI DENGAN LOGIKA SEARCH STATIS NYATA) ---
+                const dummyResults = [
+                    { title: "Profil Kantor", link: "profil.html", summary: "Informasi umum, visi dan misi, dan sejarah pembentukan kantor." },
+                    { title: "Jadwal Sholat", link: "jadwal-sholat.html", summary: "Jadwal salat bulanan untuk Kota Depok bersumber dari Bimas Islam." },
+                    { title: "Layanan Haji", link: "layanan.html#haji", summary: "Daftar pelayanan pendaftaran, pembatalan, dan bimbingan manasik haji." },
+                    { title: "Tugas Pokok Subbag TU", link: "tupoksi.html", summary: "Rincian tugas Subbagian Tata Usaha dan pengelolaan administrasi." },
+                ];
+
+                const filteredResults = dummyResults.filter(item => 
+                    item.title.toLowerCase().includes(query.toLowerCase()) || 
+                    item.summary.toLowerCase().includes(query.toLowerCase())
+                );
+                
+                let html = '';
+                if (filteredResults.length > 0) {
+                    filteredResults.forEach(result => {
+                        html += `
+                            <div class="search-result-item">
+                                <h4><a href="${result.link}" style="color:var(--primary); text-decoration:none;">${result.title}</a></h4>
+                                <p>${result.summary}</p>
+                            </div>
+                        `;
+                    });
+                } else {
+                    html = '<p>Tidak ditemukan hasil yang cocok dengan kata kunci Anda.</p>';
+                }
+                
+                resultsContainer.innerHTML = html;
+                window.scrollTo(0, 0); // Gulir ke atas
+            }
+
+            // Aksi saat tombol diklik
+            searchButton.addEventListener('click', function() {
+                const query = searchInput.value.trim();
+                // Arahkan ke halaman ini lagi dengan query di URL
+                window.location.href = `pencarian.html?q=${encodeURIComponent(query)}`;
+            });
+
+            // Aksi saat memuat halaman
+            const initialQuery = getQueryParam();
+            if (initialQuery) {
+                runSearch(initialQuery);
+            }
+        });
+    </script>
+</body>
+</html>

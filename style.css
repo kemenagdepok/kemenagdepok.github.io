@@ -137,6 +137,31 @@ header {
 /* Hamburger Menu (Hidden on Desktop) */
 .hamburger { display: none; }
 
+/* --- SEARCH BUTTON STYLE --- */
+.search-btn {
+    margin-left: 20px;
+    color: var(--text);
+    text-decoration: none;
+    transition: color 0.3s;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0; /* Pastikan tidak mengecil */
+    z-index: 1001; /* Pastikan di atas menu nav links */
+}
+.search-btn:hover {
+    color: var(--primary);
+}
+.search-icon {
+    width: 20px;
+    height: 20px;
+}
+/* Adjust spacing for mobile */
+@media (max-width: 768px) {
+    .search-btn {
+        margin-left: 10px;
+        margin-right: 20px; /* Jarak dari burger menu */
+    }
+}
 
 /* =========================================
    3. HERO SECTION (FULLSCREEN)
