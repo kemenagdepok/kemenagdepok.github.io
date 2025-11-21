@@ -78,9 +78,13 @@
             padding: 10px 5px;
             border: 1px solid #eee;
         }
+        
+        /* --- PERBAIKAN WARNA LATAR --- */
         .schedule-table tr:nth-child(even) {
-            background-color: var(--kemenag-gray);
+            background-color: var(--white); /* DIUBAH: Menjadi putih (#fff) */
         }
+        /* --- AKHIR PERBAIKAN --- */
+        
         .schedule-table td:first-child {
             font-weight: bold;
             color: var(--primary-dark);
@@ -89,7 +93,7 @@
             white-space: nowrap;
         }
         .today-row {
-            background-color: #ffe0b2 !important; 
+            background-color: #ffe0b2 !important; /* Highlight Baris Hari Ini (Kuning Muda) */
             font-weight: bold;
             color: #000;
         }
