@@ -735,3 +735,49 @@ footer {
     margin-bottom: 15px;
     color: #444;
 }
+
+/* --- DOWNLOAD CARD STYLE --- */
+.download-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Spacing between cards */
+    margin-top: 20px;
+}
+
+.download-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: var(--white);
+    padding: 15px 25px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--text);
+    transition: all 0.3s;
+}
+
+.download-card:hover {
+    border-color: var(--primary); /* Border hijau pada hover */
+    box-shadow: 0 4px 15px rgba(0, 99, 22, 0.1); /* Subtle green shadow */
+    transform: translateY(-2px);
+}
+
+.download-icon svg {
+    width: 30px;
+    height: 30px;
+    color: var(--primary); /* Icon warna hijau Kemenag */
+    flex-shrink: 0;
+}
+
+.download-title {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--text);
+    margin-bottom: 3px;
+}
+
+.download-desc {
+    font-size: 0.9rem;
+    color: #666;
+}
