@@ -81,12 +81,11 @@ header {
 
 .brand-text h1 { 
     font-size: 1.1rem; color: #000000; font-weight: 700; 
-    line-height: 1.2; margin-bottom: 0; 
+    line-height: 1; margin-bottom: 0; 
 }
 
 .brand-text p { 
-    font-size: 1.1rem; color: #000000; font-weight: 700; 
-    letter-spacing: 0.5px; margin-top: 2px; 
+    font-size: 1.1rem; color: #000000; font-weight: 700;
 }
 
 /* Teks Desktop vs Mobile */
