@@ -1,0 +1,6 @@
+# Default access policy: Allow all robots access to all files.
+User-agent: *
+Allow: /
+
+# Menunjuk ke lokasi sitemap Anda
+Sitemap: https://kemenagdepok.github.io/sitemap.xml
