@@ -8,18 +8,32 @@
     
     <style>
         /* Gaya khusus untuk Halaman Jadwal Bulanan */
-        .schedule-controls-wrapper {
-            /* Wadah baru untuk menengahkan kontrol */
+        
+        /* Wadah Kontrol Utama (Menyatukan Judul Status dan Dropdown) */
+        .schedule-layout-bar {
             display: flex;
-            justify-content: center; /* Rata tengah horizontal */
+            justify-content: space-between; /* Rata kiri dan kanan */
             align-items: center;
-            margin-bottom: 25px;
+            flex-wrap: wrap; /* Safety for mobile */
+            gap: 10px;
+            margin-bottom: 15px;
         }
+        
+        /* Gaya Status Text (Jadwal Salat Bulan...) - Sisi Kiri */
+        .schedule-status-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+
+        /* Controls (Dropdowns dan Button) - Sisi Kanan */
         .schedule-controls {
             display: flex;
             gap: 15px;
             align-items: center;
         }
+        
         .schedule-controls select {
             padding: 8px 10px;
             border-radius: 5px;
@@ -72,10 +86,10 @@
             color: var(--primary-dark);
             text-align: left;
             padding-left: 15px;
-            white-space: nowrap; /* Mencegah tanggal terpotong */
+            white-space: nowrap;
         }
         .today-row {
-            background-color: #ffe0b2 !important; /* Highlight Baris Hari Ini */
+            background-color: #ffe0b2 !important; 
             font-weight: bold;
             color: #000;
         }
@@ -90,7 +104,8 @@
         }
         
         /* Fix Table Header Text */
-        .schedule-table th:nth-child(1) { width: 180px; } /* Lebarkan kolom Tanggal */
+        .schedule-table th:nth-child(1) { width: 180px; }
+        
     </style>
 </head>
 <body>
@@ -108,15 +123,16 @@
         <div class="card wide" style="margin-bottom: 20px;">
             <p style="margin-bottom: 15px;">Jadwal Salat Bulanan untuk Kota Depok. Pilih periode di bawah untuk menampilkan data:</p>
             
-            <div class="schedule-controls-wrapper">
+            <div class="schedule-layout-bar">
+                
+                <p id="loading-status" class="schedule-status-title">Memuat Jadwal...</p>
+                
                 <div class="schedule-controls">
                     <select id="month-selector"></select>
                     <select id="year-selector"></select>
                     <button id="load-schedule-btn">Tampilkan Jadwal</button>
                 </div>
             </div>
-            
-            <p id="loading-status" style="color:var(--primary); margin-top: 10px; font-weight: 600;"></p>
         </div>
 
         <div class="schedule-table-wrapper">
