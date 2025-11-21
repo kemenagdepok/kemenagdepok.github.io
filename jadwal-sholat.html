@@ -7,26 +7,56 @@
     <link rel="stylesheet" href="style.css">
     
     <style>
-        /* Gaya khusus untuk Tabel Jadwal Bulanan */
+        /* Gaya khusus untuk Halaman Jadwal Bulanan */
+        .schedule-controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            align-items: center;
+        }
+        .schedule-controls select {
+            padding: 8px 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+        }
+        #load-schedule-btn {
+            padding: 8px 15px;
+            background-color: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        #load-schedule-btn:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        /* Gaya untuk Tabel */
         .schedule-table-wrapper {
             overflow-x: auto;
             margin-top: 20px;
         }
         .schedule-table {
             width: 100%;
-            min-width: 700px; /* Lebar minimum agar tidak terlalu sempit */
+            min-width: 900px; /* Lebar minimum agar tabel tidak terlalu sempit */
             border-collapse: collapse;
             font-size: 0.9rem;
             text-align: center;
         }
+        .schedule-table thead th {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 12px 5px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
         .schedule-table th, .schedule-table td {
             padding: 10px 5px;
             border: 1px solid #eee;
-        }
-        .schedule-table th {
-            background-color: var(--primary);
-            color: var(--white);
-            font-weight: 600;
         }
         .schedule-table tr:nth-child(even) {
             background-color: var(--kemenag-gray); /* Belang-belang */
@@ -34,6 +64,13 @@
         .schedule-table td:first-child {
             font-weight: bold;
             color: var(--primary-dark);
+            text-align: left;
+            padding-left: 15px;
+        }
+        .today-row {
+            background-color: #ffe0b2 !important; /* Highlight Baris Hari Ini */
+            font-weight: bold;
+            color: #000;
         }
     </style>
 </head>
@@ -50,7 +87,15 @@
         <h3 class="section-title">Jadwal Sholat Kota Depok</h3>
         
         <div class="card wide" style="margin-bottom: 20px;">
-            <p>Jadwal Sholat untuk **Kota Depok** (ID: 0507). Untuk menampilkan data bulanan secara dinamis, perlu kode JavaScript tambahan yang mengambil data harian selama 30 hari. Berikut adalah tampilan struktur tabel yang akan diisi oleh data tersebut:</p>
+            <p style="margin-bottom: 15px;">Jadwal Sholat Bulanan untuk Kota Depok (ID: 1225). Pilih periode di bawah untuk menampilkan data:</p>
+            
+            <div class="schedule-controls">
+                <select id="month-selector"></select>
+                <select id="year-selector"></select>
+                <button id="load-schedule-btn">Tampilkan Jadwal</button>
+            </div>
+            
+            <p id="loading-status" style="color:var(--primary); margin-top: 10px; font-weight: 600;"></p>
         </div>
 
         <div class="schedule-table-wrapper">
@@ -70,18 +115,7 @@
                 </thead>
                 <tbody id="monthly-schedule-body">
                     <tr>
-                        <td colspan="9" style="text-align: center;">Memuat jadwal bulanan...</td>
-                    </tr>
-                    <tr>
-                        <td>21 Nov</td>
-                        <td>03:55</td>
-                        <td>04:05</td>
-                        <td>05:23</td>
-                        <td>05:51</td>
-                        <td>11:42</td>
-                        <td>15:05</td>
-                        <td>17:55</td>
-                        <td>19:09</td>
+                        <td colspan="9" style="text-align: center;">Pilih bulan dan tahun di atas, lalu klik Tampilkan Jadwal.</td>
                     </tr>
                 </tbody>
             </table>
@@ -91,5 +125,104 @@
 
     <footer id="footer-placeholder"></footer>
     <script src="script.js"></script>
+    <script>
+        
+        const CITY_ID = "1225";
+        const monthlyScheduleBody = document.getElementById('monthly-schedule-body');
+        const monthSelector = document.getElementById('month-selector');
+        const yearSelector = document.getElementById('year-selector');
+        const loadButton = document.getElementById('load-schedule-btn');
+        const loadingStatus = document.getElementById('loading-status');
+        
+        const today = new Date();
+        const currentYear = today.getFullYear();
+        const currentMonth = today.getMonth() + 1;
+        const currentDay = today.getDate();
+
+        // 1. Inisialisasi Dropdown Bulan dan Tahun
+        function initializeControls() {
+            // Bulan
+            const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+            monthNames.forEach((name, index) => {
+                const monthValue = String(index + 1).padStart(2, '0');
+                const option = new Option(name, monthValue);
+                if ((index + 1) === currentMonth) {
+                    option.selected = true;
+                }
+                monthSelector.add(option);
+            });
+
+            // Tahun (Mulai dari 3 tahun ke belakang hingga 3 tahun ke depan)
+            for (let year = currentYear - 3; year <= currentYear + 3; year++) {
+                const option = new Option(year, year);
+                if (year === currentYear) {
+                    option.selected = true;
+                }
+                yearSelector.add(option);
+            }
+        }
+
+        // 2. Fungsi Utama untuk Mengambil Data
+        async function loadMonthlySchedule() {
+            const year = yearSelector.value;
+            const month = monthSelector.value;
+            const api_url = `https://api.myquran.com/v2/sholat/jadwal/${CITY_ID}/${year}/${month}`;
+            
+            monthlyScheduleBody.innerHTML = `<tr><td colspan="9" style="text-align: center;">Memuat data...</td></tr>`;
+            loadingStatus.textContent = `Memuat jadwal untuk ${monthSelector.options[monthSelector.selectedIndex].text} ${year}...`;
+
+            try {
+                const response = await fetch(api_url);
+                const data = await response.json();
+
+                if (data.status && data.data && data.data.jadwal) {
+                    renderSchedule(data.data.jadwal);
+                    loadingStatus.textContent = `Jadwal Sholat Bulan ${monthSelector.options[monthSelector.selectedIndex].text} ${year}`;
+                } else {
+                    throw new Error("Data jadwal sholat tidak tersedia untuk periode ini.");
+                }
+            } catch (error) {
+                monthlyScheduleBody.innerHTML = `<tr><td colspan="9" style="color: red; text-align: center;">Gagal memuat jadwal: ${error.message}</td></tr>`;
+                loadingStatus.textContent = `Gagal memuat jadwal.`;
+            }
+        }
+
+        // 3. Fungsi Render Tabel
+        function renderSchedule(jadwalArray) {
+            let htmlContent = '';
+            
+            jadwalArray.forEach(day => {
+                const dayDate = new Date(day.date);
+                const isToday = dayDate.getDate() === currentDay && dayDate.getMonth() + 1 === currentMonth && dayDate.getFullYear() === currentYear;
+                const rowClass = isToday ? 'today-row' : '';
+
+                htmlContent += `
+                    <tr class="${rowClass}">
+                        <td>${day.tanggal}</td>
+                        <td>${day.imsak}</td>
+                        <td>${day.subuh}</td>
+                        <td>${day.terbit}</td>
+                        <td>${day.dhuha}</td>
+                        <td>${day.dzuhur}</td>
+                        <td>${day.ashar}</td>
+                        <td>${day.maghrib}</td>
+                        <td>${day.isya}</td>
+                    </tr>
+                `;
+            });
+            monthlyScheduleBody.innerHTML = htmlContent;
+        }
+
+        // 4. Attach Event Listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeControls();
+            
+            // Atur event listener ke tombol
+            loadButton.addEventListener('click', loadMonthlySchedule);
+            
+            // Muat jadwal untuk bulan ini secara otomatis saat halaman pertama dimuat
+            loadMonthlySchedule(); 
+        });
+    </script>
 </body>
 </html>
