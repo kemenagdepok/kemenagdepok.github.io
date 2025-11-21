@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Aplikasi - Kemenag Kota Depok</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* CSS Tambahan Khusus Aplikasi */
+        .app-list { list-style: none; padding-left: 0; }
+        .app-list li { margin-bottom: 10px; }
+        .app-list a {
+            color: var(--primary);
+            font-size: 0.95rem;
+            text-decoration: none;
+            display: block;
+            padding: 5px 0;
+            transition: color 0.3s;
+        }
+        .app-list a:hover {
+            color: var(--kemenag-lime);
+        }
+        .app-category {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid var(--gold);
+        }
+        .card.app-card { min-height: 250px; }
+        /* Atur Grid agar terlihat bagus di desktop */
+        @media (min-width: 900px) {
+            .app-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header id="header-placeholder"></header>
+
+    <main>
+        <h3 class="section-title">Daftar Aplikasi & Layanan Digital</h3>
+
+        <div class="grid-container app-grid">
+            
+            <div class="card app-card">
+                <div class="app-category">Layanan PTSP: Administrasi Pelayanan Publik</div>
+                <ul class="app-list">
+                    <li><a href="#">Formulir Survey Angket KUA</a></li>
+                    <li><a href="#">Formulir Survei Angket Seksi-Sub TU</a></li>
+                    <li><a href="#">Publikasi Nilai IKM</a></li>
+                    <li><a href="#">Standar Pelayanan</a></li>
+                    <li><a href="#">Daftar Pelayanan</a></li>
+                    <li><a href="#">Sicantik</a></li>
+                    <li><a href="#">Pengumuman Kehendak Nikah KUA</a></li>
+                </ul>
+            </div>
+
+            <div class="card app-card">
+                <div class="app-category">Kinerja Digital Organisasi</div>
+                <ul class="app-list">
+                    <li><a href="https://pmpzi.kemenag.go.id/" target="_blank">Aplikasi PMPZI</a></li>
+                    <li><a href="https://simpi.kemenag.go.id/" target="_blank">Aplikasi SIMPI-SPIP</a></li>
+                    <li><a href="https://sipka.kemenag.go.id/" target="_blank">Aplikasi SIPKA</a></li>
+                </ul>
+            </div>
+
+            <div class="card app-card">
+                <div class="app-category">Publikasi Kinerja SAKIP</div>
+                <ul class="app-list">
+                    <li><a href="#">Laporan Kinerja Tahun 2023/24</a></li>
+                    <li><a href="https://pusaka-v3.kemenag.go.id/" target="_blank">Pusaka V-3</a></li>
+                    <li><a href="#">Renstra 2019-2024</a></li>
+                    <li><a href="#">Laporan Kinerja Tahun 2022/23</a></li>
+                    <li><a href="#">Perjanjian Kinerja 2024</a></li>
+                    <li><a href="#">Rencana Kinerja 2024</a></li>
+                </ul>
+            </div>
+
+            <div class="card app-card">
+                <div class="app-category">Aplikasi Kepegawaian</div>
+                <ul class="app-list">
+                    <li><a href="https://kinerja.bkn.go.id/login" target="_blank">e-KINERJA BKN</a></li>
+                    <li><a href="https://simpeg.kemenag.go.id/" target="_blank">Simpeg Unit Kerja</a></li>
+                    <li><a href="https://simsdm.kemenag.go.id/" target="_blank">SIM SDM</a></li>
+                    <li><a href="https://myasn.bkn.go.id/" target="_blank">Aplikasi MyASN</a></li>
+                    <li><a href="https://siasn.bkn.go.id/" target="_blank">SIASN BKN</a></li>
+                    <li><a href="https://simpeg5.kemenag.go.id/" target="_blank">Simpeg V5 Pegawai</a></li>
+                    <li><a href="https://hrms.kemenag.go.id/" target="_blank">HRMS</a></li>
+                </ul>
+            </div>
+            
+            <div class="card app-card">
+                <div class="app-category">Laporan LKB ASN</div>
+                <ul class="app-list">
+                    <li><a href="#">Laporan Kinerja PNS KUA</a></li>
+                    <li><a href="#">Laporan Kinerja PNS Guru</a></li>
+                    <li><a href="#">Laporan Kinerja PNS Kantor</a></li>
+                    <li><a href="#">AGW</a></li>
+                </ul>
+            </div>
+            
+            <div class="card app-card">
+                <div class="app-category">Pengaduan Masyarakat</div>
+                <ul class="app-list">
+                    <li><a href="https://simdumas.kemenag.go.id/pengaduan/login" target="_blank">Layanan Dumas Itjen</a></li>
+                    <li><a href="https://wbs.amal.or.id" target="_blank">Layanan Pengaduan Internal</a></li>
+                    <li><a href="https://www.lapor.go.id/" target="_blank">Lapor!</a></li>
+                </ul>
+            </div>
+            
+            <div class="card app-card">
+                <div class="app-category">Seksi Pendidikan Madrasah</div>
+                <ul class="app-list">
+                    <li><a href="https://emis.kemenag.go.id/" target="_blank">EMIS Pendis</a></li>
+                    <li><a href="https://simpatika.kemenag.go.id/madrasah" target="_blank">Simpatika Madrasah</a></li>
+                    <li><a href="https://bos.kemenag.go.id/" target="_blank">Layanan BOS Madrasah</a></li>
+                </ul>
+            </div>
+            
+            <div class="card app-card">
+                <div class="app-category">Seksi Bimbingan Masyarakat Islam</div>
+                <ul class="app-list">
+                    <li><a href="https://simkah4.kemenag.go.id/" target="_blank">Simkah/Layanan Daftar Nikah</a></li>
+                    <li><a href="https://ebi.kemenag.go.id/" target="_blank">e-Planning</a></li>
+                    <li><a href="#">Pengumuman Kehendak Nikah KUA</a></li>
+                </ul>
+            </div>
+            
+            <div class="card app-card">
+                <div class="app-category">Seksi Pendidikan Agama Islam dan Keislaman</div>
+                <ul class="app-list">
+                    <li><a href="https://emis.kemenag.go.id/" target="_blank">Emis PAI</a></li>
+                    <li><a href="https://siagapendis.kemenag.go.id/login" target="_blank">Siaga PAI</a></li>
+                </ul>
+            </div>
+
+        </div>
+    </main>
+
+    <footer id="footer-placeholder"></footer>
+    <script src="script.js"></script>
+</body>
+</html>
