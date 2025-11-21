@@ -715,3 +715,23 @@ footer {
 
 /* --- Tambahan untuk Tupoksi --- */
 .mt-medium { margin-top: 40px; }
+
+/* --- MAKNA LAMBANG PAGE STYLES --- */
+.logo-centered-display {
+    display: block;
+    margin: 20px auto 30px auto; /* Tengahkan logo, beri jarak atas/bawah */
+    width: 300px; /* Lebar sesuai permintaan */
+    max-width: 100%; /* Agar responsif di HP */
+    height: auto;
+}
+
+.makna-ordered-list {
+    padding-left: 20px; /* Jarak untuk angka default */
+    margin-top: 20px;
+    line-height: 1.8;
+}
+
+.makna-ordered-list li {
+    margin-bottom: 15px;
+    color: #444;
+}
