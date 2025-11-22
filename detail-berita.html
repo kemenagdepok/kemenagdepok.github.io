@@ -3,26 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <title id="page-title">Memuat Berita...</title>
+    
     <link rel="stylesheet" href="style.css">
     
-    <meta name="description" content="Baca berita terbaru dari Kantor Kemenag Kota Depok." id="meta-description">
-    <meta name="keywords" content="Berita Kemenag, Info terbaru, Kota Depok" id="meta-keywords">
+    <meta name="description" content="Portal Berita Kantor Kementerian Agama Kota Depok" id="meta-description">
+    <meta name="keywords" content="Kemenag Depok, Berita, Info Terkini" id="meta-keywords">
+    <meta name="author" content="Admin Kemenag Depok">
     <link rel="canonical" href="https://kemenagdepok.github.io/detail-berita.html" id="meta-canonical">
 
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://kemenagdepok.github.io/detail-berita.html" id="og-url">
     <meta property="og:title" content="Memuat Berita..." id="og-title">
-    <meta property="og:description" content="Baca berita terbaru dari Kantor Kemenag Kota Depok." id="og-description">
-    <meta property="og:image" content="https://kemenagdepok.github.io/images/seo/kemenag-depok.webp">
+    <meta property="og:description" content="Portal Berita Kantor Kementerian Agama Kota Depok" id="og-description">
+    <meta property="og:image" content="https://kemenagdepok.github.io/images/seo/kemenag-depok.webp" id="og-image">
     <meta property="og:site_name" content="Kantor Kementerian Agama Kota Depok">
     
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Memuat Berita..." id="twitter-title">
-    <meta name="twitter:description" content="Baca berita terbaru dari Kantor Kemenag Kota Depok." id="twitter-description">
-    <meta name="twitter:image" content="https://kemenagdepok.github.io/images/seo/kemenag-depok.webp">
+    <meta name="twitter:description" content="Portal Berita Kantor Kementerian Agama Kota Depok" id="twitter-description">
+    <meta name="twitter:image" content="https://kemenagdepok.github.io/images/seo/kemenag-depok.webp" id="twitter-image">
     
-    <meta name="author" content="Admin Kemenag Depok">
     <link rel="shortcut icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Kementerian_Agama_new_logo.png/150px-Kementerian_Agama_new_logo.png" type="image/png">
 </head>
 <body>
@@ -44,6 +46,7 @@
                 <svg class="breadcrumb-separator" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                 <span class="breadcrumb-current" id="current-article-title"></span>
             </div>
+
             <div id="article-hero"></div>
 
             <div class="news-meta" id="article-meta"></div>
@@ -69,48 +72,52 @@
         const loadingState = document.getElementById('loading-state');
         const articleWrapper = document.getElementById('article-wrapper');
         
-        // Variabel untuk menyimpan data berita agar bisa diakses di chain berikutnya
+        // Variabel Global untuk data berita
         let currentNews = null;
 
-        // --- FUNGSI UPDATE META TAGS SEO ---
+        // --- FUNGSI UPDATE SEO (Dipanggil Segera) ---
         function updateSeoMeta(news) {
             const baseUrl = 'https://kemenagdepok.github.io/';
-            const url = baseUrl + 'detail-berita.html?id=' + news.id;
-            const desc = news.ringkasan.substring(0, 150) + '...';
-            const title = news.judul + ' - Kemenag Depok';
-            const keywords = `Berita, ${news.judul.split(' ').slice(0, 5).join(', ')}, Kemenag Depok, Informasi`;
+            const fullUrl = baseUrl + 'detail-berita.html?id=' + news.id;
+            
+            // Bersihkan ringkasan dari karakter aneh jika ada
+            let cleanDesc = news.ringkasan.replace(/[*#_]/g, ''); 
+            if(cleanDesc.length > 150) cleanDesc = cleanDesc.substring(0, 150) + '...';
 
-            // 1. Tag Dasar
-            document.title = title;
-            document.getElementById('meta-description').setAttribute('content', desc);
-            document.getElementById('meta-keywords').setAttribute('content', keywords);
-            document.getElementById('meta-canonical').setAttribute('href', url);
+            const titleText = news.judul + ' - Kemenag Kota Depok';
+            const keywordsText = `Berita, ${news.judul.split(' ').slice(0, 5).join(', ')}, Kemenag Depok`;
+
+            // 1. Update Browser Title & Basic Meta
+            document.title = titleText;
+            document.getElementById('meta-description').setAttribute('content', cleanDesc);
+            document.getElementById('meta-keywords').setAttribute('content', keywordsText);
+            document.getElementById('meta-canonical').setAttribute('href', fullUrl);
             
-            // 2. Open Graph Tags
-            document.getElementById('og-title').setAttribute('content', title);
-            document.getElementById('og-description').setAttribute('content', desc);
-            document.getElementById('og-url').setAttribute('content', url);
+            // 2. Update Open Graph (Facebook/WhatsApp)
+            document.getElementById('og-title').setAttribute('content', news.judul);
+            document.getElementById('og-description').setAttribute('content', cleanDesc);
+            document.getElementById('og-url').setAttribute('content', fullUrl);
             
-            // 3. Twitter Tags
-            document.getElementById('twitter-title').setAttribute('content', title);
-            document.getElementById('twitter-description').setAttribute('content', desc);
+            // 3. Update Twitter Cards
+            document.getElementById('twitter-title').setAttribute('content', news.judul);
+            document.getElementById('twitter-description').setAttribute('content', cleanDesc);
         }
 
         if(newsId) {
-            // LANGKAH 1: Ambil JSON Daftar Berita
+            // LANGKAH 1: Ambil JSON
             fetch('berita.json')
                 .then(response => response.json())
                 .then(newsList => {
                     const news = newsList.find(item => item.id === newsId);
                     
                     if(news) {
-                        // Simpan data berita ke variabel global scope script ini
                         currentNews = news;
                         
-                        // Update SEO Meta Tags
+                        // === PENTING: UPDATE SEO SEKARANG ===
+                        // Kita update SEO sebelum fetch markdown agar lebih cepat
                         updateSeoMeta(currentNews);
                         
-                        // Lanjut ambil file Markdown
+                        // Lanjut ambil file Markdown content
                         return fetch(currentNews.file);
                     } else {
                         throw new Error("Berita tidak ditemukan dalam database.");
@@ -121,7 +128,6 @@
                     return response.text();
                 })
                 .then(markdownText => {
-                    // Cek Library Marked
                     if (typeof marked === 'undefined') {
                         throw new Error("Library Marked.js gagal dimuat.");
                     }
@@ -129,7 +135,7 @@
                     // Render Markdown
                     const htmlContent = marked.parse(markdownText);
                     
-                    // 3. Render ke HTML menggunakan variable 'currentNews'
+                    // Render HTML Elements
                     const heroHTML = `
                         <div class="auto-thumb" style="height: 280px; margin-bottom: 0;">
                             <img src="${logoUrl}" class="thumb-logo" alt="Logo Kemenag">
@@ -142,17 +148,17 @@
                     document.getElementById('article-content').innerHTML = htmlContent;
                     document.getElementById('current-article-title').textContent = currentNews.judul; 
 
-                    // 4. Tampilkan Konten
+                    // Tampilkan Hasil
                     loadingState.style.display = 'none';
                     articleWrapper.style.display = 'block';
                 })
                 .catch(error => {
                     console.error(error);
                     loadingState.innerHTML = `
-                        <div style="color: red; padding: 20px; border: 1px solid red; border-radius: 8px; background: #fff;">
+                        <div style="color: red; padding: 20px; border: 1px solid red; border-radius: 8px; background:#fff;">
                             <h3>Terjadi Kesalahan</h3>
                             <p>${error.message}</p>
-                            <p style="font-size:0.9rem; margin-top:10px;">Pastikan file <strong>.md</strong> sudah diupload ke folder <em>content/berita/</em> dan nama file di <em>berita.json</em> sudah benar.</p>
+                            <p style="font-size:0.9rem; margin-top:10px;">Pastikan file <strong>.md</strong> dan <strong>berita.json</strong> sudah sesuai.</p>
                         </div>
                     `;
                     loadingState.style.display = 'block';
