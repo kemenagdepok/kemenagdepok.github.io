@@ -1,16 +1,23 @@
 [
     {
-        "id": "persiapan-haji-2025",
-        "judul": "Persiapan Pelayanan Haji Tahun 2025 Resmi Dimulai",
-        "tanggal": "20 November 2025",
-        "ringkasan": "Kemenag Kota Depok mulai melakukan pendataan dan persiapan dini untuk jemaah haji tahun 2025.",
+        "id": "haji-2025",
+        "judul": "Depok (Kemenag)",
+        "tanggal": "22 November 2025",
+        "ringkasan": "Depok (Kemenag) - Kantor Kementerian Agama Kota Depok secara resmi memulai tahapan persiapan penyelenggaraan ibadah haji tahun 1446 H / 2025 M. Hal in...",
         "file": "content/berita/haji-2025.md"
     },
     {
+        "id": "transformasi-digital",
+        "judul": "Kemenag Depok Perkuat Transformasi Digital Layanan Keagamaan",
+        "tanggal": "22 November 2025",
+        "ringkasan": "Depok (Kemenag) – Kantor Kementerian Agama Kota Depok terus berkomitmen untuk meningkatkan kualitas pelayanan publik melalui transformasi digital. Hal...",
+        "file": "content/berita/transformasi-digital.md"
+    },
+    {
         "id": "workshop-kua",
-        "judul": "Peningkatan Kompetensi Layanan KUA se-Kota Depok",
-        "tanggal": "18 November 2025",
-        "ringkasan": "Workshop sehari penuh untuk meningkatkan standar pelayanan di Kantor Urusan Agama.",
+        "judul": "Depok (Kemenag)",
+        "tanggal": "22 November 2025",
+        "ringkasan": "Kepala Kantor Kementerian Agama Kota Depok menyampaikan bahwa KUA adalah wajah terdepan Kementerian Agama yang bersentuhan langsung dengan masyarakat....",
         "file": "content/berita/workshop-kua.md"
     }
 ]
