@@ -31,11 +31,41 @@
         .search-result-item h4 a:hover { text-decoration: underline; }
         .search-result-item p { font-size: 0.9rem; color: #555; line-height: 1.5; margin-bottom: 0; }
         
-        /* Highlight text yang ditemukan */
+        /* Highlight & Badge */
         .highlight { background-color: #fff3cd; font-weight: bold; padding: 0 2px; }
         .result-badge {
             display: inline-block; font-size: 0.7rem; padding: 2px 8px; 
             background: #eee; border-radius: 4px; color: #666; margin-bottom: 5px;
+        }
+
+        /* PAGINATION STYLES */
+        .pagination-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            margin-top: 30px;
+        }
+        .pagination-btn {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            background: #fff;
+            color: var(--text);
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            text-decoration: none;
+        }
+        .pagination-btn:hover { background-color: #f1f1f1; }
+        .pagination-btn.active {
+            background-color: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+        .pagination-btn.disabled {
+            background-color: #eee;
+            color: #aaa;
+            cursor: not-allowed;
         }
     </style>
 </head>
@@ -64,6 +94,8 @@
         </div>
 
         <div id="search-results-container"></div>
+
+        <div id="pagination-wrapper" class="pagination-container"></div>
     </main>
 
     <footer id="footer-placeholder"></footer>
@@ -76,9 +108,15 @@
             const resultsContainer = document.getElementById('search-results-container');
             const searchStatus = document.getElementById('search-status');
             const loadingIndicator = document.getElementById('loading-indicator');
+            const paginationWrapper = document.getElementById('pagination-wrapper');
 
-            // --- 1. DAFTAR HALAMAN YANG AKAN DIPINDAI (MANUAL) ---
-            // Jika Anda membuat halaman baru, tambahkan nama filenya di sini.
+            // Konfigurasi Paginasi
+            const ITEMS_PER_PAGE = 10;
+            let currentPage = 1;
+            let currentResults = [];
+            let currentQuery = "";
+
+            // Daftar Halaman yang dipindai
             const pagesList = [
                 { url: 'index.html', title: 'Beranda' },
                 { url: 'profil.html', title: 'Profil Kantor' },
@@ -93,18 +131,14 @@
                 { url: 'jadwal-salat.html', title: 'Jadwal Salat' }
             ];
 
-            // --- 2. FUNGSI FETCH & PARSE HTML ---
+            // --- FUNGSI FETCH & PARSE ---
             async function fetchPageContent(url) {
                 try {
                     const response = await fetch(url);
                     if (!response.ok) throw new Error(`Gagal memuat ${url}`);
                     const text = await response.text();
-                    
-                    // Parse string HTML menjadi DOM Document
                     const parser = new DOMParser();
                     const doc = parser.parseFromString(text, 'text/html');
-                    
-                    // Ambil hanya teks di dalam tag <main> agar header/footer tidak ikut ter-scan
                     const mainContent = doc.querySelector('main');
                     return mainContent ? mainContent.innerText : ''; 
                 } catch (error) {
@@ -113,42 +147,37 @@
                 }
             }
 
-            // --- 3. FUNGSI PENCARIAN UTAMA ---
+            // --- FUNGSI PENCARIAN ---
             async function performSearch(query) {
                 if (!query || query.length < 2) {
                     searchStatus.textContent = 'Masukkan minimal 2 karakter.';
                     resultsContainer.innerHTML = '';
+                    paginationWrapper.innerHTML = '';
                     return;
                 }
 
-                // Reset UI
+                // Reset State
+                currentResults = [];
+                currentPage = 1;
                 resultsContainer.innerHTML = '';
+                paginationWrapper.innerHTML = '';
                 searchStatus.innerHTML = `Mencari: <strong>"${query}"</strong> ...`;
                 loadingIndicator.style.display = 'block';
+                currentQuery = query;
                 
                 const lowerQuery = query.toLowerCase();
-                const results = [];
 
-                // A. CARI DI HALAMAN STATIS (HTML)
-                // Kita gunakan Promise.all agar pencarian berjalan paralel (cepat)
+                // 1. Scan Halaman Statis
                 const pagePromises = pagesList.map(async (page) => {
                     const content = await fetchPageContent(page.url);
-                    // Bersihkan spasi berlebih
                     const cleanContent = content.replace(/\s+/g, ' ').trim();
-                    
                     if (cleanContent.toLowerCase().includes(lowerQuery)) {
-                        return {
-                            type: 'Halaman',
-                            title: page.title,
-                            url: page.url,
-                            content: cleanContent
-                        };
+                        return { type: 'Halaman', title: page.title, url: page.url, content: cleanContent };
                     }
                     return null;
                 });
 
-                // B. CARI DI BERITA (JSON)
-                // Berita tetap harus via JSON karena file detailnya dinamis
+                // 2. Scan Berita (JSON)
                 const newsPromise = fetch('berita.json')
                     .then(res => res.json())
                     .then(data => {
@@ -156,68 +185,104 @@
                             news.judul.toLowerCase().includes(lowerQuery) || 
                             news.ringkasan.toLowerCase().includes(lowerQuery)
                         ).map(news => ({
-                            type: 'Berita',
-                            title: news.judul,
-                            url: `detail-berita.html?id=${news.id}`,
-                            content: news.ringkasan
+                            type: 'Berita', title: news.judul, url: `detail-berita.html?id=${news.id}`, content: news.ringkasan
                         }));
                     })
                     .catch(() => []);
 
-                // Tunggu semua proses selesai
-                const [pagesResults, newsResults] = await Promise.all([
-                    Promise.all(pagePromises),
-                    newsPromise
-                ]);
+                // 3. Gabungkan Hasil
+                const [pagesResults, newsResults] = await Promise.all([Promise.all(pagePromises), newsPromise]);
+                currentResults = [...pagesResults.filter(r => r !== null), ...newsResults];
 
-                // Gabungkan hasil (filter null dari pagesResults)
-                const finalResults = [...pagesResults.filter(r => r !== null), ...newsResults];
-
-                // Tampilkan Hasil
                 loadingIndicator.style.display = 'none';
                 
-                if (finalResults.length > 0) {
-                    searchStatus.innerHTML = `Ditemukan <strong>${finalResults.length}</strong> hasil untuk: <strong>"${query}"</strong>`;
-                    
-                    finalResults.forEach(item => {
-                        const snippet = getHighlightSnippet(item.content, query);
-                        const resultHTML = `
-                            <div class="search-result-item">
-                                <span class="result-badge">${item.type}</span>
-                                <h4><a href="${item.url}">${item.title}</a></h4>
-                                <p>${snippet}</p>
-                            </div>
-                        `;
-                        resultsContainer.innerHTML += resultHTML;
-                    });
+                // Tampilkan Hasil Halaman Pertama
+                if (currentResults.length > 0) {
+                    searchStatus.innerHTML = `Ditemukan <strong>${currentResults.length}</strong> hasil untuk: <strong>"${query}"</strong>`;
+                    renderResults();
+                    renderPagination();
                 } else {
                     searchStatus.innerHTML = `Tidak ditemukan hasil untuk: <strong>"${query}"</strong>`;
-                    resultsContainer.innerHTML = '<p style="color:#666;">Cobalah kata kunci lain atau periksa ejaan Anda.</p>';
+                    resultsContainer.innerHTML = '<p style="color:#666;">Cobalah kata kunci lain.</p>';
                 }
             }
 
-            // Fungsi Helper: Membuat cuplikan teks dan highlight kata kunci
+            // --- FUNGSI RENDER HASIL PER HALAMAN ---
+            function renderResults() {
+                resultsContainer.innerHTML = '';
+                
+                // Hitung index start dan end
+                const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+                const endIndex = startIndex + ITEMS_PER_PAGE;
+                const paginatedItems = currentResults.slice(startIndex, endIndex);
+
+                paginatedItems.forEach(item => {
+                    const snippet = getHighlightSnippet(item.content, currentQuery);
+                    const resultHTML = `
+                        <div class="search-result-item">
+                            <span class="result-badge">${item.type}</span>
+                            <h4><a href="${item.url}">${item.title}</a></h4>
+                            <p>${snippet}</p>
+                        </div>
+                    `;
+                    resultsContainer.innerHTML += resultHTML;
+                });
+                
+                // Scroll ke atas container hasil
+                window.scrollTo(0, 0);
+            }
+
+            // --- FUNGSI RENDER TOMBOL PAGINASI ---
+            function renderPagination() {
+                paginationWrapper.innerHTML = '';
+                const totalPages = Math.ceil(currentResults.length / ITEMS_PER_PAGE);
+
+                if (totalPages <= 1) return; // Tidak perlu paginasi jika cuma 1 halaman
+
+                // Tombol Prev
+                const prevBtn = document.createElement('button');
+                prevBtn.innerText = '←';
+                prevBtn.className = `pagination-btn ${currentPage === 1 ? 'disabled' : ''}`;
+                prevBtn.onclick = () => { if (currentPage > 1) { currentPage--; updatePaginationUI(); } };
+                paginationWrapper.appendChild(prevBtn);
+
+                // Tombol Angka Halaman
+                for (let i = 1; i <= totalPages; i++) {
+                    const pageBtn = document.createElement('button');
+                    pageBtn.innerText = i;
+                    pageBtn.className = `pagination-btn ${i === currentPage ? 'active' : ''}`;
+                    pageBtn.onclick = () => { currentPage = i; updatePaginationUI(); };
+                    paginationWrapper.appendChild(pageBtn);
+                }
+
+                // Tombol Next
+                const nextBtn = document.createElement('button');
+                nextBtn.innerText = '→';
+                nextBtn.className = `pagination-btn ${currentPage === totalPages ? 'disabled' : ''}`;
+                nextBtn.onclick = () => { if (currentPage < totalPages) { currentPage++; updatePaginationUI(); } };
+                paginationWrapper.appendChild(nextBtn);
+            }
+
+            // Update UI saat ganti halaman
+            function updatePaginationUI() {
+                renderResults();
+                renderPagination();
+            }
+
+            // Helper: Highlight Text
             function getHighlightSnippet(text, query) {
                 if(!text) return "";
                 const lowerText = text.toLowerCase();
                 const index = lowerText.indexOf(query.toLowerCase());
-                
-                // Jika ketemu di judul tapi tidak di body, ambil awal teks
                 if (index === -1) return text.substring(0, 150) + "...";
-
-                // Ambil potongan teks sekitar kata kunci (50 char sebelum, 100 sesudah)
                 const start = Math.max(0, index - 50);
                 const end = Math.min(text.length, index + 100);
                 let snippet = text.substring(start, end);
-
-                // Tambahkan highlight
                 const regex = new RegExp(`(${query})`, 'gi');
                 return "..." + snippet.replace(regex, '<span class="highlight">$1</span>') + "...";
             }
 
-            // EVENT LISTENERS
-            
-            // Cek URL param saat load
+            // Event Listeners
             const urlParams = new URLSearchParams(window.location.search);
             const urlQuery = urlParams.get('q');
             if (urlQuery) {
@@ -225,7 +290,6 @@
                 performSearch(urlQuery);
             }
 
-            // Klik Tombol Cari
             searchButton.addEventListener('click', () => {
                 const q = searchInput.value.trim();
                 if(q) {
@@ -235,7 +299,6 @@
                 }
             });
 
-            // Tekan Enter di Input
             searchInput.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') searchButton.click();
             });
