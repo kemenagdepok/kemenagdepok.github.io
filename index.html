@@ -115,7 +115,6 @@
         // --- 1. AMBIL DATA HIJRIAH ---
         async function loadHijriDate() {
             const dateStr = getFormattedDate(); 
-            // API Kalender Hijriah
             const api_url = `https://api.myquran.com/v2/cal/hijr/${dateStr}?adj=-1`;
 
             try {
@@ -123,7 +122,6 @@
                 const json = await response.json();
 
                 if (json.status && json.data && json.data.date) {
-                    // Ambil index ke-1: "1 Jumadil Akhir 1447 H"
                     const hijriString = json.data.date[1];
                     document.getElementById('current-hijri-date').textContent = hijriString;
                 }
@@ -134,7 +132,7 @@
 
         // --- 2. AMBIL JADWAL SALAT ---
         async function loadPrayerTimes() {
-            const cityId = "1225"; // Depok
+            const cityId = "1225"; // Kota Depok
             const date = getFormattedDate();
             const api_url = `https://api.myquran.com/v2/sholat/jadwal/${cityId}/${date}`;
             const gridContainer = document.getElementById('prayer-times-grid');
@@ -149,10 +147,7 @@
                 if (data.status && data.data && data.data.jadwal) {
                     const jadwal = data.data.jadwal;
                     
-                    // Tampilkan Tanggal Masehi
                     dateMasehiDisplay.textContent = formatIndonesianDate(data.data.jadwal.date);
-                    
-                    // Panggil fungsi Hijriah
                     loadHijriDate();
 
                     const times = [
@@ -194,24 +189,43 @@
         document.addEventListener("DOMContentLoaded", function() {
             loadPrayerTimes();
             
-            // --- FUNGSI BERITA ---
+            // --- FUNGSI BERITA (UPDATED: LOGIKA GAMBAR UNGGULAN) ---
             fetch('berita.json')
                 .then(response => response.json())
                 .then(data => {
                     const container = document.getElementById('home-news-container');
                     const latestNews = data.slice(0, 4); // Ambil 4 Berita
-                    const logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Kementerian_Agama_new_logo.png/150px-Kementerian_Agama_new_logo.png";
+                    const defaultLogoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Kementerian_Agama_new_logo.png/150px-Kementerian_Agama_new_logo.png";
 
                     if (latestNews.length > 0) {
                         container.innerHTML = '';
                         latestNews.forEach(news => {
+                            
+                            // --- LOGIKA GAMBAR (Sama seperti berita.html) ---
+                            let thumbnailHTML = '';
+
+                            if (news.thumbnail && news.thumbnail.trim() !== '') {
+                                // JIKA ADA GAMBAR: Tampilkan Gambar Asli
+                                thumbnailHTML = `
+                                    <div class="auto-thumb thumb-home" style="padding:0; background:none;">
+                                        <img src="${news.thumbnail}" alt="${news.judul}" style="width:100%; height:100%; object-fit:cover; border-radius:8px;">
+                                    </div>
+                                `;
+                            } else {
+                                // JIKA TIDAK ADA GAMBAR: Tampilkan Kotak Hijau Default
+                                thumbnailHTML = `
+                                    <div class="auto-thumb thumb-home">
+                                        <img src="${defaultLogoUrl}" class="thumb-logo thumb-logo-small" alt="Logo">
+                                        <div class="thumb-title-text thumb-title-small">${news.judul}</div>
+                                    </div>
+                                `;
+                            }
+                            // ------------------------------------------------
+
                             const card = `
                                 <div class="card">
                                     <a href="detail-berita.html?id=${news.id}" class="thumb-link" title="${news.judul}">
-                                        <div class="auto-thumb thumb-home">
-                                            <img src="${logoUrl}" class="thumb-logo thumb-logo-small" alt="Logo">
-                                            <div class="thumb-title-text thumb-title-small">${news.judul}</div>
-                                        </div>
+                                        ${thumbnailHTML}
                                     </a>
 
                                     <div class="news-text-wrapper">
