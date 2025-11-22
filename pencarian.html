@@ -6,43 +6,36 @@
     <title>Hasil Pencarian - Kemenag Kota Depok</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* CSS Khusus Halaman Pencarian */
+        /* CSS Khusus Pencarian */
         .search-area {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 40px;
-            padding: 20px;
-            background: var(--white);
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            display: flex; gap: 15px; margin-bottom: 30px; padding: 20px;
+            background: var(--white); border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
         #search-input {
-            flex: 1;
-            padding: 10px 15px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 1rem;
+            flex: 1; padding: 12px 15px; border: 1px solid #ddd;
+            border-radius: 6px; font-size: 1rem; outline: none;
         }
+        #search-input:focus { border-color: var(--primary); }
         #search-button {
-            padding: 10px 20px;
-            background-color: var(--primary);
-            color: var(--white);
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
+            padding: 10px 25px; background-color: var(--primary); color: var(--white);
+            border: none; border-radius: 6px; cursor: pointer; font-weight: 600; transition: background-color 0.3s;
         }
+        #search-button:hover { background-color: var(--primary-dark); }
+        
         .search-result-item {
-            border-bottom: 1px solid #eee;
-            padding: 15px 0;
+            background: #fff; padding: 20px; margin-bottom: 15px;
+            border-radius: 8px; border: 1px solid #eee;
         }
-        .search-result-item h4 {
-            color: var(--primary);
-            margin-bottom: 5px;
-        }
-        .search-result-item p {
-            font-size: 0.9rem;
-            color: #666;
+        .search-result-item h4 { margin-bottom: 8px; font-size: 1.1rem; }
+        .search-result-item h4 a { text-decoration: none; color: var(--primary); }
+        .search-result-item h4 a:hover { text-decoration: underline; }
+        .search-result-item p { font-size: 0.9rem; color: #555; line-height: 1.5; margin-bottom: 0; }
+        
+        /* Highlight text yang ditemukan */
+        .highlight { background-color: #fff3cd; font-weight: bold; padding: 0 2px; }
+        .result-badge {
+            display: inline-block; font-size: 0.7rem; padding: 2px 8px; 
+            background: #eee; border-radius: 4px; color: #666; margin-bottom: 5px;
         }
     </style>
 </head>
@@ -51,93 +44,201 @@
     <header id="header-placeholder"></header>
 
     <main>
-        <h3 class="section-title">Hasil Pencarian</h3>
+        <div class="breadcrumb-container">
+            <a href="/">Beranda</a>
+            <svg class="breadcrumb-separator" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+            <span class="breadcrumb-current">Pencarian</span>
+        </div>
+
+        <h3 class="section-title">Pencarian</h3>
 
         <div class="search-area">
-            <input type="text" id="search-input" placeholder="Masukkan kata kunci..." autofocus>
+            <input type="text" id="search-input" placeholder="Cari layanan, berita, atau informasi..." autofocus>
             <button id="search-button">Cari</button>
         </div>
 
-        <h4 id="search-query-display"></h4>
+        <h4 id="search-status" style="margin-bottom: 20px; color:#666;"></h4>
         
-        <div id="search-results-container">
-            <p>Silakan masukkan kata kunci untuk memulai pencarian.</p>
+        <div id="loading-indicator" style="display:none; text-align:center; color:var(--primary);">
+            <p>Sedang memindai halaman...</p>
         </div>
+
+        <div id="search-results-container"></div>
     </main>
 
     <footer id="footer-placeholder"></footer>
     <script src="script.js"></script>
+    
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const searchInput = document.getElementById('search-input');
             const searchButton = document.getElementById('search-button');
             const resultsContainer = document.getElementById('search-results-container');
-            const queryDisplay = document.getElementById('search-query-display');
+            const searchStatus = document.getElementById('search-status');
+            const loadingIndicator = document.getElementById('loading-indicator');
 
-            // Fungsi untuk mendapatkan query dari URL
-            function getQueryParam() {
-                const urlParams = new URLSearchParams(window.location.search);
-                const query = urlParams.get('q');
-                if (query) {
-                    // Isi input dengan query dari URL
-                    searchInput.value = query;
+            // --- 1. DAFTAR HALAMAN YANG AKAN DIPINDAI (MANUAL) ---
+            // Jika Anda membuat halaman baru, tambahkan nama filenya di sini.
+            const pagesList = [
+                { url: 'index.html', title: 'Beranda' },
+                { url: 'profil.html', title: 'Profil Kantor' },
+                { url: 'visimisi.html', title: 'Visi & Misi' },
+                { url: 'sejarah.html', title: 'Sejarah & Dasar Hukum' },
+                { url: 'struktur.html', title: 'Struktur Organisasi' },
+                { url: 'tupoksi.html', title: 'Tugas Pokok & Fungsi' },
+                { url: 'makna-lambang.html', title: 'Makna Lambang' },
+                { url: 'layanan.html', title: 'Layanan Kami' },
+                { url: 'aplikasi.html', title: 'Daftar Aplikasi' },
+                { url: 'kontak.html', title: 'Kontak Kami' },
+                { url: 'jadwal-salat.html', title: 'Jadwal Salat' }
+            ];
+
+            // --- 2. FUNGSI FETCH & PARSE HTML ---
+            async function fetchPageContent(url) {
+                try {
+                    const response = await fetch(url);
+                    if (!response.ok) throw new Error(`Gagal memuat ${url}`);
+                    const text = await response.text();
+                    
+                    // Parse string HTML menjadi DOM Document
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(text, 'text/html');
+                    
+                    // Ambil hanya teks di dalam tag <main> agar header/footer tidak ikut ter-scan
+                    const mainContent = doc.querySelector('main');
+                    return mainContent ? mainContent.innerText : ''; 
+                } catch (error) {
+                    console.warn(error);
+                    return "";
                 }
-                return query;
             }
 
-            // Fungsi Simulasi Pencarian
-            function runSearch(query) {
-                if (!query || query.length < 3) {
-                    queryDisplay.textContent = 'Masukkan minimal 3 karakter untuk mencari.';
+            // --- 3. FUNGSI PENCARIAN UTAMA ---
+            async function performSearch(query) {
+                if (!query || query.length < 2) {
+                    searchStatus.textContent = 'Masukkan minimal 2 karakter.';
                     resultsContainer.innerHTML = '';
                     return;
                 }
 
-                queryDisplay.innerHTML = `Menampilkan hasil untuk: <strong>"${query}"</strong>`;
+                // Reset UI
+                resultsContainer.innerHTML = '';
+                searchStatus.innerHTML = `Mencari: <strong>"${query}"</strong> ...`;
+                loadingIndicator.style.display = 'block';
                 
-                // --- LOGIKA SIMULASI HASIL (HARUS DIGANTI DENGAN LOGIKA SEARCH STATIS NYATA) ---
-                const dummyResults = [
-                    { title: "Profil Kantor", link: "profil.html", summary: "Informasi umum, visi dan misi, dan sejarah pembentukan kantor." },
-                    { title: "Jadwal Sholat", link: "jadwal-sholat.html", summary: "Jadwal salat bulanan untuk Kota Depok bersumber dari Bimas Islam." },
-                    { title: "Layanan Haji", link: "layanan.html#haji", summary: "Daftar pelayanan pendaftaran, pembatalan, dan bimbingan manasik haji." },
-                    { title: "Tugas Pokok Subbag TU", link: "tupoksi.html", summary: "Rincian tugas Subbagian Tata Usaha dan pengelolaan administrasi." },
-                ];
+                const lowerQuery = query.toLowerCase();
+                const results = [];
 
-                const filteredResults = dummyResults.filter(item => 
-                    item.title.toLowerCase().includes(query.toLowerCase()) || 
-                    item.summary.toLowerCase().includes(query.toLowerCase())
-                );
+                // A. CARI DI HALAMAN STATIS (HTML)
+                // Kita gunakan Promise.all agar pencarian berjalan paralel (cepat)
+                const pagePromises = pagesList.map(async (page) => {
+                    const content = await fetchPageContent(page.url);
+                    // Bersihkan spasi berlebih
+                    const cleanContent = content.replace(/\s+/g, ' ').trim();
+                    
+                    if (cleanContent.toLowerCase().includes(lowerQuery)) {
+                        return {
+                            type: 'Halaman',
+                            title: page.title,
+                            url: page.url,
+                            content: cleanContent
+                        };
+                    }
+                    return null;
+                });
+
+                // B. CARI DI BERITA (JSON)
+                // Berita tetap harus via JSON karena file detailnya dinamis
+                const newsPromise = fetch('berita.json')
+                    .then(res => res.json())
+                    .then(data => {
+                        return data.filter(news => 
+                            news.judul.toLowerCase().includes(lowerQuery) || 
+                            news.ringkasan.toLowerCase().includes(lowerQuery)
+                        ).map(news => ({
+                            type: 'Berita',
+                            title: news.judul,
+                            url: `detail-berita.html?id=${news.id}`,
+                            content: news.ringkasan
+                        }));
+                    })
+                    .catch(() => []);
+
+                // Tunggu semua proses selesai
+                const [pagesResults, newsResults] = await Promise.all([
+                    Promise.all(pagePromises),
+                    newsPromise
+                ]);
+
+                // Gabungkan hasil (filter null dari pagesResults)
+                const finalResults = [...pagesResults.filter(r => r !== null), ...newsResults];
+
+                // Tampilkan Hasil
+                loadingIndicator.style.display = 'none';
                 
-                let html = '';
-                if (filteredResults.length > 0) {
-                    filteredResults.forEach(result => {
-                        html += `
+                if (finalResults.length > 0) {
+                    searchStatus.innerHTML = `Ditemukan <strong>${finalResults.length}</strong> hasil untuk: <strong>"${query}"</strong>`;
+                    
+                    finalResults.forEach(item => {
+                        const snippet = getHighlightSnippet(item.content, query);
+                        const resultHTML = `
                             <div class="search-result-item">
-                                <h4><a href="${result.link}" style="color:var(--primary); text-decoration:none;">${result.title}</a></h4>
-                                <p>${result.summary}</p>
+                                <span class="result-badge">${item.type}</span>
+                                <h4><a href="${item.url}">${item.title}</a></h4>
+                                <p>${snippet}</p>
                             </div>
                         `;
+                        resultsContainer.innerHTML += resultHTML;
                     });
                 } else {
-                    html = '<p>Tidak ditemukan hasil yang cocok dengan kata kunci Anda.</p>';
+                    searchStatus.innerHTML = `Tidak ditemukan hasil untuk: <strong>"${query}"</strong>`;
+                    resultsContainer.innerHTML = '<p style="color:#666;">Cobalah kata kunci lain atau periksa ejaan Anda.</p>';
                 }
-                
-                resultsContainer.innerHTML = html;
-                window.scrollTo(0, 0); // Gulir ke atas
             }
 
-            // Aksi saat tombol diklik
-            searchButton.addEventListener('click', function() {
-                const query = searchInput.value.trim();
-                // Arahkan ke halaman ini lagi dengan query di URL
-                window.location.href = `pencarian.html?q=${encodeURIComponent(query)}`;
+            // Fungsi Helper: Membuat cuplikan teks dan highlight kata kunci
+            function getHighlightSnippet(text, query) {
+                if(!text) return "";
+                const lowerText = text.toLowerCase();
+                const index = lowerText.indexOf(query.toLowerCase());
+                
+                // Jika ketemu di judul tapi tidak di body, ambil awal teks
+                if (index === -1) return text.substring(0, 150) + "...";
+
+                // Ambil potongan teks sekitar kata kunci (50 char sebelum, 100 sesudah)
+                const start = Math.max(0, index - 50);
+                const end = Math.min(text.length, index + 100);
+                let snippet = text.substring(start, end);
+
+                // Tambahkan highlight
+                const regex = new RegExp(`(${query})`, 'gi');
+                return "..." + snippet.replace(regex, '<span class="highlight">$1</span>') + "...";
+            }
+
+            // EVENT LISTENERS
+            
+            // Cek URL param saat load
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlQuery = urlParams.get('q');
+            if (urlQuery) {
+                searchInput.value = urlQuery;
+                performSearch(urlQuery);
+            }
+
+            // Klik Tombol Cari
+            searchButton.addEventListener('click', () => {
+                const q = searchInput.value.trim();
+                if(q) {
+                    const newUrl = window.location.pathname + '?q=' + encodeURIComponent(q);
+                    window.history.pushState({path:newUrl}, '', newUrl);
+                    performSearch(q);
+                }
             });
 
-            // Aksi saat memuat halaman
-            const initialQuery = getQueryParam();
-            if (initialQuery) {
-                runSearch(initialQuery);
-            }
+            // Tekan Enter di Input
+            searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') searchButton.click();
+            });
         });
     </script>
 </body>
