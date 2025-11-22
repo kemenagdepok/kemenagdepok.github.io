@@ -469,6 +469,7 @@ main {
 /* =========================================
    9. DAFTAR APLIKASI
    ========================================= */
+/* --- DAFTAR APLIKASI PAGE STYLES --- */
 .app-list { 
     list-style: none; 
     padding-left: 10px; 
@@ -477,7 +478,7 @@ main {
 .app-list li { 
     margin-bottom: 12px; 
     position: relative;
-    padding-left: 25px; /* Ditingkatkan untuk kerapian wrapping */
+    padding-left: 25px; 
 }
 /* Custom Bullet (Titik Hijau) */
 .app-list li::before {
@@ -509,14 +510,15 @@ main {
     padding-bottom: 5px;
     border-bottom: 2px solid var(--gold);
 }
-.card.app-card { min-height: 250px; }
+.card.app-card { 
+    min-height: auto; /* Tinggi menyesuaikan isi */
+}
 
-/* Perbaikan Layout Grid Aplikasi (2 Kolom di Desktop) */
-@media (min-width: 900px) {
-    .app-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-    }
+/* LAYOUT 1 KOLOM (FULL WIDTH) */
+.app-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Memaksa 1 kolom penuh */
+    gap: 20px;
 }
 
 /* --- NEWS & THUMBNAILS UPDATE --- */
