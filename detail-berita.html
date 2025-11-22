@@ -137,22 +137,34 @@
                         throw new Error("Library Marked.js gagal dimuat.");
                     }
 
-                    // Render Markdown
                     const htmlContent = marked.parse(markdownText);
                     
-                    // Render HTML Elements (Gambar Unggulan)
+                    // 3. Render Konten HTML
+                    
+                    // A. Gambar Unggulan (Hero Image)
+                    // Kita tambahkan class khusus 'article-hero-img' agar mudah di-style
                     const heroHTML = `
-                        <div class="auto-thumb" style="height: 280px; margin-bottom: 0;">
-                            <img src="${logoUrl}" class="thumb-logo" alt="Logo Kemenag">
-                            <div class="thumb-title-text" style="font-size: 1.5rem;">${currentNews.judul}</div>
+                        <div class="auto-thumb article-hero-img" style="height: 320px; margin-bottom: 0; border-radius: 8px;">
+                            <img src="${logoUrl}" class="thumb-logo" alt="Logo Kemenag" style="width:80px; box-shadow:none; margin:0;">
+                            <div class="thumb-title-text" style="font-size: 1.8rem; margin-top:15px;">${currentNews.judul}</div>
                         </div>
                     `;
 
                     document.getElementById('article-hero').innerHTML = heroHTML;
-                    document.getElementById('article-meta').innerHTML = `📅 ${currentNews.tanggal} &nbsp;|&nbsp; 👤 Admin Kemenag`;
+                    
+                    // B. Meta Data
+                    document.getElementById('article-meta').innerHTML = `
+                        <span>📅 ${currentNews.tanggal}</span>
+                        <span>👤 Admin Kemenag</span>
+                    `;
+                    
+                    // C. Isi Berita
                     document.getElementById('article-content').innerHTML = htmlContent;
+                    
+                    // D. Update Breadcrumb
+                    document.getElementById('current-article-title').textContent = currentNews.judul; 
 
-                    // Tampilkan Hasil
+                    // 4. Tampilkan Konten
                     loadingState.style.display = 'none';
                     articleWrapper.style.display = 'block';
                 })

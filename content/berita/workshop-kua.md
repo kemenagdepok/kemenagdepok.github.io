@@ -1,3 +1,9 @@
+**Workshop Peningkatan Kompetensi Layanan KUA**
+
+<!-- ![gambar](...) -->
+
+**Depok (Kemenag)** - Isi berita dimulai di sini...
+
 **Depok (Kemenag)** – Dalam upaya meningkatkan kualitas pelayanan publik kepada masyarakat, Kantor Kementerian Agama Kota Depok menyelenggarakan kegiatan *Workshop Peningkatan Kompetensi Layanan KUA* yang diikuti oleh seluruh Kepala KUA, Penghulu, dan staf pelaksana se-Kota Depok, pada Senin (18/11/2025).
 
 Kepala Kantor Kementerian Agama Kota Depok menyampaikan bahwa KUA adalah wajah terdepan Kementerian Agama yang bersentuhan langsung dengan masyarakat. Oleh karena itu, standar pelayanan harus terus ditingkatkan seiring dengan perkembangan zaman.
