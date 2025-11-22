@@ -54,7 +54,7 @@ header {
 }
 
 .navbar { 
-    max-width: 1000px; /* BATAS LEBAR KONTEN HEADER */
+    max-width: 1000px;
     margin: 0 auto; 
     width: 100%;
     padding: 15px 20px;
@@ -137,31 +137,6 @@ header {
 /* Hamburger Menu (Hidden on Desktop) */
 .hamburger { display: none; }
 
-/* --- SEARCH BUTTON STYLE --- */
-.search-btn {
-    margin-left: 20px;
-    color: var(--text);
-    text-decoration: none;
-    transition: color 0.3s;
-    display: flex;
-    align-items: center;
-    flex-shrink: 0; /* Pastikan tidak mengecil */
-    z-index: 1001; /* Pastikan di atas menu nav links */
-}
-.search-btn:hover {
-    color: var(--primary);
-}
-.search-icon {
-    width: 20px;
-    height: 20px;
-}
-/* Adjust spacing for mobile */
-@media (max-width: 768px) {
-    .search-btn {
-        margin-left: 10px;
-        margin-right: 20px; /* Jarak dari burger menu */
-    }
-}
 
 /* =========================================
    3. HERO SECTION (FULLSCREEN)
@@ -282,54 +257,7 @@ main {
 
 
 /* =========================================
-   5. JADWAL SALAT SECTION
-   ========================================= */
-.prayer-times-section {
-    padding: 30px; background-color: #e8f5e9;
-    border-radius: 10px; margin-bottom: 40px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-}
-.prayer-header { 
-    margin-bottom: 25px; 
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end; /* Element sejajar di bawah */
-}
-.prayer-title-container { flex-shrink: 0; }
-.prayer-title { 
-    font-size: 2rem; font-weight: 800; color: var(--primary); line-height: 1.2;
-}
-.prayer-meta { 
-    text-align: right; /* Default: Rata Kanan di Desktop */
-    line-height: 1.4;
-}
-.prayer-date { 
-    font-size: 0.95rem; color: #333; font-weight: 600;
-}
-.prayer-link {
-    font-size: 0.85rem; display: block; color: var(--primary);
-    font-weight: 600; text-decoration: none; transition: color 0.3s;
-}
-.prayer-link:hover { color: var(--primary-dark); }
-
-.prayer-grid {
-    display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-start;
-}
-.prayer-box {
-    flex: 1 1 90px; min-width: 90px; background: var(--white);
-    padding: 15px 5px; border-radius: 12px; text-align: center;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-}
-.prayer-name { 
-    font-size: 0.8rem; color: var(--primary); font-weight: 600; margin-bottom: 5px;
-}
-.prayer-time { 
-    font-size: 1.3rem; color: var(--primary-dark); font-weight: 700;
-}
-
-
-/* =========================================
-   6. NEWS & THUMBNAILS
+   5. NEWS & THUMBNAILS
    ========================================= */
 .home-news-section { padding: 20px 0; }
 .loading-text { text-align: center; width: 100%; color: #666; }
@@ -360,30 +288,17 @@ main {
     background-image: radial-gradient(rgba(255,255,255,0.1) 2px, transparent 2px);
     background-size: 20px 20px; transform: rotate(30deg); pointer-events: none;
 }
-
-/* --- PENGATURAN LOGO THUMBNAIL --- */
-.thumb-logo {
-    width: 60px; height: auto; z-index: 1;
-}
-
+.thumb-logo { width: 60px; height: auto; z-index: 1; }
 .thumb-title-text {
     color: #ffffff; font-size: 1.1rem; font-weight: 700;
     line-height: 1.3; text-shadow: 0 2px 4px rgba(0,0,0,0.3); z-index: 1;
     display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
 }
-
 /* Link pada Gambar Berita */
 .thumb-link {
-    text-decoration: none;
-    display: block;
-    transition: opacity 0.3s;
+    text-decoration: none; display: block; transition: opacity 0.3s;
 }
-
-.thumb-link:hover {
-    opacity: 0.9;
-    cursor: pointer;
-}
-
+.thumb-link:hover { opacity: 0.9; cursor: pointer; }
 /* Override untuk Home (Lebih kecil) */
 .thumb-home { height: 180px; padding: 15px; }
 .thumb-logo-small { width: 50px; }
@@ -395,19 +310,12 @@ main {
 
 
 /* =========================================
-   7. PROFILE & ORGANIZATION CHART
+   6. PROFILE & ORGANIZATION CHART
    ========================================= */
 .mission-list { margin-left: 20px; margin-top: 10px; line-height: 1.6; }
-
-.org-structure {
-    display: flex; flex-direction: column; align-items: center;
-    gap: 30px; margin-top: 20px;
-}
+.org-structure { display: flex; flex-direction: column; align-items: center; gap: 30px; margin-top: 20px; }
 .org-level { width: 100%; display: flex; justify-content: center; }
-.org-grid-bottom {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px; width: 100%;
-}
+.org-grid-bottom { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; width: 100%; }
 .person-card {
     background: var(--white); padding: 25px 20px; border-radius: 8px;
     box-shadow: 0 3px 10px rgba(0,0,0,0.05); text-align: center;
@@ -424,11 +332,8 @@ main {
     margin-bottom: 5px; line-height: 1.3;
 }
 .person-nip { font-size: 0.85rem; color: #666; font-style: italic; }
-
 /* Timeline Styles */
-.timeline-box {
-    position: relative; padding-left: 20px; border-left: 2px solid #e0e0e0; margin-left: 10px;
-}
+.timeline-box { position: relative; padding-left: 20px; border-left: 2px solid #e0e0e0; margin-left: 10px; }
 .timeline-event { position: relative; margin-bottom: 25px; padding-left: 20px; }
 .t-marker {
     position: absolute; left: -28px; top: 0; width: 14px; height: 14px;
@@ -441,8 +346,6 @@ main {
 .timeline-event.current .t-marker { border-color: var(--gold); background-color: var(--gold); box-shadow: 0 0 0 4px rgba(240, 192, 1, 0.2); }
 .t-date.current-text { color: var(--primary); font-weight: 800; }
 .t-content.current-bg { background: #f0fdf4; padding: 10px 15px; border-radius: 6px; border-left: 3px solid var(--primary); margin-top: 5px; }
-
-
 /* History Page Utilities */
 .history-card-gap { margin-bottom: 20px; }
 .history-grid-gap { margin-bottom: 40px; }
@@ -461,7 +364,23 @@ main {
 
 
 /* =========================================
-   8. FOOTER
+   8. CONTACT PAGE
+   ========================================= */
+.contact-intro { margin-bottom: 30px; }
+.contact-wrapper { display: flex; flex-wrap: wrap; gap: 30px; }
+.contact-info, .contact-map { flex: 1; min-width: 300px; }
+.contact-map {
+    height: 400px; /* Diperkuat: Pastikan tingginya 400px */
+    overflow: hidden; /* Dihapus: border-radius dan box-shadow */
+}
+.contact-map iframe { width: 100%; height: 100%; border: 0; display: block; }
+.contact-item { margin-bottom: 25px; } /* Diperkuat: Spasi antar blok info */
+.contact-item h4 { margin-top: 5px; }
+.contact-item p, .contact-item table { margin-top: 5px; margin-bottom: 0; font-size: 0.95rem; } /* Spasi internal info card */
+
+
+/* =========================================
+   9. FOOTER
    ========================================= */
 footer { 
     background: var(--primary); color: var(--white); 
@@ -475,7 +394,7 @@ footer {
 
 
 /* =========================================
-   9. MOBILE RESPONSIVE
+   10. MOBILE RESPONSIVE
    ========================================= */
 @media (max-width: 900px) {
     /* Hero Responsive */
@@ -543,19 +462,19 @@ footer {
     }
     .dropbtn { pointer-events: none; font-weight: bold; }
     
-    /* --- PERBAIKAN JADWAL SALAT MOBILE --- */
+    /* Jadwal Salat Mobile Fix */
     .prayer-header {
-        flex-direction: column; /* Ubah jadi vertikal */
-        align-items: flex-start; /* Rata kiri */
-        margin-bottom: 15px; /* Jarak bawah */
+        flex-direction: column; 
+        align-items: flex-start; 
+        margin-bottom: 15px; 
     }
     
     .prayer-meta {
-        margin-top: 5px; /* Jarak dari judul utama */
-        text-align: left; /* PENTING: Menghilangkan rata kanan desktop */
+        margin-top: 5px; 
+        text-align: left;
     }
     
     .prayer-link {
-        margin-top: 3px; /* Jarak antara tanggal dan link */
+        margin-top: 3px;
     }
 }
