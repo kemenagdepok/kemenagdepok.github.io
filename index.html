@@ -13,13 +13,13 @@
 
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://kemenagdepok.github.io/">
-    <meta property="og:title" content="Kantor Kementerian Agama Kota Depok">
+    <meta property="og:title" content="Beranda - Kantor Kementerian Agama Kota Depok">
     <meta property="og:description" content="Portal resmi Kantor Kementerian Agama Kota Depok. Melayani umat dengan integritas, profesionalitas, dan semangat Ikhlas Beramal.">
     <meta property="og:image" content="https://kemenagdepok.github.io/images/seo/kemenag-depok.webp">
     <meta property="og:site_name" content="Kantor Kementerian Agama Kota Depok">
     
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Kemenag Kota Depok">
+    <meta name="twitter:title" content="Beranda - Kemenag Kota Depok">
     <meta name="twitter:description" content="Portal resmi Kantor Kementerian Agama Kota Depok.">
     <meta name="twitter:image" content="https://kemenagdepok.github.io/images/seo/kemenag-depok.webp">
     
@@ -67,19 +67,30 @@
                 <div class="prayer-meta">
                     <p class="prayer-date" id="current-masehi-date">Memuat tanggal...</p>
                     <p class="prayer-date-hijri" id="current-hijri-date"></p> 
-                    
-                    <div class="prayer-footer">
-                        Untuk jadwal salat selengkapnya, <a href="jadwal-salat.html" class="content-link">Klik Disini</a>
-                    </div>
                 </div>
             </div>
             
             <div class="prayer-grid" id="prayer-times-grid">
                 <p>Memuat jadwal...</p>
             </div>
-        </div>
 
-        </main>
+            <div class="prayer-footer" style="text-align: center; margin-top: 25px; font-size: 0.9rem;">
+                Untuk jadwal salat selengkapnya, <a href="jadwal-salat.html" class="content-link">Klik Disini</a>
+            </div>
+        </div>
+        <section class="home-news-section">
+            <h3 class="section-title">Berita Terkini</h3>
+            
+            <div id="home-news-container" class="grid-container">
+                <p class="loading-text">Memuat berita terbaru...</p>
+            </div>
+
+            <div class="btn-center-wrapper">
+                <a href="berita.html" class="btn-view-all">Lihat Semua Berita →</a>
+            </div>
+        </section>
+
+    </main>
 
     <footer id="footer-placeholder"></footer>
 
@@ -141,7 +152,7 @@
                     // Tampilkan Tanggal Masehi
                     dateMasehiDisplay.textContent = formatIndonesianDate(data.data.jadwal.date);
                     
-                    // Panggil fungsi Hijriah setelah tanggal masehi didapat
+                    // Panggil fungsi Hijriah
                     loadHijriDate();
 
                     const times = [
@@ -183,12 +194,12 @@
         document.addEventListener("DOMContentLoaded", function() {
             loadPrayerTimes();
             
-            // --- FUNGSI BERITA (Sama seperti sebelumnya) ---
+            // --- FUNGSI BERITA ---
             fetch('berita.json')
                 .then(response => response.json())
                 .then(data => {
                     const container = document.getElementById('home-news-container');
-                    const latestNews = data.slice(0, 4); // 4 Berita
+                    const latestNews = data.slice(0, 4); // Ambil 4 Berita
                     const logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Kementerian_Agama_new_logo.png/150px-Kementerian_Agama_new_logo.png";
 
                     if (latestNews.length > 0) {
@@ -202,13 +213,17 @@
                                             <div class="thumb-title-text thumb-title-small">${news.judul}</div>
                                         </div>
                                     </a>
+
                                     <div class="news-text-wrapper">
                                         <small style="color:#666; display:block;">${news.tanggal}</small>
+                                        
                                         <h4 style="margin: 5px 0; font-size: 1rem;">
                                             <a href="detail-berita.html?id=${news.id}" style="text-decoration:none; color:var(--primary);" title="${news.judul}">
                                                 ${news.judul}
                                             </a>
                                         </h4>
+                                        
+                                        <p class="news-summary">${news.ringkasan}</p>
                                     </div>
                                 </div>
                             `;
