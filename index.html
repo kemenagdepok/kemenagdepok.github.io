@@ -59,42 +59,34 @@
         
         <div class="prayer-times-section">
             <div class="prayer-header">
+                
                 <div class="prayer-title-container">
                     <h2 class="prayer-title">Jadwal Salat Kota Depok</h2>
                 </div>
+                
                 <div class="prayer-meta">
-                    <p class="prayer-date" id="current-hijri-date">Memuat tanggal...</p>
+                    <p class="prayer-date" id="current-masehi-date">Memuat tanggal...</p>
+                    <p class="prayer-date-hijri" id="current-hijri-date"></p> 
+                    
+                    <div class="prayer-footer">
+                        Untuk jadwal salat selengkapnya, <a href="jadwal-salat.html" class="content-link">Klik Disini</a>
+                    </div>
                 </div>
             </div>
             
             <div class="prayer-grid" id="prayer-times-grid">
                 <p>Memuat jadwal...</p>
             </div>
-
-            <div class="prayer-footer">
-                Untuk jadwal salat selengkapnya, <a href="jadwal-salat.html" class="content-link">Klik Disini</a>
-            </div>
         </div>
-        <section class="home-news-section">
-            <h3 class="section-title">Berita Terkini</h3>
-            
-            <div id="home-news-container" class="grid-container">
-                <p class="loading-text">Memuat berita terbaru...</p>
-            </div>
 
-            <div class="btn-center-wrapper">
-                <a href="berita.html" class="btn-view-all">Lihat Semua Berita →</a>
-            </div>
-        </section>
-    </main>
+        </main>
 
     <footer id="footer-placeholder"></footer>
 
     <script src="script.js"></script>
     
     <script>
-        
-        // --- FUNGSI JADWAL SALAT ---
+        // --- FUNGSI FORMAT TANGGAL (YYYY-MM-DD) ---
         function getFormattedDate() {
             const today = new Date();
             const yyyy = today.getFullYear();
@@ -103,20 +95,41 @@
             return `${yyyy}-${mm}-${dd}`; 
         }
 
+        // Format Tampilan: Sabtu, 22 November 2025
         function formatIndonesianDate(date) {
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             return new Date(date).toLocaleDateString('id-ID', options);
         }
 
+        // --- 1. AMBIL DATA HIJRIAH ---
+        async function loadHijriDate() {
+            const dateStr = getFormattedDate(); 
+            // API Kalender Hijriah
+            const api_url = `https://api.myquran.com/v2/cal/hijr/${dateStr}?adj=-1`;
+
+            try {
+                const response = await fetch(api_url);
+                const json = await response.json();
+
+                if (json.status && json.data && json.data.date) {
+                    // Ambil index ke-1: "1 Jumadil Akhir 1447 H"
+                    const hijriString = json.data.date[1];
+                    document.getElementById('current-hijri-date').textContent = hijriString;
+                }
+            } catch (error) {
+                console.error("Gagal memuat tanggal hijriah:", error);
+            }
+        }
+
+        // --- 2. AMBIL JADWAL SALAT ---
         async function loadPrayerTimes() {
-            const cityId = "0507"; 
+            const cityId = "0507"; // Depok
             const date = getFormattedDate();
             const api_url = `https://api.myquran.com/v2/sholat/jadwal/${cityId}/${date}`;
             const gridContainer = document.getElementById('prayer-times-grid');
-            const dateDisplay = document.getElementById('current-hijri-date');
+            const dateMasehiDisplay = document.getElementById('current-masehi-date');
 
             gridContainer.innerHTML = '<p style="font-size:0.9rem;">Memuat jadwal...</p>';
-            dateDisplay.textContent = 'Memuat tanggal...';
 
             try {
                 const response = await fetch(api_url);
@@ -124,17 +137,21 @@
 
                 if (data.status && data.data && data.data.jadwal) {
                     const jadwal = data.data.jadwal;
-                    const displayDate = formatIndonesianDate(data.data.jadwal.date); 
-                    dateDisplay.textContent = displayDate;
                     
+                    // Tampilkan Tanggal Masehi
+                    dateMasehiDisplay.textContent = formatIndonesianDate(data.data.jadwal.date);
+                    
+                    // Panggil fungsi Hijriah setelah tanggal masehi didapat
+                    loadHijriDate();
+
                     const times = [
                         { name: 'Imsak', key: 'imsak' },
                         { name: 'Subuh', key: 'subuh' },
                         { name: 'Terbit', key: 'terbit' },
                         { name: 'Dhuha', key: 'dhuha' },
-                        { name: 'Dzuhur', key: 'dzuhur' },
-                        { name: 'Ashar', key: 'ashar' },
-                        { name: 'Maghrib', key: 'maghrib' },
+                        { name: 'Zuhur', key: 'dzuhur' },
+                        { name: 'Asar', key: 'ashar' },
+                        { name: 'Magrib', key: 'maghrib' },
                         { name: 'Isya', key: 'isya' }
                     ];
 
@@ -152,29 +169,26 @@
                     gridContainer.innerHTML = htmlContent;
 
                 } else {
-                    dateDisplay.textContent = formatIndonesianDate(new Date());
-                    gridContainer.innerHTML = '<p style="font-size:0.9rem;">Data jadwal salat hari ini tidak tersedia.</p>';
+                    dateMasehiDisplay.textContent = formatIndonesianDate(new Date());
+                    gridContainer.innerHTML = '<p style="font-size:0.9rem;">Data tidak tersedia.</p>';
                 }
 
             } catch (error) {
-                console.error("Error fetching prayer times:", error);
-                document.getElementById('current-hijri-date').textContent = formatIndonesianDate(new Date());
-                gridContainer.innerHTML = '<p style="font-size:0.9rem;">Koneksi terputus atau API bermasalah.</p>';
+                console.error("Error:", error);
+                dateMasehiDisplay.textContent = formatIndonesianDate(new Date());
+                gridContainer.innerHTML = '<p style="font-size:0.9rem;">Koneksi API bermasalah.</p>';
             }
         }
-        // --- AKHIR FUNGSI JADWAL SALAT ---
 
-        
         document.addEventListener("DOMContentLoaded", function() {
             loadPrayerTimes();
             
-            // --- FUNGSI BERITA (UPDATE: 4 Item, Struktur Mobile) ---
+            // --- FUNGSI BERITA (Sama seperti sebelumnya) ---
             fetch('berita.json')
                 .then(response => response.json())
                 .then(data => {
                     const container = document.getElementById('home-news-container');
-                    // UBAH: Ambil 4 Berita Terbaru
-                    const latestNews = data.slice(0, 4);
+                    const latestNews = data.slice(0, 4); // 4 Berita
                     const logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Kementerian_Agama_new_logo.png/150px-Kementerian_Agama_new_logo.png";
 
                     if (latestNews.length > 0) {
@@ -188,18 +202,13 @@
                                             <div class="thumb-title-text thumb-title-small">${news.judul}</div>
                                         </div>
                                     </a>
-
                                     <div class="news-text-wrapper">
                                         <small style="color:#666; display:block;">${news.tanggal}</small>
-                                        
                                         <h4 style="margin: 5px 0; font-size: 1rem;">
                                             <a href="detail-berita.html?id=${news.id}" style="text-decoration:none; color:var(--primary);" title="${news.judul}">
                                                 ${news.judul}
                                             </a>
                                         </h4>
-                                        
-                                        <p class="news-summary">${news.ringkasan}</p>
-                                        <a href="detail-berita.html?id=${news.id}" class="read-more-link">Baca Selengkapnya →</a>
                                     </div>
                                 </div>
                             `;
@@ -213,7 +222,6 @@
                     console.error('Error loading news:', error);
                     document.getElementById('home-news-container').innerHTML = '<p class="loading-text">Gagal memuat berita.</p>';
                 });
-            // --- AKHIR FUNGSI BERITA ---
         });
     </script>
 </body>

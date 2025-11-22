@@ -274,7 +274,7 @@ main {
 /* =========================================
    5. JADWAL SALAT SECTION
    ========================================= */
-/* --- JADWAL SALAT SECTION --- */
+
 .prayer-times-section {
     padding: 30px;
     background-color: #e8f5e9; 
@@ -327,6 +327,14 @@ main {
     font-size: 0.9rem;
     color: #333;
     font-weight: 400; /* Tidak tebal */
+}
+
+.prayer-date-hijri {
+    font-size: 0.9rem;
+    color: var(--primary); /* Warna Hijau */
+    font-weight: 500;
+    margin-top: 2px;
+    margin-bottom: 5px;
 }
 
 
@@ -679,17 +687,20 @@ footer {
     /* Jadwal Salat Mobile Fix */
     .prayer-header {
         flex-direction: column; 
-        align-items: flex-start; 
+        align-items: center; /* Ubah dari flex-start ke center */
         margin-bottom: 15px; 
+        text-align: center;  /* Pastikan teks rata tengah */
     }
     
     .prayer-meta {
-        margin-top: 5px; 
-        text-align: left;
+        margin-top: 10px; 
+        text-align: center; /* PERMINTAAN: Tanggal Rata Tengah */
+        width: 100%;
     }
     
     .prayer-link {
-        margin-top: 3px;
+        margin-top: 5px;
+        display: inline-block;
     }
 }
 
