@@ -235,6 +235,38 @@ main {
 .breadcrumb-separator { width: 16px; height: 16px; margin: 0 8px; color: #ccc; flex-shrink: 0; }
 .breadcrumb-current { color: var(--text); font-weight: 600; }
 
+/* =========================================
+   PERBAIKAN DETAIL BERITA (NEW)
+   ========================================= */
+
+/* 1. Sembunyikan Judul di Breadcrumb */
+#breadcrumb-title, 
+#breadcrumb-sep-last {
+    display: none !important;
+}
+
+/* 2. Gaya Judul Utama (Pengganti Kotak Hijau) */
+.article-title-heading {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #222; /* Warna Hitam agar kontras */
+    line-height: 1.3;
+    margin-bottom: 10px;
+    text-align: left; /* Judul rata kiri */
+}
+
+/* 3. Sembunyikan Judul Ganda di Dalam Konten */
+/* Ini akan menyembunyikan baris pertama di body jika itu adalah judul (teks tebal/paragraf) */
+.news-content > p:first-child {
+    display: none;
+}
+
+/* Responsive Mobile */
+@media (max-width: 768px) {
+    .article-title-heading {
+        font-size: 1.5rem; /* Judul lebih kecil di HP */
+    }
+}
 
 /* =========================================
    5. DAFTAR APLIKASI (FIXED 1 COLUMN)
