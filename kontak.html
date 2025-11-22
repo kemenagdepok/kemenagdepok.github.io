@@ -24,6 +24,44 @@
     <meta name="twitter:image" content="https://kemenagdepok.github.io/images/seo/kemenag-depok.webp">
     
     <link rel="shortcut icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Kementerian_Agama_new_logo.png/150px-Kementerian_Agama_new_logo.png" type="image/png">
+    
+    <style>
+        .contact-intro { margin-bottom: 30px; }
+        .contact-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        .contact-info, .contact-map {
+            flex: 1;
+            min-width: 300px;
+        }
+        .contact-map {
+            height: 400px; /* Diperkuat: Pastikan tingginya 400px */
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .contact-map iframe {
+            width: 100%;
+            height: 100%; /* Penting: Memastikan iframe mengisi wadahnya */
+        }
+        
+        /* PERBAIKAN SPASI INTERNAL PADA ITEM KONTAK */
+        .contact-item {
+            margin-bottom: 25px; /* Spasi vertikal antar blok info (Alamat, Jam, Email) */
+        }
+        .contact-item h4 {
+            margin-top: 5px; /* Memberi sedikit jarak dari konten sebelumnya jika ada */
+        }
+        /* Memperbaiki jarak h4 ke p */
+        .contact-item p, .contact-item table {
+            margin-top: 5px; 
+            margin-bottom: 0;
+            font-size: 0.95rem;
+        }
+        
+    </style>
 </head>
 <body>
 
