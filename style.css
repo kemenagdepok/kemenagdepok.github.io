@@ -41,21 +41,6 @@ body {
     overflow-x: hidden; 
 }
 
-/* --- GLOBAL LINK STYLES --- */
-/* Aturan khusus untuk link dalam konten (seperti di paragraf atau footer jadwal) */
-.content-link {
-    color: var(--primary);
-    text-decoration: underline;
-    text-decoration-thickness: 1px; /* Ketebalan garis */
-    text-underline-offset: 5px;     /* Jarak garis dengan teks (biar tidak nempel) */
-    transition: color 0.3s;
-    font-weight: 600;
-}
-
-.content-link:hover {
-    color: var(--gold); /* Berubah warna saat kursor diarahkan */
-}
-
 /* =========================================
    2. HEADER & NAVIGATION
    ========================================= */
@@ -69,7 +54,7 @@ header {
 }
 
 .navbar { 
-    max-width: 1000px;
+    max-width: 1000px; /* BATAS LEBAR KONTEN HEADER */
     margin: 0 auto; 
     width: 100%;
     padding: 15px 20px;
@@ -152,46 +137,40 @@ header {
 /* Hamburger Menu (Hidden on Desktop) */
 .hamburger { display: none; }
 
+/* Search Button */
+.search-btn {
+    margin-left: 20px; color: var(--text); text-decoration: none;
+    transition: color 0.3s; display: flex; align-items: center;
+    flex-shrink: 0; z-index: 1001;
+}
+.search-btn:hover { color: var(--primary); }
+.search-icon { width: 20px; height: 20px; }
+
 
 /* =========================================
    3. HERO SECTION (FULLSCREEN)
    ========================================= */
 .hero-fullscreen {
     width: 100%;
-    
     background: linear-gradient(rgba(0, 99, 22, 0.9), rgba(0, 99, 22, 0.85)),
                 url('https://kemenagdepok.github.io/images/halaman/latar-belakang.webp');
-    
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    
     min-height: 85vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-    padding: 40px 0;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden; padding: 40px 0;
 }
 
 .hero-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    max-width: 1000px;
-    width: 100%;
-    gap: 50px;
-    padding: 0 20px;
-    flex-wrap: wrap;
+    display: flex; align-items: center; justify-content: space-between;
+    max-width: 1000px; width: 100%; gap: 50px; padding: 0 20px; flex-wrap: wrap;
 }
 
-/* Hero Text (Left) */
 .hero-text-content { flex: 1; min-width: 300px; color: #fff; }
 .hero-slogan {
     font-size: 3.5rem; font-weight: 800; color: var(--gold);
-    margin-bottom: 20px; line-height: 1.1;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    margin-bottom: 20px; line-height: 1.1; text-shadow: 0 2px 10px rgba(0,0,0,0.2);
 }
 .hero-description {
     font-size: 1.1rem; line-height: 1.6; color: #f1f1f1;
@@ -203,14 +182,9 @@ header {
     text-decoration: none; transition: all 0.3s;
     box-shadow: 0 4px 15px rgba(255, 193, 7, 0.4);
 }
-.cta-button:hover {
-    transform: translateY(-3px); background-color: #ffca28;
-}
+.cta-button:hover { transform: translateY(-3px); background-color: #ffca28; }
 
-/* Hero Image (Right - Glassmorphism) */
-.hero-image-content {
-    flex: 1; display: flex; justify-content: flex-end; min-width: 300px;
-}
+.hero-image-content { flex: 1; display: flex; justify-content: flex-end; min-width: 300px; }
 .profile-card-glass {
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
@@ -218,14 +192,10 @@ header {
     padding: 30px; border-radius: 20px; text-align: center;
     max-width: 350px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
 }
-
-/* Image 75% */
 .image-wrapper { width: 75%; margin: 0 auto; }
 .image-wrapper img {
-    width: 100%; height: auto; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
-    margin-bottom: 15px;
+    width: 100%; height: auto; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3)); margin-bottom: 15px;
 }
-
 .profile-label { display: block; color: var(--gold); font-size: 0.8rem;
     font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 5px; }
 .profile-name { color: #fff; font-size: 1.2rem; font-weight: 700; margin: 0;
@@ -236,19 +206,14 @@ header {
    4. MAIN CONTENT & GENERAL STYLES
    ========================================= */
 main { 
-    max-width: 1000px;
-    margin: 0 auto; 
-    width: 100%;
-    padding: 40px 20px;
-    flex: 1; 
+    max-width: 1000px; margin: 0 auto; width: 100%; padding: 40px 20px; flex: 1; 
 }
-
 .section-title { 
     margin-bottom: 20px; border-bottom: 2px solid #ddd; 
     padding-bottom: 10px; color: var(--primary); 
 }
 
-/* Cards & Grid */
+/* Cards & Grid (Default Multi Column for General Content) */
 .grid-container { 
     display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; 
 }
@@ -272,204 +237,8 @@ main {
 
 
 /* =========================================
-   5. JADWAL SALAT SECTION
+   5. DAFTAR APLIKASI (FIXED 1 COLUMN)
    ========================================= */
-
-.prayer-times-section {
-    padding: 30px;
-    background-color: #e8f5e9; 
-    border-radius: 10px;
-    margin-bottom: 40px; 
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    text-align: center; /* Agar footer jadwal rata tengah */
-}
-
-.prayer-header { 
-    margin-bottom: 25px; 
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-}
-.prayer-title-container { flex-shrink: 0; }
-.prayer-title { 
-    font-size: 2rem; font-weight: 800; color: var(--primary); line-height: 1.2;
-}
-.prayer-meta { 
-    text-align: right;
-    line-height: 1.4;
-}
-.prayer-date { 
-    font-size: 0.95rem; color: #333; font-weight: 600;
-}
-.prayer-link {
-    font-size: 0.85rem; display: block; color: var(--primary);
-    font-weight: 600; text-decoration: none; transition: color 0.3s;
-}
-.prayer-link:hover { color: var(--primary-dark); }
-
-.prayer-grid {
-    display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-start;
-}
-.prayer-box {
-    flex: 1 1 90px; min-width: 90px; background: var(--white);
-    padding: 15px 5px; border-radius: 12px; text-align: center;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-}
-.prayer-name { 
-    font-size: 0.8rem; color: var(--primary); font-weight: 600; margin-bottom: 5px;
-}
-.prayer-time { 
-    font-size: 1.3rem; color: var(--primary-dark); font-weight: 700;
-}
-/* Footer Jadwal Salat (Baru) */
-.prayer-footer {
-    margin-top: 25px;
-    font-size: 0.9rem;
-    color: #333;
-    font-weight: 400; /* Tidak tebal */
-}
-
-.prayer-date-hijri {
-    font-size: 0.9rem;
-    color: var(--primary); /* Warna Hijau */
-    font-weight: 500;
-    /* margin-top: 2px; */
-    /* margin-bottom: 5px; */
-}
-
-
-/* =========================================
-   6. NEWS & THUMBNAILS
-   ========================================= */
-.home-news-section { padding: 20px 0; }
-.loading-text { text-align: center; width: 100%; color: #666; }
-
-/* Tombol Lihat Semua */
-.btn-center-wrapper { text-align: center; margin-top: 30px; }
-.btn-view-all {
-    display: inline-block; padding: 10px 25px; background-color: var(--primary);
-    color: #fff; text-decoration: none; border-radius: 30px;
-    font-weight: 600; font-size: 0.9rem; transition: all 0.3s;
-}
-.btn-view-all:hover { background-color: var(--primary-dark); transform: translateY(-2px); }
-
-/* Auto Generated Thumbnail (Kotak Hijau) */
-.auto-thumb {
-    width: 100%; height: 220px;
-    background: linear-gradient(135deg, #007E33 0%, #004d1f 100%);
-    border-radius: 8px; padding: 20px;
-    display: flex; flex-direction: column;
-    justify-content: center; align-items: center;
-    gap: 15px; text-align: center;
-    box-shadow: inset 0 0 20px rgba(0,0,0,0.1);
-    margin-bottom: 15px; position: relative; overflow: hidden;
-}
-.auto-thumb::before {
-    content: ''; position: absolute; top: -50%; left: -50%;
-    width: 200%; height: 200%;
-    background-image: radial-gradient(rgba(255,255,255,0.1) 2px, transparent 2px);
-    background-size: 20px 20px; transform: rotate(30deg); pointer-events: none;
-}
-.thumb-logo { width: 60px; height: auto; z-index: 1; }
-.thumb-title-text {
-    color: #ffffff; font-size: 1.1rem; font-weight: 700;
-    line-height: 1.3; text-shadow: 0 2px 4px rgba(0,0,0,0.3); z-index: 1;
-    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
-}
-
-/* Link pada Gambar Berita */
-.thumb-link {
-    text-decoration: none; display: block; transition: opacity 0.3s;
-}
-.thumb-link:hover { opacity: 0.9; cursor: pointer; }
-/* Override untuk Home (Lebih kecil) */
-.thumb-home { height: 180px; padding: 15px; }
-.thumb-logo-small { width: 50px; }
-.thumb-title-small { font-size: 0.95rem; }
-.news-summary {
-    font-size: 0.9rem; color: #555; margin-top: 5px;
-    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
-}
-
-
-/* =========================================
-   7. PROFILE & ORGANIZATION CHART
-   ========================================= */
-.mission-list { margin-left: 20px; margin-top: 10px; line-height: 1.6; }
-
-.org-structure { display: flex; flex-direction: column; align-items: center; gap: 30px; margin-top: 20px; }
-.org-level { width: 100%; display: flex; justify-content: center; }
-.org-grid-bottom { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; width: 100%; }
-.person-card {
-    background: var(--white); padding: 25px 20px; border-radius: 8px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.05); text-align: center;
-    border-top: 4px solid var(--primary); width: 100%; max-width: 350px;
-    transition: transform 0.2s;
-}
-.person-card:hover { transform: translateY(-5px); }
-.person-role {
-    color: var(--primary); font-size: 0.85rem; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px;
-}
-.person-name {
-    font-size: 1.1rem; font-weight: bold; color: #000;
-    margin-bottom: 5px; line-height: 1.3;
-}
-.person-nip { font-size: 0.85rem; color: #666; font-style: italic; }
-
-/* Timeline Styles */
-.timeline-box { position: relative; padding-left: 20px; border-left: 2px solid #e0e0e0; margin-left: 10px; }
-.timeline-event { position: relative; margin-bottom: 25px; padding-left: 20px; }
-.t-marker {
-    position: absolute; left: -28px; top: 0; width: 14px; height: 14px;
-    background-color: var(--white); border: 3px solid var(--primary); border-radius: 50%; z-index: 2;
-}
-.t-date { font-size: 0.85rem; font-weight: 700; color: #888; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
-.t-content { background: #fff; padding: 0; }
-.t-content strong { display: block; font-size: 1rem; color: var(--text); margin-bottom: 2px; }
-.t-content p { font-size: 0.9rem; color: #666; margin: 0; line-height: 1.4; }
-.timeline-event.current .t-marker { border-color: var(--gold); background-color: var(--gold); box-shadow: 0 0 0 4px rgba(240, 192, 1, 0.2); }
-.t-date.current-text { color: var(--primary); font-weight: 800; }
-.t-content.current-bg { background: #f0fdf4; padding: 10px 15px; border-radius: 6px; border-left: 3px solid var(--primary); margin-top: 5px; }
-
-
-/* History Page Utilities */
-.history-card-gap { margin-bottom: 20px; }
-.history-grid-gap { margin-bottom: 40px; }
-.history-text { line-height: 1.8; text-align: justify; color: #444; }
-.history-text p { margin-bottom: 15px; }
-.note-text { color: var(--primary); font-style: italic; }
-.role-label { font-size: 0.8rem; color: var(--primary); display: block; margin-top: 2px; font-weight: 600; }
-
-/* Tupoksi Styles */
-.tupoksi-unit h5 {
-    color: var(--primary); font-size: 1.1rem; margin-bottom: 10px; padding-bottom: 5px; border-bottom: 2px solid var(--gold);
-}
-.tupoksi-unit p { font-size: 0.95rem; line-height: 1.5; color: #555; }
-.tupoksi-unit strong { color: var(--primary-light); }
-.mt-medium { margin-top: 40px; }
-
-
-/* =========================================
-   8. CONTACT PAGE
-   ========================================= */
-.contact-intro { margin-bottom: 30px; }
-.contact-wrapper { display: flex; flex-wrap: wrap; gap: 30px; }
-.contact-info, .contact-map { flex: 1; min-width: 300px; }
-.contact-map {
-    height: 400px;
-    overflow: hidden; 
-}
-.contact-map iframe { width: 100%; height: 100%; border: 0; display: block; }
-.contact-item { margin-bottom: 25px; } 
-.contact-item h4 { margin-top: 5px; }
-.contact-item p, .contact-item table { margin-top: 5px; margin-bottom: 0; font-size: 0.95rem; }
-
-
-/* =========================================
-   9. DAFTAR APLIKASI
-   ========================================= */
-/* --- DAFTAR APLIKASI PAGE STYLES --- */
 .app-list { 
     list-style: none; 
     padding-left: 10px; 
@@ -510,110 +279,156 @@ main {
     padding-bottom: 5px;
     border-bottom: 2px solid var(--gold);
 }
-.card.app-card { 
-    min-height: auto; /* Tinggi menyesuaikan isi */
-}
+.card.app-card { min-height: auto; }
 
-/* LAYOUT 1 KOLOM (FULL WIDTH) */
+/* --- PENTING: MEMAKSA GRID APLIKASI JADI 1 KOLOM --- */
 .app-grid {
     display: grid;
-    grid-template-columns: 1fr; /* Memaksa 1 kolom penuh */
+    grid-template-columns: 1fr !important; /* Paksa 1 Kolom */
     gap: 20px;
 }
 
-/* --- NEWS & THUMBNAILS UPDATE --- */
 
-/* Desktop Grid: 4 Kolom */
+/* =========================================
+   6. JADWAL SALAT SECTION
+   ========================================= */
+.prayer-times-section {
+    padding: 30px; background-color: #e8f5e9;
+    border-radius: 10px; margin-bottom: 40px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05); text-align: center;
+}
+.prayer-header { 
+    margin-bottom: 25px; display: flex; justify-content: space-between; align-items: flex-end;
+}
+.prayer-title-container { flex-shrink: 0; }
+.prayer-title { font-size: 2rem; font-weight: 800; color: var(--primary); line-height: 1.2; }
+.prayer-meta { text-align: right; line-height: 1.4; }
+.prayer-date { font-size: 0.95rem; color: #333; font-weight: 600; }
+.prayer-date-hijri { font-size: 0.9rem; color: var(--primary); font-weight: 500; margin-top: 2px; margin-bottom: 5px; }
+.prayer-footer { margin-top: 25px; font-size: 0.9rem; color: #333; font-weight: 400; }
+
+.content-link {
+    color: var(--primary); text-decoration: underline;
+    text-decoration-thickness: 1px; text-underline-offset: 5px;
+    transition: color 0.3s; font-weight: 600;
+}
+.content-link:hover { color: var(--gold); }
+
+.prayer-grid { display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-start; }
+.prayer-box {
+    flex: 1 1 90px; min-width: 90px; background: var(--white);
+    padding: 15px 5px; border-radius: 12px; text-align: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.prayer-name { font-size: 0.8rem; color: var(--primary); font-weight: 600; margin-bottom: 5px; }
+.prayer-time { font-size: 1.3rem; color: var(--primary-dark); font-weight: 700; }
+
+
+/* =========================================
+   7. NEWS LIST (BERITA PAGE 1 KOLOM)
+   ========================================= */
+/* Grid Khusus Halaman Berita */
+.news-list-container {
+    display: grid; grid-template-columns: 1fr; gap: 20px;
+}
+.news-card-horizontal {
+    display: flex; flex-direction: row; align-items: flex-start;
+    padding: 25px; gap: 30px; background: var(--white);
+    border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: transform 0.2s;
+}
+.news-card-horizontal:hover { transform: translateY(-3px); }
+.news-thumb-wrapper {
+    flex-shrink: 0; width: 280px; height: 180px; border-radius: 8px; overflow: hidden;
+}
+.news-thumb-wrapper .auto-thumb {
+    width: 100%; height: 100%; margin-bottom: 0; border-radius: 8px;
+}
+.news-thumb-wrapper .thumb-title-text { display: none; } /* Hide title inside image */
+.news-content-side {
+    flex: 1; display: flex; flex-direction: column; justify-content: center;
+}
+.news-date-list { color: #666; font-size: 0.9rem; margin-bottom: 10px; display: block; }
+.news-title-list { margin: 0 0 10px 0; font-size: 1.4rem; line-height: 1.3; }
+.news-excerpt-list { color: #555; margin-bottom: 15px; line-height: 1.6; }
+.news-read-more { font-weight: 600; color: var(--primary); text-decoration: none; font-size: 0.9rem; }
+
+
+/* =========================================
+   8. HOMEPAGE NEWS (4 KOLOM)
+   ========================================= */
+.home-news-section { padding: 20px 0; }
+.loading-text { text-align: center; width: 100%; color: #666; }
+.btn-center-wrapper { text-align: center; margin-top: 30px; }
+.btn-view-all {
+    display: inline-block; padding: 10px 25px; background-color: var(--primary);
+    color: #fff; text-decoration: none; border-radius: 30px;
+    font-weight: 600; font-size: 0.9rem; transition: all 0.3s;
+}
+.btn-view-all:hover { background-color: var(--primary-dark); transform: translateY(-2px); }
+
+.auto-thumb {
+    width: 100%; height: 220px;
+    background: linear-gradient(135deg, #007E33 0%, #004d1f 100%);
+    border-radius: 8px; padding: 20px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    gap: 15px; text-align: center;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.1);
+    margin-bottom: 15px; position: relative; overflow: hidden;
+}
+.auto-thumb::before {
+    content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+    background-image: radial-gradient(rgba(255,255,255,0.1) 2px, transparent 2px);
+    background-size: 20px 20px; transform: rotate(30deg); pointer-events: none;
+}
+.thumb-logo { width: 60px; height: auto; z-index: 1; }
+.thumb-title-text {
+    color: #ffffff; font-size: 1.1rem; font-weight: 700;
+    line-height: 1.3; text-shadow: 0 2px 4px rgba(0,0,0,0.3); z-index: 1;
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+}
+.thumb-link { text-decoration: none; display: block; transition: opacity 0.3s; }
+.thumb-link:hover { opacity: 0.9; cursor: pointer; }
+.thumb-home { height: 180px; padding: 15px; }
+.thumb-logo-small { width: 50px; }
+.thumb-title-small { font-size: 0.95rem; }
+.news-summary { display: none; } /* Hide summary on homepage */
+.read-more-link { display: none; } /* Hide read more on homepage */
+
 @media (min-width: 900px) {
-    .grid-container { 
-        grid-template-columns: repeat(4, 1fr); /* UBAH JADI 4 KOLOM */
-        gap: 20px; 
-    }
-}
-
-/* Sembunyikan Ringkasan dan Tombol Baca Selengkapnya (Global) */
-.news-summary, .read-more-link {
-    display: none; /* Hilang di Desktop dan Mobile sesuai request */
-}
-
-/* --- MOBILE NEWS CARD (TAMPILAN MENYAMPING) --- */
-@media (max-width: 768px) {
-    .grid-container {
-        grid-template-columns: 1fr; /* 1 Kolom ke bawah */
-        gap: 15px;
-    }
-
-    /* Ubah Kartu jadi Flexbox Horizontal */
-    .card {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        padding: 10px;
-        gap: 15px;
-        text-align: left;
-        height: auto; /* Tinggi menyesuaikan konten */
-    }
-
-    /* Bungkus Link Gambar agar ukurannya tetap */
-    .thumb-link {
-        flex-shrink: 0; /* Jangan mengecil */
-    }
-
-    /* Atur Ukuran Gambar Mobile 90x90 px */
-    .thumb-home {
-        width: 90px !important;
-        height: 90px !important;
-        padding: 0 !important; /* Hapus padding dalam */
-        margin-bottom: 0 !important;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    
-    /* Sembunyikan Teks Judul di dalam Gambar (karena kecil) */
-    .thumb-home .thumb-title-text {
-        display: none; 
-    }
-    
-    /* Tampilkan Logo saja di tengah */
-    .thumb-home .thumb-logo {
-        width: 40px; /* Perkecil logo di dalam thumbnail 90px */
-    }
-
-    /* Wrapper Teks di Kanan */
-    .news-text-wrapper {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    /* Judul Berita Mobile */
-    .card h4 {
-        margin: 0 0 5px 0;
-        font-size: 0.95rem;
-        line-height: 1.3;
-    }
-
-    /* Tanggal Berita Mobile */
-    .card small {
-        margin: 0;
-        font-size: 0.8rem;
-        color: #777;
+    /* Override grid container di homepage jadi 4 kolom */
+    .home-news-section .grid-container { 
+        grid-template-columns: repeat(4, 1fr); gap: 20px; 
     }
 }
 
 
 /* =========================================
+   9. PROFILE & OTHER STYLES
+   ========================================= */
+/* ... (Styles for Profile, Org Chart, History, Tupoksi, Contact Map, etc.) ... */
+/* (Pastikan Anda menyertakan bagian ini dari file sebelumnya jika diperlukan) */
+.org-chart-image { max-width: 100%; height: auto; display: block; margin: 20px auto 40px auto; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+.org-structure { display: flex; flex-direction: column; align-items: center; gap: 30px; margin-top: 20px; }
+.org-level { width: 100%; display: flex; justify-content: center; }
+.org-grid-bottom { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; width: 100%; }
+.person-card { background: var(--white); padding: 25px 20px; border-radius: 8px; box-shadow: 0 3px 10px rgba(0,0,0,0.05); text-align: center; border-top: 4px solid var(--primary); width: 100%; max-width: 350px; transition: transform 0.2s; }
+.person-card:hover { transform: translateY(-5px); }
+.person-role { color: var(--primary); font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
+.person-name { font-size: 1.1rem; font-weight: bold; color: #000; margin-bottom: 5px; line-height: 1.3; }
+.person-nip { font-size: 0.85rem; color: #666; font-style: italic; }
+
+.contact-map { height: 400px; overflow: hidden; }
+.contact-map iframe { width: 100%; height: 100%; border: 0; display: block; }
+.contact-item { margin-bottom: 25px; }
+.contact-item h4 { margin-top: 5px; }
+.contact-item p, .contact-item table { margin-top: 5px; margin-bottom: 0; font-size: 0.95rem; }
+
+/* =========================================
    10. FOOTER
    ========================================= */
-footer { 
-    background: var(--primary); color: var(--white); 
-    text-align: center; padding: 20px 0; margin-top: auto; width: 100%; 
-}
-.footer-content { 
-    max-width: 1000px;
-    margin: 0 auto; padding: 0 20px; 
-}
+footer { background: var(--primary); color: var(--white); text-align: center; padding: 20px 0; margin-top: auto; width: 100%; }
+.footer-content { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
 .footer-content p { font-size: 0.9rem; margin: 5px 0; }
 
 
@@ -621,7 +436,6 @@ footer {
    11. MOBILE RESPONSIVE
    ========================================= */
 @media (max-width: 900px) {
-    /* Hero Responsive */
     .hero-wrapper { flex-direction: column-reverse; text-align: center; gap: 40px; }
     .hero-image-content { justify-content: center; }
     .hero-description { margin: 0 auto 30px auto; }
@@ -629,269 +443,49 @@ footer {
 }
 
 @media (max-width: 768px) {
-    /* Navbar Responsive */
     .navbar { flex-direction: row; justify-content: space-between; padding: 15px 5%; }
-    
-    /* Text Logo Logic */
-    .text-desktop { display: none; }
-    .text-mobile { display: block; }
-    .logo { height: 45px; }
-    .brand-text h1, .brand-text p { font-size: 1rem; }
-    
-    /* Card & Grid */
+    .text-desktop { display: none; } .text-mobile { display: block; }
+    .logo { height: 45px; } .brand-text h1, .brand-text p { font-size: 1rem; }
     .card.wide { grid-column: span 1; }
-
-    /* Hamburger Button */
-    .hamburger {
-        display: flex; flex-direction: column; gap: 5px;
-        cursor: pointer; z-index: 2000;
-    }
-    .hamburger span {
-        display: block; width: 25px; height: 3px;
-        background-color: var(--primary); border-radius: 2px;
-        transition: all 0.3s ease-in-out;
-    }
-    /* Animasi Burger X */
+    
+    /* Hamburger & Menu */
+    .hamburger { display: flex; flex-direction: column; gap: 5px; cursor: pointer; z-index: 2000; }
+    .hamburger span { display: block; width: 25px; height: 3px; background-color: var(--primary); border-radius: 2px; transition: all 0.3s; }
     .hamburger.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
     .hamburger.active span:nth-child(2) { opacity: 0; }
     .hamburger.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
-
-    /* Mobile Navigation (Side Drawer) */
-    .nav-links {
-        position: fixed; top: 0; right: 0;
-        height: 100vh; width: 70%;
-        background-color: var(--white);
-        flex-direction: column; align-items: flex-start; justify-content: flex-start;
-        padding-top: 100px; padding-left: 40px; padding-bottom: 40px;
-        box-shadow: -2px 0 10px rgba(0,0,0,0.1);
-        transform: translateX(100%); transition: transform 0.4s ease-in-out;
-        z-index: 1500;
-    }
+    
+    .nav-links { position: fixed; top: 0; right: 0; height: 100vh; width: 70%; background-color: var(--white); flex-direction: column; align-items: flex-start; justify-content: flex-start; padding-top: 100px; padding-left: 40px; padding-bottom: 40px; box-shadow: -2px 0 10px rgba(0,0,0,0.1); transform: translateX(100%); transition: transform 0.4s; z-index: 1500; }
     .nav-links.active { transform: translateX(0); }
     .nav-links li { width: 100%; margin: 10px 0; opacity: 0; }
     .nav-links.active li { opacity: 1; transition: opacity 0.5s ease 0.2s; }
-
-    /* Social Menu (Show on Mobile) */
-    .social-menu-item {
-        display: block; margin-top: auto !important;
-        border-top: 1px solid #eee; padding-top: 20px; width: 80% !important;
-    }
-    .social-icons { display: flex; gap: 20px; }
-    .social-icons a { color: #888; }
-
-    /* Mobile Dropdown */
-    .dropdown-content {
-        position: relative; display: block; box-shadow: none;
-        background-color: transparent; padding-left: 20px; top: 0;
-    }
+    .social-menu-item { display: block; margin-top: auto !important; border-top: 1px solid #eee; padding-top: 20px; width: 80% !important; }
+    .social-icons { display: flex; gap: 20px; } .social-icons a { color: #888; }
+    .dropdown-content { position: relative; display: block; box-shadow: none; background-color: transparent; padding-left: 20px; top: 0; }
     .dropbtn { pointer-events: none; font-weight: bold; }
+    .search-btn { margin-left: 10px; margin-right: 20px; }
+
+    /* Jadwal Salat Mobile */
+    .prayer-header { flex-direction: column; align-items: center; margin-bottom: 15px; text-align: center; }
+    .prayer-meta { margin-top: 10px; text-align: center; width: 100%; }
+    .prayer-link { margin-top: 5px; display: inline-block; }
+
+    /* Homepage News Mobile (List View) */
+    .home-news-section .grid-container { grid-template-columns: 1fr; gap: 15px; }
+    .home-news-section .card { display: flex; flex-direction: row; align-items: center; padding: 10px; gap: 15px; text-align: left; height: auto; }
+    .home-news-section .thumb-link { flex-shrink: 0; }
+    .home-news-section .thumb-home { width: 90px !important; height: 90px !important; padding: 0 !important; margin-bottom: 0 !important; display: flex; justify-content: center; align-items: center; }
+    .home-news-section .thumb-home .thumb-title-text { display: none; }
+    .home-news-section .thumb-home .thumb-logo { width: 40px; }
+    .news-text-wrapper { display: flex; flex-direction: column; justify-content: center; }
+    .home-news-section .card h4 { margin: 0 0 5px 0; font-size: 0.95rem; line-height: 1.3; }
+    .home-news-section .card small { margin: 0; font-size: 0.8rem; color: #777; }
     
-    /* Jadwal Salat Mobile Fix */
-    .prayer-header {
-        flex-direction: column; 
-        align-items: center; /* Ubah dari flex-start ke center */
-        margin-bottom: 15px; 
-        text-align: center;  /* Pastikan teks rata tengah */
-    }
-    
-    .prayer-meta {
-        margin-top: 10px; 
-        text-align: center; /* PERMINTAAN: Tanggal Rata Tengah */
-        width: 100%;
-    }
-    
-    .prayer-link {
-        margin-top: 5px;
-        display: inline-block;
-    }
-}
-
-
-/* --- DETAIL BERITA PAGE STYLES (Dipindahkan dari detail-berita.html) --- */
-
-/* Container Utama (Article Card) */
-.article-card {
-    background: #ffffff;
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    margin-top: 20px;
-}
-
-/* Meta Data (Tanggal & Admin) */
-.news-meta {
-    color: #666;
-    font-size: 0.95rem;
-    margin-top: 20px;
-    margin-bottom: 30px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid #eee;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-/* Typography Isi Berita (Markdown Result) */
-.news-content { 
-    line-height: 1.8; 
-    color: #2c3e50; 
-    font-size: 1.05rem;
-    min-height: 200px; 
-}
-.news-content h1, .news-content h2, .news-content h3 { 
-    color: var(--primary); 
-    margin-top: 30px; 
-    margin-bottom: 15px; 
-    font-weight: 700;
-}
-.news-content p { margin-bottom: 15px; text-align: justify; }
-.news-content ul, .news-content ol { margin-left: 25px; margin-bottom: 20px; }
-.news-content blockquote {
-    border-left: 4px solid var(--primary);
-    background: #f9f9f9;
-    padding: 15px;
-    font-style: italic;
-    margin: 20px 0;
-}
-/* --- TAMBAHAN BARU: Hapus margin bawah paragraf di dalam quote --- */
-.news-content blockquote p {
-    margin-bottom: 0;
-}
-.news-content img { 
-    max-width: 100%; 
-    height: auto; 
-    border-radius: 8px; 
-    margin: 15px auto; /* Centering image inside article */
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    display: block;
-}
-
-/* Tombol Kembali */
-.back-btn-container {
-    padding-top: 10px;
-    text-align: center; /* Pindahkan tombol ke tengah agar konsisten dengan design Kemenag */
-}
-
-.back-btn {
-    display: inline-block;
-    margin-top: 30px;
-    text-decoration: none;
-    color: var(--primary);
-    font-weight: 600;
-    padding: 10px 20px;
-    border: 1px solid var(--primary);
-    border-radius: 30px;
-    transition: all 0.3s;
-}
-.back-btn:hover {
-    background-color: var(--primary);
-    color: #fff;
-}
-
-/* =========================================
-   KHUSUS HALAMAN DAFTAR BERITA (berita.html)
-   ========================================= */
-
-/* 1. Container List (1 Kolom ke bawah) */
-.news-list-container {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px;
-}
-
-/* 2. Kartu Berita Horizontal */
-.news-card-horizontal {
-    display: flex;
-    flex-direction: row; /* Gambar Kiri, Teks Kanan */
-    align-items: flex-start;
-    padding: 25px;
-    gap: 30px;
-    background: var(--white);
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    transition: transform 0.2s;
-}
-.news-card-horizontal:hover { transform: translateY(-3px); }
-
-/* Wrapper Gambar (Kiri) */
-.news-thumb-wrapper {
-    flex-shrink: 0;
-    width: 280px; /* Lebar gambar di Desktop */
-    height: 180px;
-    border-radius: 8px;
-    overflow: hidden;
-}
-.news-thumb-wrapper .auto-thumb {
-    width: 100%;
-    height: 100%;
-    margin-bottom: 0;
-    border-radius: 8px;
-}
-/* Sembunyikan teks judul di dalam gambar (agar bersih) */
-.news-thumb-wrapper .thumb-title-text { display: none; }
-
-/* Wrapper Teks (Kanan) */
-.news-content-side {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-/* Elemen Teks */
-.news-date-list {
-    color: #666;
-    font-size: 0.9rem;
-    margin-bottom: 10px;
-    display: block;
-}
-.news-title-list {
-    margin: 0 0 10px 0;
-    font-size: 1.4rem;
-    line-height: 1.3;
-}
-.news-excerpt-list {
-    color: #555;
-    margin-bottom: 15px;
-    line-height: 1.6;
-}
-.news-read-more {
-    font-weight: 600;
-    color: var(--primary);
-    text-decoration: none;
-    font-size: 0.9rem;
-}
-
-/* --- RESPONSIVE MOBILE (Meniru Gaya Index) --- */
-@media (max-width: 768px) {
-    .news-card-horizontal {
-        padding: 15px;
-        gap: 15px;
-        align-items: center; /* Vertikal center */
-    }
-
-    /* Gambar Kecil (90x90) */
-    .news-thumb-wrapper {
-        width: 90px;
-        height: 90px;
-    }
-    .news-thumb-wrapper .thumb-logo {
-        width: 40px; /* Perkecil logo */
-    }
-
-    /* Teks Judul & Tanggal */
-    .news-title-list {
-        font-size: 1rem;
-        margin-bottom: 5px;
-    }
-    .news-date-list {
-        font-size: 0.8rem;
-        margin-bottom: 0;
-    }
-
-    /* Sembunyikan Ringkasan & Tombol di Mobile (Sesuai Index) */
-    .news-excerpt-list, 
-    .news-read-more {
-        display: none;
-    }
+    /* Berita List Mobile */
+    .news-card-horizontal { padding: 15px; gap: 15px; align-items: center; }
+    .news-thumb-wrapper { width: 90px; height: 90px; }
+    .news-thumb-wrapper .thumb-logo { width: 40px; }
+    .news-title-list { font-size: 1rem; margin-bottom: 5px; }
+    .news-date-list { font-size: 0.8rem; margin-bottom: 0; }
+    .news-excerpt-list, .news-read-more { display: none; }
 }
