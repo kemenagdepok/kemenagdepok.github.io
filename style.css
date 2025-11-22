@@ -478,3 +478,54 @@ footer {
         margin-top: 3px;
     }
 }
+
+/* --- DAFTAR APLIKASI PAGE STYLES --- */
+.app-list { 
+    list-style: none; /* Hilangkan bullet default */
+    padding-left: 10px; /* Tambahkan sedikit padding kiri */
+    margin-top: 10px;
+}
+.app-list li { 
+    margin-bottom: 8px; 
+    position: relative;
+    padding-left: 10px; /* Ruang untuk custom bullet */
+}
+/* Custom Bullet (Titik Hijau) */
+.app-list li::before {
+    content: '•';
+    color: var(--primary);
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 1.2rem;
+    line-height: 1.2rem;
+}
+.app-list a {
+    color: var(--primary);
+    font-size: 0.95rem;
+    text-decoration: none;
+    display: block;
+    padding: 2px 0;
+    transition: color 0.3s;
+}
+.app-list a:hover {
+    color: var(--primary-dark);
+}
+.app-category {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    border-bottom: 2px solid var(--gold);
+}
+.card.app-card { min-height: 250px; }
+
+/* Perbaikan Layout Grid Aplikasi (2 Kolom di Desktop) */
+@media (min-width: 900px) {
+    .app-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+}
