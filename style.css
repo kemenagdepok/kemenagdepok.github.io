@@ -584,3 +584,81 @@ footer {
         margin-top: 3px;
     }
 }
+
+
+/* --- DETAIL BERITA PAGE STYLES (Dipindahkan dari detail-berita.html) --- */
+
+/* Container Utama (Article Card) */
+.article-card {
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    margin-top: 20px;
+}
+
+/* Meta Data (Tanggal & Admin) */
+.news-meta {
+    color: #666;
+    font-size: 0.95rem;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Typography Isi Berita (Markdown Result) */
+.news-content { 
+    line-height: 1.8; 
+    color: #2c3e50; 
+    font-size: 1.05rem;
+    min-height: 200px; 
+}
+.news-content h1, .news-content h2, .news-content h3 { 
+    color: var(--primary); 
+    margin-top: 30px; 
+    margin-bottom: 15px; 
+    font-weight: 700;
+}
+.news-content p { margin-bottom: 15px; text-align: justify; }
+.news-content ul, .news-content ol { margin-left: 25px; margin-bottom: 20px; }
+.news-content blockquote {
+    border-left: 4px solid var(--primary);
+    background: #f9f9f9;
+    padding: 15px;
+    font-style: italic;
+    margin: 20px 0;
+}
+.news-content img { 
+    max-width: 100%; 
+    height: auto; 
+    border-radius: 8px; 
+    margin: 15px auto; /* Centering image inside article */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: block;
+}
+
+/* Tombol Kembali */
+.back-btn-container {
+    padding-top: 10px;
+    text-align: center; /* Pindahkan tombol ke tengah agar konsisten dengan design Kemenag */
+}
+
+.back-btn {
+    display: inline-block;
+    margin-top: 30px;
+    text-decoration: none;
+    color: var(--primary);
+    font-weight: 600;
+    padding: 10px 20px;
+    border: 1px solid var(--primary);
+    border-radius: 30px;
+    transition: all 0.3s;
+}
+.back-btn:hover {
+    background-color: var(--primary);
+    color: #fff;
+}
