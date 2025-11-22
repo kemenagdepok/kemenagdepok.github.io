@@ -740,6 +740,10 @@ footer {
     font-style: italic;
     margin: 20px 0;
 }
+/* --- TAMBAHAN BARU: Hapus margin bawah paragraf di dalam quote --- */
+.news-content blockquote p {
+    margin-bottom: 0;
+}
 .news-content img { 
     max-width: 100%; 
     height: auto; 
