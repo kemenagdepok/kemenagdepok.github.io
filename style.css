@@ -785,3 +785,111 @@ footer {
     background-color: var(--primary);
     color: #fff;
 }
+
+/* =========================================
+   KHUSUS HALAMAN DAFTAR BERITA (berita.html)
+   ========================================= */
+
+/* 1. Container List (1 Kolom ke bawah) */
+.news-list-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+/* 2. Kartu Berita Horizontal */
+.news-card-horizontal {
+    display: flex;
+    flex-direction: row; /* Gambar Kiri, Teks Kanan */
+    align-items: flex-start;
+    padding: 25px;
+    gap: 30px;
+    background: var(--white);
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: transform 0.2s;
+}
+.news-card-horizontal:hover { transform: translateY(-3px); }
+
+/* Wrapper Gambar (Kiri) */
+.news-thumb-wrapper {
+    flex-shrink: 0;
+    width: 280px; /* Lebar gambar di Desktop */
+    height: 180px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+.news-thumb-wrapper .auto-thumb {
+    width: 100%;
+    height: 100%;
+    margin-bottom: 0;
+    border-radius: 8px;
+}
+/* Sembunyikan teks judul di dalam gambar (agar bersih) */
+.news-thumb-wrapper .thumb-title-text { display: none; }
+
+/* Wrapper Teks (Kanan) */
+.news-content-side {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Elemen Teks */
+.news-date-list {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    display: block;
+}
+.news-title-list {
+    margin: 0 0 10px 0;
+    font-size: 1.4rem;
+    line-height: 1.3;
+}
+.news-excerpt-list {
+    color: #555;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+.news-read-more {
+    font-weight: 600;
+    color: var(--primary);
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+/* --- RESPONSIVE MOBILE (Meniru Gaya Index) --- */
+@media (max-width: 768px) {
+    .news-card-horizontal {
+        padding: 15px;
+        gap: 15px;
+        align-items: center; /* Vertikal center */
+    }
+
+    /* Gambar Kecil (90x90) */
+    .news-thumb-wrapper {
+        width: 90px;
+        height: 90px;
+    }
+    .news-thumb-wrapper .thumb-logo {
+        width: 40px; /* Perkecil logo */
+    }
+
+    /* Teks Judul & Tanggal */
+    .news-title-list {
+        font-size: 1rem;
+        margin-bottom: 5px;
+    }
+    .news-date-list {
+        font-size: 0.8rem;
+        margin-bottom: 0;
+    }
+
+    /* Sembunyikan Ringkasan & Tombol di Mobile (Sesuai Index) */
+    .news-excerpt-list, 
+    .news-read-more {
+        display: none;
+    }
+}

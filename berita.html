@@ -5,19 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Berita - Kemenag Kota Depok</title>
     <link rel="stylesheet" href="style.css">
+    
+    <meta name="description" content="Indeks berita dan informasi terkini dari Kantor Kementerian Agama Kota Depok.">
+    <meta name="keywords" content="Berita Kemenag Depok, Info Haji Depok, Pendidikan Madrasah Depok">
+    <meta name="author" content="Admin Kemenag Depok">
+    <link rel="canonical" href="https://kemenagdepok.github.io/berita.html">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://kemenagdepok.github.io/berita.html">
+    <meta property="og:title" content="Berita Terkini - Kemenag Kota Depok">
+    <meta property="og:description" content="Indeks berita dan informasi terkini dari Kantor Kementerian Agama Kota Depok.">
+    <meta property="og:image" content="https://kemenagdepok.github.io/images/seo/kemenag-depok.webp">
+    
+    <link rel="shortcut icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Kementerian_Agama_new_logo.png/150px-Kementerian_Agama_new_logo.png" type="image/png">
 </head>
 <body>
     <header id="header-placeholder"></header>
 
     <main>
         <div class="breadcrumb-container">
-            <a href="index.html">Beranda</a>
+            <a href="/">Beranda</a>
             <svg class="breadcrumb-separator" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
             <span class="breadcrumb-current">Berita</span>
         </div>
         <h3 class="section-title">Berita Terkini</h3>
-        <div id="news-container" class="grid-container">
-            <p>Memuat berita...</p>
+        
+        <div id="news-container" class="news-list-container">
+            <p class="loading-text">Memuat berita...</p>
         </div>
     </main>
 
@@ -30,35 +44,36 @@
                 .then(response => response.json())
                 .then(data => {
                     const container = document.getElementById('news-container');
-                    
-                    // URL Logo
                     const logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Kementerian_Agama_new_logo.png/150px-Kementerian_Agama_new_logo.png";
 
                     container.innerHTML = ''; // Bersihkan loading text
 
                     data.forEach(news => {
+                        // Struktur HTML Kartu Horizontal
                         const card = `
-                            <div class="card">
-                                <a href="detail-berita.html?id=${news.id}" class="thumb-link" title="${news.judul}">
+                            <div class="news-card-horizontal">
+                                <a href="detail-berita.html?id=${news.id}" class="news-thumb-wrapper thumb-link" title="${news.judul}">
                                     <div class="auto-thumb">
                                         <img src="${logoUrl}" class="thumb-logo" alt="Logo Kemenag">
                                         <div class="thumb-title-text">${news.judul}</div>
                                     </div>
                                 </a>
-                                <small style="color:#666; display:block; margin-top:10px;">${news.tanggal}</small>
-                                
-                                <h4 style="margin: 5px 0;">
-                                    <a href="detail-berita.html?id=${news.id}" style="text-decoration:none; color:var(--primary);" title="${news.judul}">
-                                        ${news.judul}
+
+                                <div class="news-content-side">
+                                    <small class="news-date-list">${news.tanggal}</small>
+                                    
+                                    <h4 class="news-title-list">
+                                        <a href="detail-berita.html?id=${news.id}" style="text-decoration:none; color:var(--primary);" title="${news.judul}">
+                                            ${news.judul}
+                                        </a>
+                                    </h4>
+                                    
+                                    <p class="news-excerpt-list">${news.ringkasan}</p>
+                                    
+                                    <a href="detail-berita.html?id=${news.id}" class="news-read-more" title="${news.judul}">
+                                        Baca Selengkapnya →
                                     </a>
-                                </h4>
-                                
-                                <p style="font-size:0.9rem; color:#555;">${news.ringkasan}</p>
-                                <br>
-                                
-                                <a href="detail-berita.html?id=${news.id}" style="font-size:0.85rem; font-weight:bold; color:var(--primary); text-decoration:none;" title="${news.judul}">
-                                    Baca Selengkapnya →
-                                </a>
+                                </div>
                             </div>
                         `;
                         container.innerHTML += card;
@@ -66,7 +81,7 @@
                 })
                 .catch(error => {
                     console.error(error);
-                    document.getElementById('news-container').innerHTML = '<p>Gagal memuat berita.</p>';
+                    document.getElementById('news-container').innerHTML = '<p class="loading-text">Gagal memuat berita.</p>';
                 });
         });
     </script>
