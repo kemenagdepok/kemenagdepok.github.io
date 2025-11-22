@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title id="page-title">Memuat Berita...</title>
+    <title>Memuat Berita... - Kemenag Kota Depok</title>
     
     <link rel="stylesheet" href="style.css">
     
@@ -34,7 +34,7 @@
     <main class="article-container">
         
         <div id="loading-state" style="text-align: center; padding: 40px;">
-            <p>Memuat artikel...</p>
+            <p>Sedang memuat artikel...</p>
         </div>
 
         <article id="article-wrapper" class="article-card" style="display: none;">
@@ -78,27 +78,29 @@
         // --- FUNGSI UPDATE SEO (Dipanggil Segera) ---
         function updateSeoMeta(news) {
             const baseUrl = 'https://kemenagdepok.github.io/';
-            const fullUrl = baseUrl + 'detail-berita.html?id=' + news.id;
+            const fullUrl = window.location.href; // URL saat ini
             
-            // Bersihkan ringkasan dari karakter aneh jika ada
-            let cleanDesc = news.ringkasan.replace(/[*#_]/g, ''); 
+            // Bersihkan ringkasan dari karakter aneh
+            let cleanDesc = news.ringkasan ? news.ringkasan.replace(/[*#_]/g, '') : "Berita Kemenag Depok"; 
             if(cleanDesc.length > 150) cleanDesc = cleanDesc.substring(0, 150) + '...';
 
             const titleText = news.judul + ' - Kemenag Kota Depok';
             const keywordsText = `Berita, ${news.judul.split(' ').slice(0, 5).join(', ')}, Kemenag Depok`;
 
-            // 1. Update Browser Title & Basic Meta
+            // 1. Update Browser Title
             document.title = titleText;
+
+            // 2. Update Basic Meta
             document.getElementById('meta-description').setAttribute('content', cleanDesc);
             document.getElementById('meta-keywords').setAttribute('content', keywordsText);
             document.getElementById('meta-canonical').setAttribute('href', fullUrl);
             
-            // 2. Update Open Graph (Facebook/WhatsApp)
+            // 3. Update Open Graph (Facebook/WhatsApp)
             document.getElementById('og-title').setAttribute('content', news.judul);
             document.getElementById('og-description').setAttribute('content', cleanDesc);
             document.getElementById('og-url').setAttribute('content', fullUrl);
             
-            // 3. Update Twitter Cards
+            // 4. Update Twitter Cards
             document.getElementById('twitter-title').setAttribute('content', news.judul);
             document.getElementById('twitter-description').setAttribute('content', cleanDesc);
         }
@@ -114,9 +116,12 @@
                         currentNews = news;
                         
                         // === PENTING: UPDATE SEO SEKARANG ===
-                        // Kita update SEO sebelum fetch markdown agar lebih cepat
+                        // Kita update SEO sebelum fetch markdown agar lebih cepat terlihat di tab browser
                         updateSeoMeta(currentNews);
                         
+                        // Update Breadcrumb Title juga di sini
+                        document.getElementById('current-article-title').textContent = currentNews.judul;
+
                         // Lanjut ambil file Markdown content
                         return fetch(currentNews.file);
                     } else {
@@ -135,7 +140,7 @@
                     // Render Markdown
                     const htmlContent = marked.parse(markdownText);
                     
-                    // Render HTML Elements
+                    // Render HTML Elements (Gambar Unggulan)
                     const heroHTML = `
                         <div class="auto-thumb" style="height: 280px; margin-bottom: 0;">
                             <img src="${logoUrl}" class="thumb-logo" alt="Logo Kemenag">
@@ -146,7 +151,6 @@
                     document.getElementById('article-hero').innerHTML = heroHTML;
                     document.getElementById('article-meta').innerHTML = `📅 ${currentNews.tanggal} &nbsp;|&nbsp; 👤 Admin Kemenag`;
                     document.getElementById('article-content').innerHTML = htmlContent;
-                    document.getElementById('current-article-title').textContent = currentNews.judul; 
 
                     // Tampilkan Hasil
                     loadingState.style.display = 'none';
@@ -159,11 +163,13 @@
                             <h3>Terjadi Kesalahan</h3>
                             <p>${error.message}</p>
                             <p style="font-size:0.9rem; margin-top:10px;">Pastikan file <strong>.md</strong> dan <strong>berita.json</strong> sudah sesuai.</p>
+                            <a href="berita.html" style="display:inline-block; margin-top:15px; color:var(--primary); font-weight:bold;">Kembali ke Daftar</a>
                         </div>
                     `;
                     loadingState.style.display = 'block';
                 });
         } else {
+            // Jika tidak ada ID, lempar kembali ke halaman daftar
             window.location.href = 'berita.html';
         }
     </script>
